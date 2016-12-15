@@ -1,0 +1,7 @@
+{
+  "DEV_SITE_URL": "http://dev.hoge.com/",
+  "PROD_SITE_URL": "http://prod.hoge.com/",
+  "SITE_NAME": "これはタイトルです",
+  "AUTHOR": "これは作成者です",
+  "MODIFIER": "これは編集者です"
+}

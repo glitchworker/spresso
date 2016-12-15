@@ -1,0 +1,65 @@
+@import '../../common/stylesheets/config';
+
+/* ------------------------------------------- SASS Information
+ Name:      app.scss
+ Author:    #{$AUTHOR}
+ Info:      #{$SITE_NAME}
+----------------------------------------------------------- */
+
+// -----------------------------------------------------------
+//  FUNCTIONS
+// -----------------------------------------------------------
+
+@import 'bases/config';
+
+// -----------------------------------------------------------
+//  VARS
+// -----------------------------------------------------------
+
+// @import '../../common/stylesheets/vars/color';
+// @import '../../common/stylesheets/vars/easing';
+
+// -----------------------------------------------------------
+//  MIXINS
+// -----------------------------------------------------------
+
+@import '../../common/stylesheets/mixins/fontSize';
+@import '../../common/stylesheets/mixins/clearfix';
+@import '../../common/stylesheets/mixins/hideaway';
+@import '../../common/stylesheets/mixins/opacity';
+@import '../../common/stylesheets/mixins/inlineBlock';
+@import '../../common/stylesheets/mixins/mediaqueries';
+
+// -----------------------------------------------------------
+//  STYLES: bases
+// -----------------------------------------------------------
+
+@import '../../common/stylesheets/reset';
+@import 'bases/default';
+
+// -----------------------------------------------------------
+//  STYLES: utils
+// -----------------------------------------------------------
+
+// @import '../../common/stylesheets/utils/font';
+// @import '../../common/stylesheets/utils/align';
+// @import '../../common/stylesheets/utils/float';
+// @import '../../common/stylesheets/utils/margin';
+// @import '../../common/stylesheets/utils/padding';
+// @import '../../common/stylesheets/utils/width';
+// @import '../../common/stylesheets/utils/display';
+// @import '../../common/stylesheets/utils/visibility';
+
+// -----------------------------------------------------------
+//  STYLES: partials
+// -----------------------------------------------------------
+
+@import 'partials/header';
+@import 'partials/footer';
+
+// -----------------------------------------------------------
+//  STYLES: pages
+// -----------------------------------------------------------
+
+@import 'index';
+@import 'hoge';

@@ -1,0 +1,15 @@
+// ------------------------------------------- SASS Information
+//  Name:      _config.scss
+//  Author:    Loxis
+// -----------------------------------------------------------
+
+$appConfig: getJson('./src/app.config.json');
+
+$SITE_URL: map-get($appConfig, APP_SITE_URL);
+$SITE_NAME: map-get($appConfig, SITE_NAME);
+$AUTHOR: map-get($appConfig, AUTHOR);
+$MODIFIER: map-get($appConfig, MODIFIER);
+$UPDATE: map-get($appConfig, UPDATE);
+$TIMESTAMP: '?v=' + map-get($appConfig, TIMESTAMP);
+
+$IMG: '../images/';

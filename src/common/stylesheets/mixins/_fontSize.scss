@@ -1,0 +1,8 @@
+// ------------------------------------------- SASS Information
+//  Name:      mixins/_fontSize.scss
+//  Author:    Loxis
+// -----------------------------------------------------------
+
+@mixin fontSize($fontSize, $baseFontSize: $FONT_SIZE){
+  font-size: percentage($fontSize / $baseFontSize);
+}
