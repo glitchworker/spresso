@@ -1,5 +1,5 @@
 # sPresso StarterKit
-**sPresso Startkit's for modern webapps**
+**sPresso StarterKit for modern websites**
 
 gulp / ect / sass / webpack (coffeescript)
 
