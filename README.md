@@ -46,6 +46,10 @@ gulp / ect / sass / webpack (coffeescript)
 
 webpackに関する設定ファイル
 
+- /tasks/webpack.config.base.coffee
+
+webpackに関する設定ファイル
+
 - /tasks/webpack.config.common.coffee
 
 共通のwebpackに関する設定ファイル
@@ -316,6 +320,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 			│   ├── getTime.coffee
 			│   ├── getTimeStamp.coffee
 			│   └── sassGetJson.coffee
+			├── webpack.config.base.coffee
 			├── webpack.config.pc.coffee
 			├── webpack.config.sp.coffee
 			└── webpack.config.common.coffee
