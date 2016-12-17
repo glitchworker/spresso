@@ -44,7 +44,7 @@ gulp / ect / sass / webpack (coffeescript)
 
 - /tasks/gulp.config.coffee
 
-webpackに関する設定ファイル
+gulpに関する設定ファイル
 
 - /tasks/webpack.config.base.coffee
 
@@ -410,6 +410,8 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 - [Yarn](https://yarnpkg.com/)
 
 ## Issues
+
+https://github.com/glitchworker/spresso/issues
 
 ## Version History
 
