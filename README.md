@@ -5,7 +5,7 @@ gulp / ect / sass / webpack (coffeescript)
 
 ## Usage
 
-1. Node.js をダウンロードしインストールする（https://nodejs.org/en/）
+1. [NodeJS](https://nodejs.org/en/) をダウンロードしインストールする
 
 2. ターミナルまたはコマンドプロンプトを管理者権限で開く
 
@@ -411,7 +411,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ## Issues
 
-https://github.com/glitchworker/spresso/issues
+- [GitHub Issues](https://github.com/glitchworker/spresso/issues)
 
 ## Version History
 

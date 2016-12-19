@@ -5,7 +5,7 @@
   "homepage": "https://github.com/glitchworker/spresso#readme",
   "author": "Loxis (http://loxis.jp/)",
   "license": "MIT",
-  "repository": { 
+  "repository": {
     "type": "git",
     "url": "https://github.com/glitchworker/spresso.git"
   },
