@@ -33,6 +33,12 @@ gulp / ect / sass / webpack (coffeescript)
 ※作業を開始する前に実行しておくと作業開始時から編集後の差分データを出力することが出来る
 　つまり実行しなければ過去に実行した時点からの差分を出力することが可能
 
+v1.1.0 から新たに src フォルダに import フォルダが追加されました。
+この中にファイル又はフォルダを追加し data.json に設定を記述することによって
+本テンプレート以外にユーザーが自由に設定したファイル＆フォルダを htdocs に出力することが可能です。
+フォルダの場合は type に dir ファイルの場合は file を記述し data にフォルダ名またはファイル名を入力した後
+output の項目に出力先のパスを入力することによって書き出されます。
+
 ## Setting
 
 ### project
@@ -76,6 +82,9 @@ template内で使う規定値（SP）
 
 stylesheet内で使う規定値
 
+- /src/import/data.json
+
+インポートデータで使う規定値
 
 ## 規定値をsrc内で共有する方法
 
@@ -190,6 +199,10 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 - yarn run clean-diff ( gulp clean-archive )
 
+#### インポートデータのタスク実行
+
+- yarn run import ( gulp import )
+
 ## Structure
 
 ### outline
@@ -201,6 +214,8 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	├── package.json
 	├── src
 	│   ├── app.config.json
+	│   ├── import
+	│   │   └── data.json
 	│   ├── common
 	│   │   ├── images
 	│   │   │   ├── favicon.ico
@@ -328,6 +343,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 ### src
 
 	./src
+	├── import
 	├── common
 	│   ├── images
 	│   ├── scripts
@@ -414,6 +430,12 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 - [GitHub Issues](https://github.com/glitchworker/spresso/issues)
 
 ## Version History
+
+### v1.1.0
+
+- インポートデータ機能の追加
+- package.json の更新
+- README.md の修正
 
 ### v1.0.0
 

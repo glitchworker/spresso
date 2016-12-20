@@ -72,6 +72,8 @@ paths =
     libcopy:
       lib: rootDir.src + '/common/scripts/lib/**/*.js'
       dest: rootDir.htdocs + '/assets/common/js/lib/'
+    import:
+      json: rootDir.src + '/import/data.json'
   pc:
     dest: rootDir.htdocs + '/'
     ect:
@@ -165,6 +167,21 @@ pathSearch = (dir, dirName) ->
 # Common Settings
 # 共通設定
 #------------------------------------------------------
+
+# data import process
+g.task 'import', ->
+  jsonData = JSON.parse fs.readFileSync(paths.common.import.json)
+  jsonData.forEach (page, i) ->
+    if page.type == 'dir'
+      g.src rootDir.src + '/import/' + page.data + '/**/*'
+      .pipe $.plumber()
+      .pipe $.changed(page.output)
+      .pipe g.dest rootDir.htdocs + '/' + page.output
+    else
+      g.src rootDir.src + '/import/' + page.data
+      .pipe $.plumber()
+      .pipe $.changed(page.output)
+      .pipe g.dest rootDir.htdocs + '/' + page.output
 
 # lib copy process
 g.task 'libcopy', ->
