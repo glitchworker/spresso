@@ -27,14 +27,9 @@ isProduction = options.env == 'production'
 #------------------------------------------------------
 
 outputName = 'common'
-commonPath = './common'
 config = merge baseConfig,
   output:
     filename: outputName + '.js' # 出力するファイル名
     sourceMapFilename: if not isProduction then outputName + '.map' # 出力するマップファイル名
-  plugins: [
-    new webpack.ProvidePlugin
-      Common: commonPath # common.coffee を Common という名前で共通で require する
-  ]
 
 module.exports = config

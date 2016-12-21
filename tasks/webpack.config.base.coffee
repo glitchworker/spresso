@@ -3,6 +3,7 @@
 # モジュール読み込み
 #------------------------------------------------------
 
+path = require 'path' # パス解析
 webpack = require('gulp-webpack').webpack # Webpack 読み込み
 minimist = require 'minimist' # Gulp で引数を解析
 
@@ -28,6 +29,7 @@ isProduction = if options.env == 'production' then true else false
 # WebPack のモジュール設定
 #------------------------------------------------------
 
+commonPath = path.resolve('') + '/src/common/scripts/coffee/common'
 config = {
   devtool: if not isProduction then 'source-map'
   resolve: {
@@ -38,6 +40,8 @@ config = {
       {test: /\.coffee$/, loader: 'coffee-loader'} # CoffeeScript をコンパイルするための設定
     ]
   plugins: if not isProduction then [
+    new webpack.ProvidePlugin
+      Common: commonPath # common.coffee を Common という名前で共通で require する
     new webpack.DefinePlugin
       'APP_SITE_URL': JSON.stringify appConfig.DEV_SITE_URL
       'APP_SITE_NAME': JSON.stringify appConfig.SITE_NAME
@@ -46,6 +50,8 @@ config = {
       'APP_UPDATE': JSON.stringify update
       'APP_TIMESTAMP':JSON.stringify timestamp
   ] else [
+    new webpack.ProvidePlugin
+      Common: commonPath # common.coffee を Common という名前で共通で require する
     new webpack.DefinePlugin
       'APP_SITE_URL': JSON.stringify appConfig.PROD_SITE_URL
       'APP_SITE_NAME': JSON.stringify appConfig.SITE_NAME
