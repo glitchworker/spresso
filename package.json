@@ -1,7 +1,7 @@
 {
   "name": "spresso",
   "description": "sPresso StarterKit for modern websites",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "homepage": "https://github.com/glitchworker/spresso#readme",
   "author": "Loxis (http://loxis.jp/)",
   "license": "MIT",
@@ -27,20 +27,19 @@
   "main": "app.js",
   "scripts": {
     "start": "gulp",
-    "pc": "gulp watch-pc",
-    "sp": "gulp watch-sp",
-    "build": "gulp build",
-    "build-pc": "gulp build-pc",
-    "build-sp": "gulp build-sp",
-    "build-prod": "gulp build --env production",
-    "build-prod-pc": "gulp build-pc --env production",
-    "build-prod-sp": "gulp build-sp --env production",
+    "start-pc": "gulp watch-pc",
+    "start-sp": "gulp watch-sp",
+    "dev": "gulp build",
+    "dev-pc": "gulp build-pc",
+    "dev-sp": "gulp build-sp",
+    "prod": "gulp build --env production",
+    "prod-pc": "gulp build-pc --env production",
+    "prod-sp": "gulp build-sp --env production",
     "diff": "gulp diff",
     "diff-prod": "gulp diff --env production",
     "export": "gulp export",
     "clean": "gulp clean",
-    "clean-diff": "gulp clean-archive",
-    "import": "gulp import"
+    "clean-diff": "gulp clean-archive"
   },
   "devDependencies": {
     "browser-sync": "^2.18.5",

@@ -17,7 +17,7 @@ gulp / ect / sass / webpack (coffeescript)
 
 6. ```/src/app.config.json``` を開き各項目を編集しておく（後から変更可能）
 
-7. ```yarn run build``` で一度ビルドしておく
+7. ```yarn run dev``` で一度ビルドしておく
 
 8. ```yarn run start``` で開発環境を起動する（自動的に既存のブラウザが起動）
 
@@ -25,7 +25,7 @@ gulp / ect / sass / webpack (coffeescript)
 
 10. 以降8〜9の繰り返し
 
-本番環境にアップロードする場合、```yarn run build-prod``` を実行し ```/htdocs/``` 内をアップする
+本番環境にアップロードする場合、```yarn run prod``` を実行し ```/htdocs/``` 内をアップする
 ※ 各設定ファイルについては Setting 、開発用のコマンドについては Scripts を参照
 
 また、7 の時に ```yarn run diff``` としておくと ```/htdocs/``` と ```/temp/``` フォルダが生成され
@@ -153,29 +153,29 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 - yarn run start ( gulp )
 
-- yarn run build ( gulp build )
+- yarn run dev ( gulp build )
 
 #### PC版開発用タスク実行
 
-- yarn run pc ( gulp watch-pc )
+- yarn run start-pc ( gulp watch-pc )
 
-- yarn run build-pc ( gulp build-pc )
+- yarn run dev-pc ( gulp build-pc )
 
 #### SP版開発用タスク実行
 
-- yarn run sp ( gulp watch-sp )
+- yarn run start-sp ( gulp watch-sp )
 
-- yarn run build-sp ( gulp build-sp )
+- yarn run dev-sp ( gulp build-sp )
 
 ### build / clean
 
 #### 開発環境用ビルド
 
-- yarn run build ( gulp build-sp )
+- yarn run dev ( gulp build-sp )
 
 #### 本番環境用ビルド
 
-- yarn run build-prod ( gulp build --env production )
+- yarn run prod ( gulp build --env production )
 
 #### ビルドフォルダを消去
 
@@ -433,10 +433,17 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ## Version History
 
+### v1.1.2
+
+- タスク実行コマンドの大幅変更
+- webpack.config.xxxx.coffee 設定の調整
+- package.json の更新
+- README.md の修正
+
 ### v1.1.1
 
 - meta タグの lang 属性を指定出来るように変更
-- WebPack 設定の最適化
+- webpack.config.xxxx.coffee 設定の最適化
 - README.md の修正
 
 ### v1.1.0
