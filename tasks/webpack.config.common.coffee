@@ -32,19 +32,9 @@ config = merge baseConfig,
   output:
     filename: outputName + '.js' # 出力するファイル名
     sourceMapFilename: if not isProduction then outputName + '.map' # 出力するマップファイル名
-  devtool: if not isProduction then 'source-map'
-  plugins: if not isProduction then [
+  plugins: [
     new webpack.ProvidePlugin
       Common: commonPath # common.coffee を Common という名前で共通で require する
-  ] else [
-    new webpack.ProvidePlugin
-      Common: commonPath # common.coffee を Common という名前で共通で require する
-    new webpack.optimize.UglifyJsPlugin({
-      preserveComments: 'some' # Licence 表記を消さない
-      compress:
-        warnings: false
-        drop_console: true
-    })
   ]
 
 module.exports = config

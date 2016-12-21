@@ -34,6 +34,7 @@ else
 #------------------------------------------------------
 
 config = {
+  devtool: if not isProduction then 'source-map'
   resolve: {
     extensions: ['', '.js', '.coffee'] # require する際に、拡張子を省略するための設定
   }
@@ -41,7 +42,7 @@ config = {
     loaders: [
       {test: /\.coffee$/, loader: 'coffee-loader'} # CoffeeScript をコンパイルするための設定
     ]
-  plugins: [
+  plugins: if not isProduction then [
     new webpack.DefinePlugin
       'APP_SITE_URL': JSON.stringify APP_SITE_URL
       'APP_SITE_NAME': JSON.stringify appConfig.SITE_NAME
@@ -49,6 +50,20 @@ config = {
       'APP_MODIFIER': JSON.stringify appConfig.MODIFIER
       'APP_UPDATE': JSON.stringify update
       'APP_TIMESTAMP':JSON.stringify timestamp
+  ] else [
+    new webpack.DefinePlugin
+      'APP_SITE_URL': JSON.stringify APP_SITE_URL
+      'APP_SITE_NAME': JSON.stringify appConfig.SITE_NAME
+      'APP_AUTHOR': JSON.stringify appConfig.AUTHOR
+      'APP_MODIFIER': JSON.stringify appConfig.MODIFIER
+      'APP_UPDATE': JSON.stringify update
+      'APP_TIMESTAMP':JSON.stringify timestamp
+    new webpack.optimize.UglifyJsPlugin({
+      preserveComments: 'some' # Licence 表記を消さない
+      compress:
+        warnings: false
+        drop_console: true
+    })
   ]
 }
 

@@ -436,6 +436,8 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 ### v1.1.1
 
 - meta タグの lang 属性を指定出来るように変更
+- WebPack 設定の最適化
+- README.md の修正
 
 ### v1.1.0
 
