@@ -433,6 +433,10 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ## Version History
 
+### v1.1.1
+
+- meta タグの lang 属性を指定出来るように変更
+
 ### v1.1.0
 
 - インポートデータ機能の追加

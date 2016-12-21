@@ -1,11 +1,5 @@
 <!DOCTYPE html>
-<% if @language == 'ja' : %>
-<html lang="ja" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# mixi: http://mixi-platform.com/ns# website: http://ogp.me/ns/<%- @namespace %>#" class="no-js">
-<% else if @language == 'en' : %>
-<html lang="en" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# mixi: http://mixi-platform.com/ns# website: http://ogp.me/ns/<%- @namespace %>#" class="no-js">
-<% else : %>
-<html prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# mixi: http://mixi-platform.com/ns# website: http://ogp.me/ns/<%- @namespace %>#" class="no-js">
-<% end %>
+<html lang="<%- @language %>" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# mixi: http://mixi-platform.com/ns# website: http://ogp.me/ns/<%- @namespace %>#" class="no-js">
 <head>
 <% include 'bases/_head' %>
 </head>
