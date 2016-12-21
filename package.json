@@ -39,7 +39,8 @@
     "diff-prod": "gulp diff --env production",
     "export": "gulp export",
     "clean": "gulp clean",
-    "clean-diff": "gulp clean-archive"
+    "clean-diff": "gulp clean-archive",
+    "import": "gulp import"
   },
   "devDependencies": {
     "browser-sync": "^2.18.5",
