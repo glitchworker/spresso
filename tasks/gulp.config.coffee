@@ -227,7 +227,7 @@ g.task 'img', ['img-check'], ->
 
 # build
 g.task 'build', ->
-  return runSequence 'libcopy', 'coffee', 'img', 'ect-pc', 'css-pc', 'coffee-pc', 'img-pc', 'ect-sp', 'css-sp', 'coffee-sp', 'img-sp'
+  return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-pc', 'css-pc', 'coffee-pc', 'img-pc', 'ect-sp', 'css-sp', 'coffee-sp', 'img-sp'
 
 #------------------------------------------------------
 # Setting for PC
@@ -335,7 +335,7 @@ g.task 'img-pc', ['img-pc-check'], ->
 
 # build pc
 g.task 'build-pc', ->
-  return runSequence 'libcopy', 'coffee', 'img', 'ect-pc', 'css-pc', 'coffee-pc', 'img-pc'
+  return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-pc', 'css-pc', 'coffee-pc', 'img-pc'
 
 #------------------------------------------------------
 # Setting for SP
@@ -442,7 +442,7 @@ g.task 'img-sp', ['img-sp-check'], ->
 
 # build sp
 g.task 'build-sp', ->
-  return runSequence 'libcopy', 'coffee', 'img', 'ect-sp', 'css-sp', 'coffee-sp', 'img-sp'
+  return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-sp', 'css-sp', 'coffee-sp', 'img-sp'
 
 #------------------------------------------------------
 # Differential data extraction
@@ -451,7 +451,7 @@ g.task 'build-sp', ->
 
 # diff process
 g.task 'diff', ['clean', 'clean-temp'], ->
-  runSequence 'libcopy', 'coffee', 'img', 'ect-pc', 'css-pc', 'coffee-pc', 'img-pc', 'ect-sp', 'css-sp', 'coffee-sp', 'img-sp', 'temp'
+  return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-pc', 'css-pc', 'coffee-pc', 'img-pc', 'ect-sp', 'css-sp', 'coffee-sp', 'img-sp', 'temp'
 
 # temp process
 g.task 'temp', ->
