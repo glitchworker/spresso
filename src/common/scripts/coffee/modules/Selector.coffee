@@ -78,9 +78,9 @@ class Selector
         ua = navigator.userAgent
         if ua.indexOf('iPhone') > 0
           if (window.screen.width >= 414 and window.screen.height >= 736) or (window.screen.width >= 736 and window.screen.height >= 414) and window.devicePixelRatio == 3
-            version = 'iphone6_plus iphone6s_plus'
+            version = 'iphone6_7_plus iphone6_7s_plus'
           else if (window.screen.width >= 375 and window.screen.height >= 667) or (window.screen.width >= 667 and window.screen.height >= 375) and window.devicePixelRatio == 2
-            version = 'iphone6 iphone6s'
+            version = 'iphone6_7 iphone6_7s'
           else if (window.screen.width >= 568 and window.screen.height >= 320) or (window.screen.width >= 320 and window.screen.height >= 568) and window.devicePixelRatio == 2
             version = 'iphone5 iphone5s iphone5c'
           else if (window.screen.width >= 480 and window.screen.height >= 320) or (window.screen.width >= 320 and window.screen.height >= 480) and window.devicePixelRatio == 2
