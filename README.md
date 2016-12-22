@@ -122,18 +122,15 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ## Scripts
 
-### watch / compile
+### watch
 
-#### 開発用タスク実行
+#### 監視タスク実行
 
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
 | yarn run start | gulp | 開発サーバーを起動する |
-| yarn run dev | gulp build | 開発用のファイルを出力 |
 | yarn run start-pc | gulp watch-pc | 開発サーバーを起動する（PC） |
-| yarn run dev-pc | gulp build-pc | 開発用のファイルを出力（PC） |
 | yarn run start-sp | gulp watch-sp | 開発サーバーを起動する（SP） |
-| yarn run dev-sp | gulp build-sp | 開発用のファイルを出力（SP） |
 
 ### build / clean
 
@@ -142,7 +139,11 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
 | yarn run dev | gulp build | 開発用のファイルを出力 |
+| yarn run dev-pc | gulp build-pc | 開発用のファイルを出力（PC） |
+| yarn run dev-sp | gulp build-sp | 開発用のファイルを出力（SP） |
 | yarn run prod | gulp build --env production | 本番用のファイルを出力 |
+| yarn run prod-pc | gulp build-pc --env production | 本番用のファイルを出力（PC） |
+| yarn run prod-sp | gulp build-sp --env production | 本番用のファイルを出力（SP） |
 | yarn run clean | gulp clean | ビルドフォルダを削除 |
 
 ### compress / clean
