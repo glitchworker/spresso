@@ -132,9 +132,9 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 | yarn run start-pc | gulp watch-pc | 開発サーバーを起動する（PC） |
 | yarn run start-sp | gulp watch-sp | 開発サーバーを起動する（SP） |
 
-### build / clean
+### build
 
-#### ビルド出力＆削除
+#### ビルド出力
 
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
@@ -144,24 +144,31 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 | yarn run prod | gulp build --env production | 本番用のファイルを出力 |
 | yarn run prod-pc | gulp build-pc --env production | 本番用のファイルを出力（PC） |
 | yarn run prod-sp | gulp build-sp --env production | 本番用のファイルを出力（SP） |
-| yarn run clean | gulp clean | ビルドフォルダを削除 |
 
-### compress / clean
+### diff / export
 
-#### 一時ファイル出力＆差分データ出力＆削除
+#### 一時ファイル＆差分データ出力
 
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
 | yarn run diff | gulp diff | 開発用一時データを出力 |
 | yarn run diff-prod | gulp diff --env production | 本番用一時データを出力 |
 | yarn run export | gulp export | 差分データを出力 |
-| yarn run clean-diff | gulp clean-archive | 差分フォルダを削除 |
+
+### others / clean
 
 #### インポートデータのタスク実行
 
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
-| yarn run import | gulp import | データ追加用タスクの実行 |
+| yarn run import | gulp import | 追加データの出力 |
+
+#### ディレクトリ削除
+
+| Yarn コマンド | Gulp コマンド | 説明 |
+|----|---|---|
+| yarn run clean | gulp clean | ビルドフォルダを削除 |
+| yarn run clean-diff | gulp clean-archive | 差分フォルダを削除 |
 
 ## Structure
 
