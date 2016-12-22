@@ -43,48 +43,23 @@ output の項目に出力先のパスを入力することによって書き出�
 
 ### project
 
-- /src/app.config.json
-
-プロジェクト内共通の設定ファイル
-※ ネストは非対応
-
-- /tasks/gulp.config.coffee
-
-gulpに関する設定ファイル
-
-- /tasks/webpack.config.base.coffee
-
-webpackに関する設定ファイル
-
-- /tasks/webpack.config.common.coffee
-
-共通のwebpackに関する設定ファイル
-
-- /tasks/webpack.config.pc.coffee
-
-PCのwebpackに関する設定ファイル
-
-- /tasks/webpack.config.sp.coffee
-
-SPのwebpackに関する設定ファイル
+| ファイル名 | 説明 |
+|----|---|
+| /src/app.config.json | プロジェクト内共通の設定ファイル ※ ネストは非対応 |
+| /tasks/gulp.config.coffee | gulpに関する設定ファイル |
+| /tasks/webpack.config.base.coffee | webpackに関する設定ファイル |
+| /tasks/webpack.config.common.coffee | 共通のwebpackに関する設定ファイル |
+| /tasks/webpack.config.pc.coffee | PCのwebpackに関する設定ファイル |
+| /tasks/webpack.config.sp.coffee | SPのwebpackに関する設定ファイル |
 
 ### src
 
-- /src/pc/template/pages.json
-
-template内で使う規定値（PC）
-
-- /src/sp/template/pages.json
-
-template内で使う規定値（SP）
-
-- /src/common/stylesheets/_config.scss
-
-stylesheet内で使う規定値
-
-- /src/import/data.json
-
-インポートデータで使う規定値
+| ファイル名 | 説明 |
+|----|---|
+| /src/pc/template/pages.json | template内で使う規定値（PC） |
+| /src/sp/template/pages.json | template内で使う規定値（SP） |
+| /src/common/stylesheets/_config.scss | stylesheet内で使う規定値 |
+| /src/import/data.json | インポートデータで使う規定値 |
 
 ## 規定値をsrc内で共有する方法
 
@@ -151,57 +126,76 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 #### 共通開発用タスク実行
 
-- yarn run start ( gulp )
-
-- yarn run dev ( gulp build )
+| Yarn コマンド | Gulp コマンド | 説明 |
+|----|---|---|
+| yarn run start | gulp | 開発サーバーを起動する |
+| yarn run dev | gulp build | 開発用のファイルを出力 |
 
 #### PC版開発用タスク実行
 
-- yarn run start-pc ( gulp watch-pc )
-
-- yarn run dev-pc ( gulp build-pc )
+| Yarn コマンド | Gulp コマンド | 説明 |
+|----|---|---|
+| yarn run start-pc | gulp watch-pc | 開発サーバーを起動する（PC） |
+| yarn run dev-pc | gulp build-pc | 開発用のファイルを出力（PC） |
 
 #### SP版開発用タスク実行
 
-- yarn run start-sp ( gulp watch-sp )
-
-- yarn run dev-sp ( gulp build-sp )
+| Yarn コマンド | Gulp コマンド | 説明 |
+|----|---|---|
+| yarn run start-sp | gulp watch-sp | 開発サーバーを起動する（SP） |
+| yarn run dev-sp | gulp build-sp | 開発用のファイルを出力（SP） |
 
 ### build / clean
 
 #### 開発環境用ビルド
 
-- yarn run dev ( gulp build-sp )
+| Yarn コマンド | Gulp コマンド | 説明 |
+|----|---|---|
+| yarn run dev | gulp build | 開発用のファイルを出力 |
 
 #### 本番環境用ビルド
 
-- yarn run prod ( gulp build --env production )
+| Yarn コマンド | Gulp コマンド | 説明 |
+|----|---|---|
+| yarn run prod | gulp build --env production | 本番用のファイルを出力 |
 
 #### ビルドフォルダを消去
 
-- yarn run clean ( gulp clean )
+| Yarn コマンド | Gulp コマンド | 説明 |
+|----|---|---|
+| yarn run clean | gulp clean | ビルドフォルダを消去 |
 
 ### compress / clean（任意）
 
-#### 開発環境用差分データ比較用一時ファイル出力
+#### 開発用の差分データ比較用一時ファイル出力
 
-- yarn run diff ( gulp diff )
+| Yarn コマンド | Gulp コマンド | 説明 |
+|----|---|---|
+| yarn run diff | gulp diff | 開発用差分一時データを出力 |
 
-#### 本番環境用差分データ比較用一時ファイル出力
+#### 本番用の差分データ比較用一時ファイル出力
 
-- yarn run diff-prod ( gulp diff --env production )
+| Yarn コマンド | Gulp コマンド | 説明 |
+|----|---|---|
+| yarn run diff-prod | gulp diff --env production | 本番用差分一時データを出力 |
 
 #### 差分データを出力
 
-- yarn run export ( gulp export )
+| Yarn コマンド | Gulp コマンド | 説明 |
+|----|---|---|
+| yarn run export | gulp export | 差分データを出力 |
 
 #### 差分フォルダを消去
 
-- yarn run clean-diff ( gulp clean-archive )
+| Yarn コマンド | Gulp コマンド | 説明 |
+|----|---|---|
+| yarn run clean-diff | gulp clean-archive | 差分フォルダを削除 |
 
 #### インポートデータのタスク実行
 
-- yarn run import ( gulp import )
+| Yarn コマンド | Gulp コマンド | 説明 |
+|----|---|---|
+| yarn run import | gulp import | データ追加用タスクの実行 |
 
 ## Structure
 
@@ -332,15 +326,15 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│           ├── index.ect
 	│           └── pages.json
 	└── tasks
-			├── gulp.config.coffee
-			├── script
-			│   ├── getTime.coffee
-			│   ├── getTimeStamp.coffee
-			│   └── sassGetJson.coffee
-			├── webpack.config.base.coffee
-			├── webpack.config.pc.coffee
-			├── webpack.config.sp.coffee
-			└── webpack.config.common.coffee
+		├── gulp.config.coffee
+		├── script
+		│   ├── getTime.coffee
+		│   ├── getTimeStamp.coffee
+		│   └── sassGetJson.coffee
+		├── webpack.config.base.coffee
+		├── webpack.config.pc.coffee
+		├── webpack.config.sp.coffee
+		└── webpack.config.common.coffee
 
 ### src
 
@@ -372,18 +366,18 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│       ├── bases
 	│       └── partials
 	└── sp
-			├── images
-			├── scripts
-			│   ├── coffee
-			│   │   └── modules
-			│   ├── javascript
-			│   └── plugin
-			├── stylesheets
-			│   ├── bases
-			│   └── partials
-			└── templates
-					├── bases
-					└── partials
+		├── images
+		├── scripts
+		│   ├── coffee
+		│   │   └── modules
+		│   ├── javascript
+		│   └── plugin
+		├── stylesheets
+		│   ├── bases
+		│   └── partials
+		└── templates
+			├── bases
+			└── partials
 
 
 ### htdocs
@@ -521,8 +515,8 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 - pages.json の meta 情報を入れ子で取得するように変更
 - BrowserSync の log 出力にプロジェクト名（サイト名）で表示するように変更
 - scss を css 変更後にリロードするようにしていたのを stream に流してリアルタイムに反映するように変更
-- ect を html 変更後にリロードするようにしていたのを stream に流してリアルタイムに反映するように変更（仮実装）
-- coffee を js 変更後にリロードするようにしていたのを stream に流してリアルタイムに反映するように変更（仮実装）
+- ect を html 変更後にリロードするようにしていたのを stream に流してリアルタイムに反映するように変更
+- coffee を js 変更後にリロードするようにしていたのを stream に流してリアルタイムに反映するように変更
 - README.md の修正
 
 ### v0.1.2
