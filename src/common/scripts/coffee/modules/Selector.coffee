@@ -74,11 +74,28 @@ class Selector
         v += " " + p + n
         v
 
+      getIphoneDeviceName: ->
+        ua = navigator.userAgent
+        if ua.indexOf('iPhone') > 0
+          if (window.screen.width >= 414 and window.screen.height >= 736) or (window.screen.width >= 736 and window.screen.height >= 414) and window.devicePixelRatio == 3
+            version = 'iphone6_plus iphone6s_plus'
+          else if (window.screen.width >= 375 and window.screen.height >= 667) or (window.screen.width >= 667 and window.screen.height >= 375) and window.devicePixelRatio == 2
+            version = 'iphone6 iphone6s'
+          else if (window.screen.width >= 568 and window.screen.height >= 320) or (window.screen.width >= 320 and window.screen.height >= 568) and window.devicePixelRatio == 2
+            version = 'iphone5 iphone5s iphone5c'
+          else if (window.screen.width >= 480 and window.screen.height >= 320) or (window.screen.width >= 320 and window.screen.height >= 480) and window.devicePixelRatio == 2
+            version = 'iphone4 iphone4s'
+          else if (window.screen.width >= 480 and window.screen.height >= 320) or (window.screen.width >= 320 and window.screen.height >= 480) and window.devicePixelRatio == 1
+            version = 'iphone3g iphone3gs'
+        else
+          version = ''
+        return ' ' + version
+
       getPlatform: ->
         ua = userAgent.ua
         ver = userAgent.version
         is_ = userAgent.is
-        [ (if is_("ipad|ipod|iphone") then (((if /CPU( iPhone)? OS (\d+[_|\.]\d+([_|\.]\d+)*)/i.test(ua) then "ios" + ver("ios", RegExp.$2) else "")) + " " + ((if /(ip(ad|od|hone))/g.test(ua) then RegExp.$1 else ""))) else (if is_("mac") then "mac" + ((if /mac os x ((\d+)[.|_](\d+))/.test(ua) then (" mac" + (RegExp.$2) + " mac" + (RegExp.$1).replace(".", "_")) else "")) else (if is_("win") then "win" + ((if is_("windows nt 6.3") then " win8_1" else (if is_("windows nt 6.2") then " win8" else (if is_("windows nt 6.1") then " win7" else (if is_("windows nt 6.0") then " vista" else (if is_("windows nt 5.2") or is_("windows nt 5.1") then " win_xp" else (if is_("windows nt 5.0") then " win_2k" else (if is_("windows nt 4.0") or is_("WinNT4.0") then " win_nt" else "")))))))) else (if is_("freebsd") then "freebsd" else (if is_("x11|linux") then "linux" else (if is_("playbook") then "playbook" else (if is_("kindle|silk") then "kindle" else (if is_("playbook") then "playbook" else (if is_("j2me") then "j2me" else ""))))))))) ]
+        [ (if is_("ipad|ipod|iphone") then (((if /CPU( iPhone)? OS (\d+[_|\.]\d+([_|\.]\d+)*)/i.test(ua) then "ios" + ver("ios", RegExp.$2) else "")) + " " + ((if /(ip(ad|od|hone))/g.test(ua) then RegExp.$1 else "")) + "" + ((if /(iphone)/g.test(ua) then userAgent.getIphoneDeviceName() else ""))) else (if is_("mac") then "mac" + ((if /mac os x ((\d+)[.|_](\d+))/.test(ua) then (" mac" + (RegExp.$2) + " mac" + (RegExp.$1).replace(".", "_")) else "")) else (if is_("win") then "win" + ((if is_("windows nt 6.3") then " win8_1" else (if is_("windows nt 6.2") then " win8" else (if is_("windows nt 6.1") then " win7" else (if is_("windows nt 6.0") then " vista" else (if is_("windows nt 5.2") or is_("windows nt 5.1") then " win_xp" else (if is_("windows nt 5.0") then " win_2k" else (if is_("windows nt 4.0") or is_("WinNT4.0") then " win_nt" else "")))))))) else (if is_("freebsd") then "freebsd" else (if is_("x11|linux") then "linux" else (if is_("playbook") then "playbook" else (if is_("kindle|silk") then "kindle" else (if is_("playbook") then "playbook" else (if is_("j2me") then "j2me" else ""))))))))) ]
 
       getMobile: ->
         is_ = userAgent.is

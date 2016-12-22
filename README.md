@@ -400,6 +400,11 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ## Version History
 
+### v1.1.3
+
+- Selector.coffee に iPhone 機種判別処理実装
+- package.json の更新
+
 ### v1.1.2
 
 - タスク実行コマンドの大幅変更
