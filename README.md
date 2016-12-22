@@ -45,21 +45,21 @@ output の項目に出力先のパスを入力することによって書き出�
 
 | ファイル名 | 説明 |
 |----|---|
-| /src/app.config.json | プロジェクト内共通の設定ファイル ※ ネストは非対応 |
-| /tasks/gulp.config.coffee | gulpに関する設定ファイル |
-| /tasks/webpack.config.base.coffee | webpackに関する設定ファイル |
-| /tasks/webpack.config.common.coffee | 共通のwebpackに関する設定ファイル |
-| /tasks/webpack.config.pc.coffee | PCのwebpackに関する設定ファイル |
-| /tasks/webpack.config.sp.coffee | SPのwebpackに関する設定ファイル |
+| /src/app.config.json | プロジェクト内共通の設定ファイル ※ネストは非対応 |
+| /tasks/gulp.config.coffee | gulp に関する設定ファイル |
+| /tasks/webpack.config.base.coffee | webpack に関する設定ファイル |
+| /tasks/webpack.config.common.coffee | 共通の webpack に関する設定ファイル |
+| /tasks/webpack.config.pc.coffee | webpack に関する設定ファイル（PC） |
+| /tasks/webpack.config.sp.coffee | webpack に関する設定ファイル（SP） |
 
 ### src
 
 | ファイル名 | 説明 |
 |----|---|
-| /src/pc/template/pages.json | template内で使う規定値（PC） |
-| /src/sp/template/pages.json | template内で使う規定値（SP） |
-| /src/common/stylesheets/_config.scss | stylesheet内で使う規定値 |
-| /src/import/data.json | インポートデータで使う規定値 |
+| /src/pc/template/pages.json | template 内で使う規定値（PC） |
+| /src/sp/template/pages.json | template 内で使う規定値（SP） |
+| /src/common/stylesheets/_config.scss | stylesheet 内で使う規定値 |
+| /src/import/data.json | import で使う規定値 |
 
 ## 規定値をsrc内で共有する方法
 
@@ -147,12 +147,12 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ### compress / clean
 
-#### 差分一時ファイル出力＆差分データ出力＆削除
+#### 一時ファイル出力＆差分データ出力＆削除
 
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
-| yarn run diff | gulp diff | 開発用差分一時データを出力 |
-| yarn run diff-prod | gulp diff --env production | 本番用差分一時データを出力 |
+| yarn run diff | gulp diff | 開発用一時データを出力 |
+| yarn run diff-prod | gulp diff --env production | 本番用一時データを出力 |
 | yarn run export | gulp export | 差分データを出力 |
 | yarn run clean-diff | gulp clean-archive | 差分フォルダを削除 |
 
