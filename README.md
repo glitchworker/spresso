@@ -124,71 +124,36 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ### watch / compile
 
-#### 共通開発用タスク実行
+#### 開発用タスク実行
 
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
 | yarn run start | gulp | 開発サーバーを起動する |
 | yarn run dev | gulp build | 開発用のファイルを出力 |
-
-#### PC版開発用タスク実行
-
-| Yarn コマンド | Gulp コマンド | 説明 |
-|----|---|---|
 | yarn run start-pc | gulp watch-pc | 開発サーバーを起動する（PC） |
 | yarn run dev-pc | gulp build-pc | 開発用のファイルを出力（PC） |
-
-#### SP版開発用タスク実行
-
-| Yarn コマンド | Gulp コマンド | 説明 |
-|----|---|---|
 | yarn run start-sp | gulp watch-sp | 開発サーバーを起動する（SP） |
 | yarn run dev-sp | gulp build-sp | 開発用のファイルを出力（SP） |
 
 ### build / clean
 
-#### 開発環境用ビルド
+#### ビルド出力＆削除
 
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
 | yarn run dev | gulp build | 開発用のファイルを出力 |
-
-#### 本番環境用ビルド
-
-| Yarn コマンド | Gulp コマンド | 説明 |
-|----|---|---|
 | yarn run prod | gulp build --env production | 本番用のファイルを出力 |
+| yarn run clean | gulp clean | ビルドフォルダを削除 |
 
-#### ビルドフォルダを消去
+### compress / clean
 
-| Yarn コマンド | Gulp コマンド | 説明 |
-|----|---|---|
-| yarn run clean | gulp clean | ビルドフォルダを消去 |
-
-### compress / clean（任意）
-
-#### 開発用の差分データ比較用一時ファイル出力
+#### 差分一時ファイル出力＆差分データ出力＆削除
 
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
 | yarn run diff | gulp diff | 開発用差分一時データを出力 |
-
-#### 本番用の差分データ比較用一時ファイル出力
-
-| Yarn コマンド | Gulp コマンド | 説明 |
-|----|---|---|
 | yarn run diff-prod | gulp diff --env production | 本番用差分一時データを出力 |
-
-#### 差分データを出力
-
-| Yarn コマンド | Gulp コマンド | 説明 |
-|----|---|---|
 | yarn run export | gulp export | 差分データを出力 |
-
-#### 差分フォルダを消去
-
-| Yarn コマンド | Gulp コマンド | 説明 |
-|----|---|---|
 | yarn run clean-diff | gulp clean-archive | 差分フォルダを削除 |
 
 #### インポートデータのタスク実行
