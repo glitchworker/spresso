@@ -68,55 +68,55 @@ output の項目に出力先のパスを入力することによって書き出�
 
 #### ectの場合
 
-```
-<%- @path %>（ディレクトリパス）
-<%- @path_filename %>（ファイルパス）
-<%- @SITE_URL %>（サイトURL）
-<%- @SITE_NAME %>（サイト名）
-```
+| 記述 | 説明 |
+|----|---|
+| <%- @path %> | ディレクトリパス |
+| <%- @path_filename %> | ファイルパス |
+| <%- @SITE_URL %> | サイトURL |
+| <%- @SITE_NAME %> | サイト名 |
 
 /src/(pc か sp)/templates/pages.json 内で json を取得しています。 ```<%- @meta_title %>``` 等で参照できます。
 上記以外にも、pages.json に記入された内容は呼び出すことが可能です。
 ```<% for head in @head : %><% end %>``` で囲むことによって meta 情報の入れ子を以下の様に
 記述することによって取得可能にしています。
 
-```
-<%- head.meta_title %>（ページ名）
-<%- head.meta_keywords %>（ページキーワード）
-<%- head.meta_description %>（ページデスクリプション）
-<%- head.meta_author %>（ページ製作者）
-<%- head.meta_appleIcon %>（iPhone用アイコン）
-<%- head.meta_icon %>（モダン用アイコン）
-<%- head.meta_iconXhtml %>（旧IE用アイコン）
-<%- head.meta_facebook %>（facebookのmetaタグ）
-<%- head.meta_twitter %>（twitterのmetaタグ）
-<%- head.meta_windows %>（windowsのmetaタグ）
-```
+| 記述 | 説明 |
+|----|---|
+| <%- head.meta_title %> | ページ名 |
+| <%- head.meta_keywords %> | ページキーワード |
+| <%- head.meta_description %> | ページデスクリプション |
+| <%- head.meta_author %> | ページ製作者 |
+| <%- head.meta_appleIcon %> | iPhone用アイコン |
+| <%- head.meta_icon %> | モダン用アイコン |
+| <%- head.meta_iconXhtml %> | 旧IE用アイコン |
+| <%- head.meta_facebook %> | facebookのmetaタグ |
+| <%- head.meta_twitter %> | twitterのmetaタグ |
+| <%- head.meta_windows %> | windowsのmetaタグ |
 
 #### sassの場合
 
-```
-#{$SITE_URL}（サイトURL）
-#{$SITE_NAME}（サイト名）
-#{$AUTHOR}（サイト制作者）
-#{$MODIFIER}（サイト編集者）
-#{$UPDATE}（ファイル更新日時）
-#{$TIMESTAMP}（ファイル更新日時Unix）
-```
+| 記述 | 説明 |
+|----|---|
+| #{$SITE_URL} | サイトURL |
+| #{$SITE_NAME} | サイト名 |
+| #{$AUTHOR} | サイト制作者 |
+| #{$MODIFIER} | サイト編集者 |
+| #{$UPDATE} | ファイル更新日時 |
+| #{$TIMESTAMP} | ファイル更新日時Unix |
 
 /src/common/stylesheets/_config.scss 内で json を取得しています。 ```#{$SITE_NAME}``` 等で参照できます。
 また sass の map 形式に変換されるので、 ```map-get($appConfig, [hash])``` 等で参照できます。
 
 #### coffeescriptの場合
 
-```
-APP_SITE_URL（サイトURL）
-APP_SITE_NAME（サイト名）
-APP_AUTHOR（サイト制作者）
-APP_MODIFIER（サイト編集者）
-APP_UPDATE（ファイル更新日時）
-APP_TIMESTAMP（ファイル更新日時Unix）
-```
+| 記述 | 説明 |
+|----|---|
+| APP_SITE_URL | サイトURL |
+| APP_SITE_NAME | サイト名 |
+| APP_AUTHOR | サイト制作者 |
+| APP_MODIFIER | サイト編集者 |
+| APP_UPDATE | ファイル更新日時 |
+| APP_TIMESTAMP | ファイル更新日時Unix |
 
 webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` 等で参照できます。
 
