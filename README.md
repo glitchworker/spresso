@@ -400,6 +400,12 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ## Version History
 
+### v1.1.4
+
+- gulp-sass-glob の追加
+- sass の @import における glob を有効にする
+- package.json の更新
+
 ### v1.1.3
 
 - Selector.coffee に iPhone 機種判別処理実装

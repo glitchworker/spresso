@@ -277,6 +277,11 @@ g.task 'css-pc', ->
   g.src paths.pc.css.sass
   .pipe $.plumber()
   .pipe $.if not isProduction, $.sourcemaps.init()
+  # sass の @import における glob を有効にする
+  .pipe $.sassGlob(ignorePaths: [
+    'bases/**'
+    'partials/**'
+  ])
   # sass で JSON ファイルを変数に読み込む
   .pipe $.sass({
     outputStyle: 'expanded'
@@ -384,6 +389,11 @@ g.task 'css-sp', ->
   g.src paths.sp.css.sass
   .pipe $.plumber()
   .pipe $.if not isProduction, $.sourcemaps.init()
+  # sass の @import における glob を有効にする
+  .pipe $.sassGlob(ignorePaths: [
+    'bases/**'
+    'partials/**'
+  ])
   # sass で JSON ファイルを変数に読み込む
   .pipe $.sass({
     outputStyle: 'expanded'
