@@ -265,8 +265,8 @@ g.task 'ect-pc', ->
     # src フォルダに存在しないファイルを htdocs から削除する
     .pipe pathSearch(paths.pc.dest, 'templates').on 'end', (cb) ->
       if i == jsonDataLength
-        pathArray.unshift('!'+paths.pc.dest + 'index.html')
-        pathArray.unshift('!'+paths.sp.dest + '**/*.html')
+        pathArray.unshift('!' + paths.pc.dest + 'index.html')
+        pathArray.unshift('!' + paths.sp.dest + '**/*.html')
         pathArray.unshift(paths.pc.dest + '**/*.html')
         del pathArray, cb
       return
@@ -378,7 +378,7 @@ g.task 'ect-sp', ->
     # src フォルダに存在しないファイルを htdocs から削除する
     .pipe pathSearch(paths.sp.dest, 'templates').on 'end', (cb) ->
       if i == jsonDataLength
-        pathArray.unshift('!'+paths.sp.dest + 'index.html')
+        pathArray.unshift('!' + paths.sp.dest + 'index.html')
         pathArray.unshift(paths.sp.dest + '**/*.html')
         del pathArray, cb
       return
