@@ -537,7 +537,7 @@ g.task 'bs', ->
 g.task 'watch', ['bs'], ->
   g.watch [paths.common.js.plugin, paths.common.js.javascript, paths.common.js.coffee], ['coffee']
   $.watch paths.common.img.src, ->
-    g.start 'img-check' # img ファイルが変更または追加されたらビルド出力
+    g.start 'img' # img ファイルが変更または追加されたらビルド出力
 
 # watch pc
 g.task 'watch-pc', ['bs'], ->
@@ -545,7 +545,7 @@ g.task 'watch-pc', ['bs'], ->
   g.watch paths.pc.css.watch, ['css-pc']
   g.watch [paths.pc.js.plugin, paths.pc.js.javascript, paths.pc.js.coffee], ['coffee-pc']
   $.watch paths.pc.img.src, ->
-    g.start 'img-pc-check' # img ファイルが変更または追加されたらビルド出力
+    g.start 'img-pc' # img ファイルが変更または追加されたらビルド出力
 
 # watch sp
 g.task 'watch-sp', ['bs'], ->
@@ -553,7 +553,7 @@ g.task 'watch-sp', ['bs'], ->
   g.watch paths.sp.css.watch, ['css-sp']
   g.watch [paths.sp.js.plugin, paths.sp.js.javascript, paths.sp.js.coffee], ['coffee-sp']
   $.watch paths.sp.img.src, ->
-    g.start 'img-sp-check' # img ファイルが変更または追加されたらビルド出力
+    g.start 'img-sp' # img ファイルが変更または追加されたらビルド出力
 
 # default task
 g.task 'default', ['bs', 'watch-pc', 'watch-sp', 'watch']
