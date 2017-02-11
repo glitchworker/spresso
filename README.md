@@ -9,9 +9,9 @@ gulp / ect / sass / webpack (coffeescript)
 
 2. ターミナルまたはコマンドプロンプトを管理者権限で開く
 
-3. ```npm install -g yarnpkg``` で Yarn をインストールする（npm のままでも可能）
+3. ```npm install -g yarnpkg``` で Yarn をインストールする
 
-4. ```yarn install -g gulp``` で Gulp をインストールする
+4. ```yarn global add gulp``` で Gulp をインストールする（npm の場合 ```npm install -g gulp```）
 
 5. ```yarn install``` で必要なパッケージをインストール（出来ない場合 ```sudo yarn install```）
 
@@ -399,6 +399,11 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 - [GitHub Issues](https://github.com/glitchworker/spresso/issues)
 
 ## Version History
+
+### v1.1.6
+
+- gulp-sass-glob が Windows で正常に動いていなかったのを習性
+- README.md の修正
 
 ### v1.1.5
 

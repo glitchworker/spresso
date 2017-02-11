@@ -279,6 +279,7 @@ g.task 'css-pc', ->
   .pipe $.if not isProduction, $.sourcemaps.init()
   # sass の @import における glob を有効にする
   .pipe $.sassGlob(ignorePaths: [
+    'app.scss'
     'bases/**'
     'partials/**'
   ])
@@ -391,6 +392,7 @@ g.task 'css-sp', ->
   .pipe $.if not isProduction, $.sourcemaps.init()
   # sass の @import における glob を有効にする
   .pipe $.sassGlob(ignorePaths: [
+    'app.scss'
     'bases/**'
     'partials/**'
   ])
