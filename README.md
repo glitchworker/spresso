@@ -412,8 +412,8 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ### v1.1.7
 
-- gulp-sass-glob を一時的に削除
-- 上記に伴い、app.scss に @include を記述するスタイルに変更
+- gulp.config.coffee の pathArray のロジック変更（ビルド時に htdocs 内を綺麗にするように）
+- gulp-sass-glob を一時的に削除（app.scss に @include を記述するスタイルに変更）
 - WebPack 圧縮時にコンストラクタ名が省略されるため、constructor.name が動いていなかったのを修正
 - hoge の他に fuga のサンプルディレクトリも追加
 - README.md の修正

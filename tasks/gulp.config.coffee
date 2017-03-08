@@ -191,7 +191,6 @@ g.task 'libcopy', ->
 
 # coffee compile process
 g.task 'coffee', ->
-  pathArray = []
   g.src([paths.common.js.plugin, paths.common.js.javascript, paths.common.js.coffee])
   .pipe $.plumber()
   .pipe $.webpack require './webpack.config.common.coffee'
@@ -202,18 +201,15 @@ g.task 'coffee', ->
   # sourcemaps を本番ビルド時に削除する
   .pipe $.if isProduction, pathSearch(paths.common.js.dest, 'js').on 'end', (cb) ->
     pathArray.unshift(paths.common.js.dest + '**/*.map')
-    del pathArray, cb
     return
 
 # img file check
 g.task 'img-check', ->
-  pathArray = []
   return g.src paths.common.img.src
   .pipe $.plumber()
   # src フォルダに存在しないファイルを htdocs から削除する
   .pipe pathSearch(rootDir.src + '/common/images/', 'images').on 'end', (cb) ->
     pathArray.unshift(paths.common.img.dest + '**/*.*')
-    del pathArray, cb
     return
 
 # img optimize
@@ -227,7 +223,7 @@ g.task 'img', ['img-check'], ->
 
 # build
 g.task 'build', ->
-  return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-pc', 'css-pc', 'coffee-pc', 'img-pc', 'ect-sp', 'css-sp', 'coffee-sp', 'img-sp'
+  return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-pc', 'css-pc', 'coffee-pc', 'img-pc', 'ect-sp', 'css-sp', 'coffee-sp', 'img-sp', 'remove-files'
 
 #------------------------------------------------------
 # Setting for PC
@@ -236,7 +232,6 @@ g.task 'build', ->
 
 # ect json process pc
 g.task 'ect-pc', ->
-  pathArray = []
   jsonData = JSON.parse fs.readFileSync(paths.pc.ect.json)
   jsonDataLength = Object.keys(jsonData).length - 1
   jsonData.forEach (page, i) ->
@@ -268,12 +263,10 @@ g.task 'ect-pc', ->
         pathArray.unshift('!' + paths.pc.dest + 'index.html')
         pathArray.unshift('!' + paths.sp.dest + '**/*.html')
         pathArray.unshift(paths.pc.dest + '**/*.html')
-        del pathArray, cb
       return
 
 # sass compile process pc
 g.task 'css-pc', ->
-  pathArray = []
   g.src paths.pc.css.sass
   .pipe $.plumber()
   .pipe $.if not isProduction, $.sourcemaps.init()
@@ -294,7 +287,6 @@ g.task 'css-pc', ->
   # sourcemaps を本番ビルド時に削除する
   .pipe $.if isProduction, pathSearch(paths.pc.css.dest, 'css').on 'end', (cb) ->
     pathArray.unshift(paths.pc.css.dest + '**/*.map')
-    del pathArray, cb
     return
 
 # coffee compile process pc
@@ -315,13 +307,11 @@ g.task 'coffee-pc', ->
 
 # img check pc
 g.task 'img-pc-check', ->
-  pathArray = []
   return g.src paths.pc.img.src
   .pipe $.plumber()
   # src フォルダに存在しないファイルを htdocs から削除する
   .pipe pathSearch(rootDir.src + '/pc/images/', 'images').on 'end', (cb) ->
     pathArray.unshift(paths.pc.img.dest + '**/*.*')
-    del pathArray, cb
     return
 
 # img optimize pc
@@ -335,7 +325,7 @@ g.task 'img-pc', ['img-pc-check'], ->
 
 # build pc
 g.task 'build-pc', ->
-  return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-pc', 'css-pc', 'coffee-pc', 'img-pc'
+  return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-pc', 'css-pc', 'coffee-pc', 'img-pc', 'remove-files'
 
 #------------------------------------------------------
 # Setting for SP
@@ -344,7 +334,6 @@ g.task 'build-pc', ->
 
 # ect json process sp
 g.task 'ect-sp', ->
-  pathArray = []
   jsonData = JSON.parse fs.readFileSync(paths.sp.ect.json)
   jsonDataLength = Object.keys(jsonData).length - 1
   jsonData.forEach (page, i) ->
@@ -375,12 +364,10 @@ g.task 'ect-sp', ->
       if i == jsonDataLength
         pathArray.unshift('!' + paths.sp.dest + 'index.html')
         pathArray.unshift(paths.sp.dest + '**/*.html')
-        del pathArray, cb
       return
 
 # sass compile process sp
 g.task 'css-sp', ->
-  pathArray = []
   g.src paths.sp.css.sass
   .pipe $.plumber()
   .pipe $.if not isProduction, $.sourcemaps.init()
@@ -401,12 +388,10 @@ g.task 'css-sp', ->
   # sourcemaps を本番ビルド時に削除する
   .pipe $.if isProduction, pathSearch(paths.sp.css.dest, 'css').on 'end', (cb) ->
     pathArray.unshift(paths.sp.css.dest + '**/*.map')
-    del pathArray, cb
     return
 
 # coffee compile process sp
 g.task 'coffee-sp', ->
-  pathArray = []
   g.src([paths.sp.js.plugin, paths.sp.js.javascript, paths.sp.js.coffee])
   .pipe $.plumber()
   .pipe $.webpack require './webpack.config.sp.coffee'
@@ -417,18 +402,15 @@ g.task 'coffee-sp', ->
   # sourcemaps を本番ビルド時に削除する
   .pipe $.if isProduction, pathSearch(paths.sp.js.dest, 'js').on 'end', (cb) ->
     pathArray.unshift(paths.sp.js.dest + '**/*.map')
-    del pathArray, cb
     return
 
 # img check sp
 g.task 'img-sp-check', ->
-  pathArray = []
   return g.src paths.sp.img.src
   .pipe $.plumber()
   # src フォルダに存在しないファイルを htdocs から削除する
   .pipe pathSearch(rootDir.src + '/sp/images/', 'images').on 'end', (cb) ->
     pathArray.unshift(paths.sp.img.dest + '**/*.*')
-    del pathArray, cb
     return
 
 # img optimize sp
@@ -442,7 +424,7 @@ g.task 'img-sp', ['img-sp-check'], ->
 
 # build sp
 g.task 'build-sp', ->
-  return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-sp', 'css-sp', 'coffee-sp', 'img-sp'
+  return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-sp', 'css-sp', 'coffee-sp', 'img-sp', 'remove-files'
 
 #------------------------------------------------------
 # Differential data extraction
@@ -488,6 +470,10 @@ g.task 'export', ->
 # Other Settings
 # その他設定
 #------------------------------------------------------
+
+# remove files
+g.task 'remove-files', (cb) ->
+  return del pathArray, cb
 
 # clean
 g.task 'clean', (cb) ->
