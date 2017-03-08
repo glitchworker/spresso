@@ -175,12 +175,12 @@ g.task 'import', ->
     if page.type == 'dir'
       g.src rootDir.src + '/import/' + page.data + '/**/*'
       .pipe $.plumber()
-      .pipe $.changed(page.output)
+      .pipe $.changed(page.output, { hasChanged: $.changed.compareSha1Digest })
       .pipe g.dest rootDir.htdocs + '/' + page.output
     else
       g.src rootDir.src + '/import/' + page.data
       .pipe $.plumber()
-      .pipe $.changed(page.output)
+      .pipe $.changed(page.output, { hasChanged: $.changed.compareSha1Digest })
       .pipe g.dest rootDir.htdocs + '/' + page.output
 
 # lib copy process
@@ -217,7 +217,7 @@ g.task 'img', ['img-check'], ->
   g.src paths.common.img.src
   .pipe $.plumber()
   # 画像に変更がない場合、出力しない
-  .pipe $.changed(paths.common.img.dest)
+  .pipe $.changed(paths.common.img.dest, { hasChanged: $.changed.compareSha1Digest })
   .pipe $.imagemin()
   .pipe g.dest paths.common.img.dest
 
@@ -317,7 +317,7 @@ g.task 'img-pc', ['img-pc-check'], ->
   g.src paths.pc.img.src
   .pipe $.plumber()
   # 画像に変更がない場合、出力しない
-  .pipe $.changed(paths.pc.img.dest)
+  .pipe $.changed(paths.pc.img.dest, { hasChanged: $.changed.compareSha1Digest })
   .pipe $.imagemin()
   .pipe g.dest paths.pc.img.dest
 
@@ -416,7 +416,7 @@ g.task 'img-sp', ['img-sp-check'], ->
   g.src paths.sp.img.src
   .pipe $.plumber()
   # 画像に変更がない場合、出力しない
-  .pipe $.changed(paths.sp.img.dest)
+  .pipe $.changed(paths.sp.img.dest, { hasChanged: $.changed.compareSha1Digest })
   .pipe $.imagemin()
   .pipe g.dest paths.sp.img.dest
 
