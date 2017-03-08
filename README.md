@@ -129,7 +129,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
 | yarn run start | gulp | 開発サーバーを起動する |
-| yarn run start-prod | gulp | 開発サーバーを本番状態で起動する |
+| yarn run start-prod | gulp --env production | 開発サーバーを本番状態で起動する |
 | yarn run start-pc | gulp watch-pc | 開発サーバーを起動する（PC） |
 | yarn run start-sp | gulp watch-sp | 開発サーバーを起動する（SP） |
 
