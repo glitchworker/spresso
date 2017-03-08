@@ -302,7 +302,6 @@ g.task 'coffee-pc', ->
   # sourcemaps を本番ビルド時に削除する
   .pipe $.if isProduction, pathSearch(paths.pc.js.dest, 'js').on 'end', (cb) ->
     pathArray.unshift(paths.pc.js.dest + '**/*.map')
-    del pathArray, cb
     return
 
 # img check pc
