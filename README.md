@@ -400,9 +400,14 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ## Version History
 
+### v1.1.7
+
+- gulp-sass-glob を一時的に削除
+- README.md の修正
+
 ### v1.1.6
 
-- gulp-sass-glob が Windows で正常に動いていなかったのを習性
+- gulp-sass-glob が Windows で正常に動いていなかったのを修正
 - README.md の修正
 
 ### v1.1.5

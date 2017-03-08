@@ -1,7 +1,7 @@
 class Index
 
   constructor: ->
-    if Common.getName(this.constructor.name)
+    if Common.getName('Index')
       @init()
 
   init: ->

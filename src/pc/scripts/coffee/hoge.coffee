@@ -1,7 +1,7 @@
 class Hoge
 
   constructor: ->
-    if Common.getName(this.constructor.name)
+    if Common.getName('Hoge')
       @init()
 
   init: ->
