@@ -232,9 +232,13 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│   │   │   │   └── image.png
 	│   │   │   ├── hoge
 	│   │   │   │   └── image.png
+	│   │   │   ├── fuga
+	│   │   │   │   └── image.png
 	│   │   │   └── image.png
 	│   │   ├── scripts
 	│   │   │   ├── coffee
+	│   │   │   │   ├── fuga.coffee
+	│   │   │   │   ├── hoge.coffee
 	│   │   │   │   ├── index.coffee
 	│   │   │   │   └── modules
 	│   │   │   ├── javascript
@@ -259,6 +263,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│   │       ├── partials
 	│   │       │   ├── _footer.ect
 	│   │       │   └── _header.ect
+	│   │       ├── fuga.ect
 	│   │       ├── hoge.ect
 	│   │       ├── index.ect
 	│   │       └── pages.json
@@ -268,9 +273,13 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│       │   │   └── image.png
 	│       │   ├── hoge
 	│       │   │   └── image.png
+	│       │   ├── fuga
+	│       │   │   └── image.png
 	│       │   └── image.png
 	│       ├── scripts
 	│       │   ├── coffee
+	│       │   │   ├── fuga.coffee
+	│       │   │   ├── hoge.coffee
 	│       │   │   ├── index.coffee
 	│       │   │   └── modules
 	│       │   ├── javascript
@@ -295,6 +304,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│           ├── partials
 	│           │   ├── _footer.ect
 	│           │   └── _header.ect
+	│           ├── fuga.ect
 	│           ├── hoge.ect
 	│           ├── index.ect
 	│           └── pages.json
@@ -403,6 +413,9 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 ### v1.1.7
 
 - gulp-sass-glob を一時的に削除
+- 上記に伴い、app.scss に @include を記述するスタイルに変更
+- WebPack 圧縮時にコンストラクタ名が省略されるため、constructor.name が動いていなかったのを修正
+- hoge の他に fuga のサンプルディレクトリも追加
 - README.md の修正
 
 ### v1.1.6
