@@ -291,7 +291,6 @@ g.task 'css-pc', ->
 
 # coffee compile process pc
 g.task 'coffee-pc', ->
-  pathArray = []
   g.src([paths.pc.js.plugin, paths.pc.js.javascript, paths.pc.js.coffee])
   .pipe $.plumber()
   .pipe $.webpack require './webpack.config.pc.coffee'
