@@ -418,6 +418,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 - gulp-sass-glob を一時的に削除（app.scss に @include を記述するスタイルに変更）
 - WebPack 圧縮時にコンストラクタ名が省略されるため、constructor.name が動いていなかったのを修正
 - hoge の他に fuga のサンプルディレクトリも追加
+- meta タグの旧IE用コンディショナルコメントを pages.json 項目で個別に有効・無効出来るように変更
 - README.md の修正
 
 ### v1.1.6

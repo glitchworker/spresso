@@ -31,7 +31,8 @@
         "meta_google": false,
         "meta_windows": false,
         "meta_windows_image": "tile_image.png",
-        "meta_windows_color": "#000000"
+        "meta_windows_color": "#000000",
+        "meta_oldBrowser": true
       }
     ]
   },
@@ -67,7 +68,8 @@
         "meta_google": false,
         "meta_windows": false,
         "meta_windows_image": "tile_image.png",
-        "meta_windows_color": "#000000"
+        "meta_windows_color": "#000000",
+        "meta_oldBrowser": true
       }
     ]
   },
@@ -103,7 +105,8 @@
         "meta_google": false,
         "meta_windows": false,
         "meta_windows_image": "tile_image.png",
-        "meta_windows_color": "#000000"
+        "meta_windows_color": "#000000",
+        "meta_oldBrowser": true
       }
     ]
   }
