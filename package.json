@@ -27,6 +27,7 @@
   "main": "app.js",
   "scripts": {
     "start": "gulp",
+    "start-prod": "gulp --env production",
     "start-pc": "gulp watch-pc",
     "start-sp": "gulp watch-sp",
     "dev": "gulp build",

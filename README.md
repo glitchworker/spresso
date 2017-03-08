@@ -129,6 +129,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
 | yarn run start | gulp | 開発サーバーを起動する |
+| yarn run start-prod | gulp | 開発サーバーを本番状態で起動する |
 | yarn run start-pc | gulp watch-pc | 開発サーバーを起動する（PC） |
 | yarn run start-sp | gulp watch-sp | 開発サーバーを起動する（SP） |
 
@@ -412,6 +413,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ### v1.1.7
 
+- yarn run start-prod の コマンドを追加
 - gulp.config.coffee の pathArray のロジック変更（ビルド時に htdocs 内を綺麗にするように）
 - gulp-sass-glob を一時的に削除（app.scss に @include を記述するスタイルに変更）
 - WebPack 圧縮時にコンストラクタ名が省略されるため、constructor.name が動いていなかったのを修正
