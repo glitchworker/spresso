@@ -413,6 +413,15 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ## Version History
 
+### v1.1.8
+
+- common.coffee に getParam() shuffleArray() splitByLength() の共通関数を追加
+- 上記の getParam() はURLからパラメータを取得する
+- 上記の shuffleArray() は配列をシャッフルする
+- 上記の splitByLength() は指定した文字数で分割し配列で返す
+- package.json の更新
+- README.md の修正
+
 ### v1.1.7
 
 - yarn run start-prod の コマンドを追加

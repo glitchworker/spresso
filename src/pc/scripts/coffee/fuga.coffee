@@ -1,7 +1,7 @@
 class Fuga
 
   constructor: ->
-    if Common.getName('Fuga')
+    if Common.getName 'Fuga'
       @init()
 
   init: ->
