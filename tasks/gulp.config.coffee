@@ -218,7 +218,7 @@ g.task 'img', ['img-check'], ->
   .pipe $.plumber()
   # 画像に変更がない場合、出力しない
   .pipe $.changed(paths.common.img.dest, { hasChanged: $.changed.compareSha1Digest })
-  .pipe $.imagemin()
+  # .pipe $.imagemin()
   .pipe g.dest paths.common.img.dest
 
 # build
@@ -318,7 +318,7 @@ g.task 'img-pc', ['img-pc-check'], ->
   .pipe $.plumber()
   # 画像に変更がない場合、出力しない
   .pipe $.changed(paths.pc.img.dest, { hasChanged: $.changed.compareSha1Digest })
-  .pipe $.imagemin()
+  # .pipe $.imagemin()
   .pipe g.dest paths.pc.img.dest
 
 # build pc
@@ -417,7 +417,7 @@ g.task 'img-sp', ['img-sp-check'], ->
   .pipe $.plumber()
   # 画像に変更がない場合、出力しない
   .pipe $.changed(paths.sp.img.dest, { hasChanged: $.changed.compareSha1Digest })
-  .pipe $.imagemin()
+  # .pipe $.imagemin()
   .pipe g.dest paths.sp.img.dest
 
 # build sp

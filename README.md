@@ -413,6 +413,12 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ## Version History
 
+### v1.1.9
+
+- imagemin を一時的にコメントアウト
+- package.json の全バージョンの更新
+- README.md の修正
+
 ### v1.1.8
 
 - common.coffee に getParam() shuffleArray() splitByLength() の共通関数を追加
