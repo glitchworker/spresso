@@ -413,6 +413,14 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ## Version History
 
+### v1.2.0
+
+- gulp-postcss & postcss-assets を追加
+- gulp.config.coffee に postcss の記述を追加
+- postcss の形式に変換する scss function の作成
+- postcss の resolve(), width(), height(), size(), inline()を scss で使用可能に
+- README.md の修正
+
 ### v1.1.9
 
 - imagemin を一時的にコメントアウト

@@ -68,6 +68,7 @@ paths =
       dest: rootDir.htdocs + '/assets/common/js/'
     img:
       src: rootDir.src + '/common/images/**/*.*'
+      postcss: 'assets/common/images/'
       dest: rootDir.htdocs + '/assets/common/images/'
     libcopy:
       lib: rootDir.src + '/common/scripts/lib/**/*.js'
@@ -91,6 +92,7 @@ paths =
       dest: rootDir.htdocs + '/assets/pc/js/'
     img:
       src: rootDir.src + '/pc/images/**/*.*'
+      postcss: 'assets/pc/images/'
       dest: rootDir.htdocs + '/assets/pc/images/'
   sp:
     dest: rootDir.htdocs + '/sp/'
@@ -109,6 +111,7 @@ paths =
       dest: rootDir.htdocs + '/assets/sp/js/'
     img:
       src: rootDir.src + '/sp/images/**/*.*'
+      postcss: 'assets/sp/images/'
       dest: rootDir.htdocs + '/assets/sp/images/'
   archive:
     src: rootDir.htdocs + '/**/*'
@@ -276,6 +279,13 @@ g.task 'css-pc', ->
     functions:
       'getJson($path)': require './script/sassGetJson'
   }).on('error', $.sass.logError) # エラーでも止めない
+  # postcss で画像サイズを取得し変換する
+  .pipe $.postcss([
+    require('postcss-assets')(
+      loadPaths: [paths.pc.img.postcss]
+      basePath: paths.pc.dest
+    )
+  ])
   .pipe $.autoprefixer autoprefixer: '> 5%'
   .pipe $.concat paths.pc.css.concat
   .pipe $.if isProduction, $.minifyCss({advanced:false})
@@ -375,6 +385,13 @@ g.task 'css-sp', ->
     functions:
       'getJson($path)': require './script/sassGetJson'
   }).on('error', $.sass.logError) # エラーでも止めない
+  # postcss で画像サイズを取得し変換する
+  .pipe $.postcss([
+    require('postcss-assets')(
+      loadPaths: [paths.sp.img.postcss]
+      basePath: paths.pc.dest
+    )
+  ])
   .pipe $.autoprefixer autoprefixer: '> 5%'
   .pipe $.concat paths.sp.css.concat
   .pipe $.if isProduction, $.minifyCss({advanced:false})

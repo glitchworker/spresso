@@ -12,4 +12,30 @@ $MODIFIER: map-get($appConfig, MODIFIER);
 $UPDATE: map-get($appConfig, UPDATE);
 $TIMESTAMP: '?v=' + map-get($appConfig, TIMESTAMP);
 
+$COMMON_IMG: '../../common/images/';
 $IMG: '../images/';
+
+// ------------------------------------------- SASS Information
+//  Name:      postcss to scss
+//  Author:    Loxis
+// -----------------------------------------------------------
+
+@function resolve($url) {
+  @return unquote("url(#{$url})");
+}
+
+@function width($url) {
+  @return unquote("width(#{$url})");
+}
+
+@function height($url) {
+  @return unquote("height(#{$url})");
+}
+
+@function size($url) {
+  @return unquote("size(#{$url})");
+}
+
+@function inline($url) {
+  @return unquote("inline(#{$url})");
+}
