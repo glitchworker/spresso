@@ -415,10 +415,11 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ### v1.2.0
 
-- gulp-postcss & postcss-assets を追加
+- gulp-postcss & postcss-assets & postcss-calc を追加
 - gulp.config.coffee に postcss の記述を追加
 - postcss の形式に変換する scss function の作成
-- postcss の resolve(), width(), height(), size(), inline()を scss で使用可能に
+- postcss の width(), height(), size(), inline(), calc() を scss で呼び出す
+- 上記 scss の function と衝突しないように p2w(), p2h(), p2s(), p2i(), p2c() で使用可能
 - README.md の修正
 
 ### v1.1.9

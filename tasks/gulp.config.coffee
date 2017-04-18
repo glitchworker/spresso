@@ -285,6 +285,7 @@ g.task 'css-pc', ->
       loadPaths: [paths.pc.img.postcss]
       basePath: paths.pc.dest
     )
+    require('postcss-calc')
   ])
   .pipe $.autoprefixer autoprefixer: '> 5%'
   .pipe $.concat paths.pc.css.concat
@@ -391,6 +392,7 @@ g.task 'css-sp', ->
       loadPaths: [paths.sp.img.postcss]
       basePath: paths.pc.dest
     )
+    require('postcss-calc')
   ])
   .pipe $.autoprefixer autoprefixer: '> 5%'
   .pipe $.concat paths.sp.css.concat

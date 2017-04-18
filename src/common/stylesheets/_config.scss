@@ -20,22 +20,22 @@ $IMG: '../images/';
 //  Author:    Loxis
 // -----------------------------------------------------------
 
-@function resolve($url) {
-  @return unquote("url(#{$url})");
+@function p2w($url) {
+  @return unquote('width(#{$url})');
 }
 
-@function width($url) {
-  @return unquote("width(#{$url})");
+@function p2h($url) {
+  @return unquote('height(#{$url})');
 }
 
-@function height($url) {
-  @return unquote("height(#{$url})");
+@function p2s($url) {
+  @return unquote('size(#{$url})');
 }
 
-@function size($url) {
-  @return unquote("size(#{$url})");
+@function p2i($url) {
+  @return unquote('inline(#{$url})');
 }
 
-@function inline($url) {
-  @return unquote("inline(#{$url})");
+@function p2c($url) {
+  @return unquote('calc(#{$url})');
 }
