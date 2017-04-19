@@ -182,6 +182,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	├── package.json
 	├── src
 	│   ├── app.config.json
+	│   ├── postcss-sorting.json
 	│   ├── import
 	│   │   └── data.json
 	│   ├── common
@@ -415,11 +416,14 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ### v1.2.0
 
-- gulp-postcss & postcss-assets & postcss-calc を追加
+- gulp-util & gulp-postcss & postcss-assets & postcss-calc & postcss-sorting & css-mqpacker を追加
 - gulp.config.coffee に postcss の記述を追加
+- postcss のエラー時 gulp を止めないように gulp-util を追加
+- 同一の mediaqueries を一つにまとめる css-mqpacker を追加
+- css のプロパティ順を指定した並びに変更する postcss-sorting を追加
 - postcss の形式に変換する scss function の作成
 - postcss の width(), height(), size(), inline(), calc() を scss で呼び出す
-- 上記 scss の function と衝突しないように p2w(), p2h(), p2s(), p2i(), p2c() で使用可能
+- 上記 scss の function と衝突しないように w(), h(), s(), i(), c() で使用可能
 - README.md の修正
 
 ### v1.1.9

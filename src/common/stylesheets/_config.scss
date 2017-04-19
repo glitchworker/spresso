@@ -16,26 +16,26 @@ $COMMON_IMG: '../../common/images/';
 $IMG: '../images/';
 
 // ------------------------------------------- SASS Information
-//  Name:      postcss to scss
+//  Name:      scss to postcss
 //  Author:    Loxis
 // -----------------------------------------------------------
 
-@function p2w($url) {
+@function w($url) {
   @return unquote('width(#{$url})');
 }
 
-@function p2h($url) {
+@function h($url) {
   @return unquote('height(#{$url})');
 }
 
-@function p2s($url) {
+@function s($url) {
   @return unquote('size(#{$url})');
 }
 
-@function p2i($url) {
+@function i($url) {
   @return unquote('inline(#{$url})');
 }
 
-@function p2c($url) {
+@function c($url) {
   @return unquote('calc(#{$url})');
 }

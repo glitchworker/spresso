@@ -286,8 +286,12 @@ g.task 'css-pc', ->
       basePath: paths.pc.dest
     )
     require('postcss-calc')
-  ])
-  .pipe $.autoprefixer autoprefixer: '> 5%'
+    require('css-mqpacker')
+    require('postcss-sorting')(
+      require '../src/postcss-sorting.json' # 並び順の設定ファイル
+    )
+  ]).on('error', $.util.log) # エラーでも止めない
+  .pipe $.autoprefixer browsers: ['> 0%']
   .pipe $.concat paths.pc.css.concat
   .pipe $.if isProduction, $.minifyCss({advanced:false})
   .pipe $.if isProduction, $.header(commentsCss, pkg: appConfig, filename: paths.pc.css.concat)
@@ -393,8 +397,12 @@ g.task 'css-sp', ->
       basePath: paths.pc.dest
     )
     require('postcss-calc')
-  ])
-  .pipe $.autoprefixer autoprefixer: '> 5%'
+    require('css-mqpacker')
+    require('postcss-sorting')(
+      require '../src/postcss-sorting.json' # 並び順の設定ファイル
+    )
+  ]).on('error', $.util.log) # エラーでも止めない
+  .pipe $.autoprefixer browsers: ['> 0%']
   .pipe $.concat paths.sp.css.concat
   .pipe $.if isProduction, $.minifyCss({advanced:false})
   .pipe $.if isProduction, $.header(commentsCss, pkg: appConfig, filename: paths.sp.css.concat)
