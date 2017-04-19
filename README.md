@@ -422,8 +422,9 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 - 同一の mediaqueries を一つにまとめる css-mqpacker を追加
 - css のプロパティ順を指定した並びに変更する postcss-sorting を追加
 - postcss の形式に変換する scss function の作成
-- postcss の width(), height(), size(), inline(), calc() を scss で呼び出す
-- 上記 scss の function と衝突しないように w(), h(), s(), i(), c() で使用可能
+- postcss の width(), height(), size(), inline() を scss で呼び出す
+- 上記 scss の function と衝突しないように w(), h(), s(), i() で使用可能
+- w(), h(), s() に関しては、第二引数に数値を入れることによって割る事が出来ます。
 - README.md の修正
 
 ### v1.1.9

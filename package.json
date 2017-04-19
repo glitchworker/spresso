@@ -80,7 +80,6 @@
     "minimist": "^1.2.0",
     "path": "^0.12.7",
     "postcss-assets": "^4.1.0",
-    "postcss-calc": "^5.3.1",
     "postcss-sorting": "^2.0.1",
     "require-dir": "^0.3.1",
     "rimraf": "^2.6.1",

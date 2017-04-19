@@ -285,7 +285,6 @@ g.task 'css-pc', ->
       loadPaths: [paths.pc.img.postcss]
       basePath: paths.pc.dest
     )
-    require('postcss-calc')
     require('css-mqpacker')
     require('postcss-sorting')(
       require '../src/postcss-sorting.json' # 並び順の設定ファイル
@@ -396,7 +395,6 @@ g.task 'css-sp', ->
       loadPaths: [paths.sp.img.postcss]
       basePath: paths.pc.dest
     )
-    require('postcss-calc')
     require('css-mqpacker')
     require('postcss-sorting')(
       require '../src/postcss-sorting.json' # 並び順の設定ファイル
