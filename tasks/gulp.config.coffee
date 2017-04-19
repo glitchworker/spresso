@@ -284,6 +284,7 @@ g.task 'css-pc', ->
     require('postcss-assets')(
       loadPaths: [paths.pc.img.postcss]
       basePath: paths.pc.dest
+      relative: true
     )
     require('css-mqpacker')
     require('postcss-sorting')(
@@ -394,6 +395,7 @@ g.task 'css-sp', ->
     require('postcss-assets')(
       loadPaths: [paths.sp.img.postcss]
       basePath: paths.pc.dest
+      relative: true
     )
     require('css-mqpacker')
     require('postcss-sorting')(

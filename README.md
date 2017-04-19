@@ -414,6 +414,12 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ## Version History
 
+### v1.2.1
+
+- postcss の形式に変換する scss function を削除（どうやら無くても大丈夫みたい？）
+- postcss の resolve(), width(), height(), size(), inline() を scss で利用可能
+- README.md の修正
+
 ### v1.2.0
 
 - gulp-util & gulp-postcss & postcss-assets & postcss-calc & postcss-sorting & css-mqpacker を追加

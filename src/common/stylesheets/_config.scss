@@ -19,36 +19,3 @@ $TIMESTAMP: '?v=' + map-get($appConfig, TIMESTAMP);
 
 $IMG_COMMON: '../../common/images/';
 $IMG: '../images/';
-
-// ------------------------------------------- SASS Information
-//  Name:      scss to postcss functions
-//  Author:    Loxis
-// -----------------------------------------------------------
-
-@function w($number, $divide: null) {
-  @if $divide == null {
-    @return unquote('width(#{$number})');
-  } @else {
-    @return unquote('width(#{$number}, #{$divide})');
-  }
-}
-
-@function h($number, $divide: null) {
-  @if $divide == null {
-    @return unquote('height(#{$number})');
-  } @else {
-    @return unquote('height(#{$number}, #{$divide})');
-  }
-}
-
-@function s($number, $divide: null) {
-  @if $divide == null {
-    @return unquote('size(#{$number})');
-  } @else {
-    @return unquote('size(#{$number}, #{$divide})');
-  }
-}
-
-@function i($url) {
-  @return unquote('inline(#{$url})');
-}
