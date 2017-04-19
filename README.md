@@ -418,6 +418,8 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 - postcss の形式に変換する scss function を削除（どうやら無くても大丈夫みたい？）
 - postcss の resolve(), width(), height(), size(), inline() を scss で利用可能
+- resolve() が追加されたことによって、images フォルダ以下のパスのみで取得出来るように変更
+- plumberConfig 関数を追加し、エラーが出ても必ずタスクは継続されるように変更
 - README.md の修正
 
 ### v1.2.0

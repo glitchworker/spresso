@@ -167,6 +167,16 @@ pathSearch = (dir, dirName) ->
     return
 
 #------------------------------------------------------
+# Plumber Settings
+# Plumber でエラーが出た時に止めないようにする
+#------------------------------------------------------
+
+plumberConfig = (error) ->
+  console.log error
+  @emit 'end'
+  return
+
+#------------------------------------------------------
 # Common Settings
 # 共通設定
 #------------------------------------------------------
@@ -177,12 +187,12 @@ g.task 'import', ->
   jsonData.forEach (page, i) ->
     if page.type == 'dir'
       g.src rootDir.src + '/import/' + page.data + '/**/*'
-      .pipe $.plumber()
+      .pipe $.plumber(plumberConfig)
       .pipe $.changed(page.output, { hasChanged: $.changed.compareSha1Digest })
       .pipe g.dest rootDir.htdocs + '/' + page.output
     else
       g.src rootDir.src + '/import/' + page.data
-      .pipe $.plumber()
+      .pipe $.plumber(plumberConfig)
       .pipe $.changed(page.output, { hasChanged: $.changed.compareSha1Digest })
       .pipe g.dest rootDir.htdocs + '/' + page.output
 
@@ -195,7 +205,7 @@ g.task 'libcopy', ->
 # coffee compile process
 g.task 'coffee', ->
   g.src([paths.common.js.plugin, paths.common.js.javascript, paths.common.js.coffee])
-  .pipe $.plumber()
+  .pipe $.plumber(plumberConfig)
   .pipe $.webpack require './webpack.config.common.coffee'
   .pipe $.if isProduction, $.header(commentsJs, pkg: appConfig, filename: '共通スクリプト')
   .pipe g.dest paths.common.js.dest
@@ -209,7 +219,7 @@ g.task 'coffee', ->
 # img file check
 g.task 'img-check', ->
   return g.src paths.common.img.src
-  .pipe $.plumber()
+  .pipe $.plumber(plumberConfig)
   # src フォルダに存在しないファイルを htdocs から削除する
   .pipe pathSearch(rootDir.src + '/common/images/', 'images').on 'end', (cb) ->
     pathArray.unshift(paths.common.img.dest + '**/*.*')
@@ -218,7 +228,7 @@ g.task 'img-check', ->
 # img optimize
 g.task 'img', ['img-check'], ->
   g.src paths.common.img.src
-  .pipe $.plumber()
+  .pipe $.plumber(plumberConfig)
   # 画像に変更がない場合、出力しない
   .pipe $.changed(paths.common.img.dest, { hasChanged: $.changed.compareSha1Digest })
   # .pipe $.imagemin()
@@ -239,7 +249,7 @@ g.task 'ect-pc', ->
   jsonDataLength = Object.keys(jsonData).length - 1
   jsonData.forEach (page, i) ->
     g.src rootDir.src + '/pc/templates/' + page.template + '.ect'
-    .pipe $.plumber()
+    .pipe $.plumber(plumberConfig)
     # ect で JSON ファイルを変数に読み込む
     .pipe $.data (file)->
       staticData = page
@@ -271,7 +281,7 @@ g.task 'ect-pc', ->
 # sass compile process pc
 g.task 'css-pc', ->
   g.src paths.pc.css.sass
-  .pipe $.plumber()
+  .pipe $.plumber(plumberConfig)
   .pipe $.if not isProduction, $.sourcemaps.init()
   # sass で JSON ファイルを変数に読み込む
   .pipe $.sass({
@@ -282,15 +292,15 @@ g.task 'css-pc', ->
   # postcss で画像サイズを取得し変換する
   .pipe $.postcss([
     require('postcss-assets')(
-      loadPaths: [paths.pc.img.postcss]
+      loadPaths: [paths.common.img.postcss, paths.pc.img.postcss]
       basePath: paths.pc.dest
-      relative: true
+      relative: rootDir.htdocs + '/**/**/'
     )
     require('css-mqpacker')
     require('postcss-sorting')(
       require '../src/postcss-sorting.json' # 並び順の設定ファイル
     )
-  ]).on('error', $.util.log) # エラーでも止めない
+  ])
   .pipe $.autoprefixer browsers: ['> 0%']
   .pipe $.concat paths.pc.css.concat
   .pipe $.if isProduction, $.minifyCss({advanced:false})
@@ -307,7 +317,7 @@ g.task 'css-pc', ->
 # coffee compile process pc
 g.task 'coffee-pc', ->
   g.src([paths.pc.js.plugin, paths.pc.js.javascript, paths.pc.js.coffee])
-  .pipe $.plumber()
+  .pipe $.plumber(plumberConfig)
   .pipe $.webpack require './webpack.config.pc.coffee'
   .pipe $.if isProduction, $.header(commentsJs, pkg: appConfig, filename: 'メインスクリプト')
   .pipe g.dest paths.pc.js.dest
@@ -321,7 +331,7 @@ g.task 'coffee-pc', ->
 # img check pc
 g.task 'img-pc-check', ->
   return g.src paths.pc.img.src
-  .pipe $.plumber()
+  .pipe $.plumber(plumberConfig)
   # src フォルダに存在しないファイルを htdocs から削除する
   .pipe pathSearch(rootDir.src + '/pc/images/', 'images').on 'end', (cb) ->
     pathArray.unshift(paths.pc.img.dest + '**/*.*')
@@ -330,7 +340,7 @@ g.task 'img-pc-check', ->
 # img optimize pc
 g.task 'img-pc', ['img-pc-check'], ->
   g.src paths.pc.img.src
-  .pipe $.plumber()
+  .pipe $.plumber(plumberConfig)
   # 画像に変更がない場合、出力しない
   .pipe $.changed(paths.pc.img.dest, { hasChanged: $.changed.compareSha1Digest })
   # .pipe $.imagemin()
@@ -351,7 +361,7 @@ g.task 'ect-sp', ->
   jsonDataLength = Object.keys(jsonData).length - 1
   jsonData.forEach (page, i) ->
     g.src rootDir.src + '/sp/templates/' + page.template + '.ect'
-    .pipe $.plumber()
+    .pipe $.plumber(plumberConfig)
     # ect で JSON ファイルを変数に読み込む
     .pipe $.data (file)->
       staticData = page
@@ -382,7 +392,7 @@ g.task 'ect-sp', ->
 # sass compile process sp
 g.task 'css-sp', ->
   g.src paths.sp.css.sass
-  .pipe $.plumber()
+  .pipe $.plumber(plumberConfig)
   .pipe $.if not isProduction, $.sourcemaps.init()
   # sass で JSON ファイルを変数に読み込む
   .pipe $.sass({
@@ -393,9 +403,8 @@ g.task 'css-sp', ->
   # postcss で画像サイズを取得し変換する
   .pipe $.postcss([
     require('postcss-assets')(
-      loadPaths: [paths.sp.img.postcss]
+      loadPaths: [paths.common.img.postcss, paths.sp.img.postcss]
       basePath: paths.pc.dest
-      relative: true
     )
     require('css-mqpacker')
     require('postcss-sorting')(
@@ -418,7 +427,7 @@ g.task 'css-sp', ->
 # coffee compile process sp
 g.task 'coffee-sp', ->
   g.src([paths.sp.js.plugin, paths.sp.js.javascript, paths.sp.js.coffee])
-  .pipe $.plumber()
+  .pipe $.plumber(plumberConfig)
   .pipe $.webpack require './webpack.config.sp.coffee'
   .pipe $.if isProduction, $.header(commentsJs, pkg: appConfig, filename: 'メインスクリプト')
   .pipe g.dest paths.sp.js.dest
@@ -432,7 +441,7 @@ g.task 'coffee-sp', ->
 # img check sp
 g.task 'img-sp-check', ->
   return g.src paths.sp.img.src
-  .pipe $.plumber()
+  .pipe $.plumber(plumberConfig)
   # src フォルダに存在しないファイルを htdocs から削除する
   .pipe pathSearch(rootDir.src + '/sp/images/', 'images').on 'end', (cb) ->
     pathArray.unshift(paths.sp.img.dest + '**/*.*')
@@ -441,7 +450,7 @@ g.task 'img-sp-check', ->
 # img optimize sp
 g.task 'img-sp', ['img-sp-check'], ->
   g.src paths.sp.img.src
-  .pipe $.plumber()
+  .pipe $.plumber(plumberConfig)
   # 画像に変更がない場合、出力しない
   .pipe $.changed(paths.sp.img.dest, { hasChanged: $.changed.compareSha1Digest })
   # .pipe $.imagemin()
@@ -463,7 +472,7 @@ g.task 'diff', ['clean', 'clean-temp'], ->
 # temp process
 g.task 'temp', ->
   g.src paths.archive.src
-  .pipe $.plumber()
+  .pipe $.plumber(plumberConfig)
   # htdocs を temp にコピー
   .pipe g.dest paths.archive.temp
 
@@ -477,7 +486,7 @@ g.task 'export', ->
   m = date.getMinutes()
   s = date.getSeconds()
   g.src paths.archive.src
-  .pipe $.plumber()
+  .pipe $.plumber(plumberConfig)
   .pipe $.changed(paths.archive.temp, { hasChanged: $.changed.compareSha1Digest })
   # 全ファイルをコピーするが、空フォルダは出力しない
   .pipe $.ignore.include({ isFile: true })
