@@ -300,7 +300,7 @@ g.task 'css-pc', ->
     require('postcss-sorting')(
       require '../src/postcss-sorting.json' # 並び順の設定ファイル
     )
-  ])
+  ]).on('error', $.util.log) # エラーでも止めない
   .pipe $.autoprefixer browsers: ['> 0%']
   .pipe $.concat paths.pc.css.concat
   .pipe $.if isProduction, $.minifyCss({advanced:false})
