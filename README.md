@@ -414,6 +414,11 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ## Version History
 
+### v1.2.2
+
+- package.json の全バージョンの更新
+- README.md の修正
+
 ### v1.2.1
 
 - postcss の形式に変換する scss function を削除（どうやら無くても大丈夫みたい？）
