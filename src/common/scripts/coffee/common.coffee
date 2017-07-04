@@ -54,4 +54,76 @@ class Common
       end = start + length
     resultArr
 
+  #------------------------------------------------------
+  # Twitterのシェアダイアログを表示
+  #------------------------------------------------------
+
+  @twitterShare: (i_target, i_url, i_text) ->
+    if document.querySelector(i_target) != null
+      document.querySelector(i_target).addEventListener 'click', (->
+        url = 'http://twitter.com/share?url='
+        url += encodeURIComponent(i_url)
+        url += '&text=' + encodeURIComponent(i_text)
+        window.open url, 'share', [
+          'width=550'
+          'height=450'
+          'location=yes'
+          'resizable=yes'
+          'toolbar=no'
+          'menubar=no'
+          'scrollbars=no'
+          'status=no'
+        ].join(',')
+        false
+      ), false
+    return
+
+  #------------------------------------------------------
+  # Facebookのシェアダイアログを表示
+  #------------------------------------------------------
+
+  @facebookShare: (i_target, i_url) ->
+    if document.querySelector(i_target) != null
+      document.querySelector(i_target).addEventListener 'click', (->
+        url = 'http://www.facebook.com/share.php?u='
+        url += encodeURIComponent(i_url)
+        window.open url, 'share', [
+          'width=550'
+          'height=450'
+          'location=yes'
+          'resizable=yes'
+          'toolbar=no'
+          'menubar=no'
+          'scrollbars=no'
+          'status=no'
+        ].join(',')
+        false
+      ), false
+    return
+
+  #------------------------------------------------------
+  # LINEのシェアダイアログを表示
+  #------------------------------------------------------
+
+  @lineShare: (i_target, i_url, i_text) ->
+    if document.querySelector(i_target) != null
+      document.querySelector(i_target).addEventListener 'click', (->
+        url = 'http://line.me/R/msg/text/?'
+        url += encodeURIComponent(i_text)
+        url += '%20' + encodeURIComponent(i_url)
+        console.log url
+        window.open url, 'share', [
+          'width=550'
+          'height=450'
+          'location=yes'
+          'resizable=yes'
+          'toolbar=no'
+          'menubar=no'
+          'scrollbars=no'
+          'status=no'
+        ].join(',')
+        false
+      ), false
+    return
+
 module.exports = Common

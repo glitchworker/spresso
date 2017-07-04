@@ -414,6 +414,12 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ## Version History
 
+### v1.2.3
+
+- SNSシェアボタン処理の実装（Twitter、Facebook、LINE）
+- package.json の全バージョンの更新
+- README.md の修正
+
 ### v1.2.2
 
 - package.json の全バージョンの更新
