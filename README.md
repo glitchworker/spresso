@@ -414,6 +414,12 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ## Version History
 
+### v1.2.4
+
+- postcss の変数を初回ビルド時に使用した場合エラーが起きていたのを修正
+- package.json の全バージョンの更新
+- README.md の修正
+
 ### v1.2.3
 
 - SNSシェアボタン処理の実装（Twitter、Facebook、LINE）
