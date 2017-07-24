@@ -1,7 +1,7 @@
 {
   "name": "spresso",
   "description": "sPresso StarterKit for modern websites",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "homepage": "https://github.com/glitchworker/spresso#readme",
   "author": "Loxis (http://loxis.jp/)",
   "license": "MIT",
@@ -44,7 +44,7 @@
     "import": "gulp import"
   },
   "devDependencies": {
-    "browser-sync": "^2.18.12",
+    "browser-sync": "^2.18.13",
     "browsersync-ssi": "^0.2.4",
     "coffee-loader": "^0.7.3",
     "coffee-script": "^1.12.7",
@@ -79,7 +79,7 @@
     "gulp-zip": "^4.0.0",
     "minimist": "^1.2.0",
     "path": "^0.12.7",
-    "postcss-assets": "^4.1.0",
+    "postcss-assets": "^4.2.0",
     "postcss-sorting": "^3.0.1",
     "require-dir": "^0.3.2",
     "rimraf": "^2.6.1",

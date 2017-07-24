@@ -47,8 +47,10 @@
 <meta name="twitter:url" content="<%- @SITE_URL %>">
 <meta name="twitter:title" content="<%- head.meta_title %>">
 <meta name="twitter:description" content="<%- head.meta_description %>">
+<% if head.meta_twitter_account?.length : %>
 <meta name="twitter:site" content="@<%- head.meta_twitter_account %>">
 <meta name="twitter:creator" content="@<%- head.meta_twitter_account %>">
+<% end %>
 <meta name="twitter:image:src" content="<%- @SITE_URL %>assets/common/images/<%- head.meta_facebook_image %>">
 <% if head.meta_twitter_app_android?.length : %>
 <meta name="twitter:app:android" content="<%- head.meta_twitter_app_android %>">
