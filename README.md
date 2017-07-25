@@ -414,6 +414,13 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ## Version History
 
+### v1.2.6
+
+- head タグのテンプレート更新
+- jQuery Core を最新にアップデート
+- package.json の run-sequence の更新
+- README.md の修正
+
 ### v1.2.5
 
 - head タグのテンプレート更新

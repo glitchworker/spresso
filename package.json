@@ -1,7 +1,7 @@
 {
   "name": "spresso",
   "description": "sPresso StarterKit for modern websites",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "homepage": "https://github.com/glitchworker/spresso#readme",
   "author": "Loxis (http://loxis.jp/)",
   "license": "MIT",
@@ -83,7 +83,7 @@
     "postcss-sorting": "^3.0.1",
     "require-dir": "^0.3.2",
     "rimraf": "^2.6.1",
-    "run-sequence": "^2.0.0",
+    "run-sequence": "^2.1.0",
     "underscore": "^1.8.3",
     "webpack-merge": "^4.1.0"
   }
