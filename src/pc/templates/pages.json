@@ -24,7 +24,7 @@
         "meta_facebook_image": "ogp_image.jpg",
         "meta_twitter": false,
         "meta_twitter_card": "summary_large_image",
-        "meta_twitter_account": "Twitterアカウント名",
+        "meta_twitter_account": "",
         "meta_twitter_app_android": "",
         "meta_twitter_app_ipad": "",
         "meta_twitter_app_iphone": "",
@@ -32,7 +32,7 @@
         "meta_windows": false,
         "meta_windows_image": "tile_image.png",
         "meta_windows_color": "#000000",
-        "meta_oldBrowser": true
+        "meta_oldBrowser": false
       }
     ]
   },
@@ -61,7 +61,7 @@
         "meta_facebook_image": "ogp_image.jpg",
         "meta_twitter": false,
         "meta_twitter_card": "summary_large_image",
-        "meta_twitter_account": "Twitterアカウント名",
+        "meta_twitter_account": "",
         "meta_twitter_app_android": "",
         "meta_twitter_app_ipad": "",
         "meta_twitter_app_iphone": "",
@@ -69,7 +69,7 @@
         "meta_windows": false,
         "meta_windows_image": "tile_image.png",
         "meta_windows_color": "#000000",
-        "meta_oldBrowser": true
+        "meta_oldBrowser": false
       }
     ]
   },
@@ -98,7 +98,7 @@
         "meta_facebook_image": "ogp_image.jpg",
         "meta_twitter": false,
         "meta_twitter_card": "summary_large_image",
-        "meta_twitter_account": "Twitterアカウント名",
+        "meta_twitter_account": "",
         "meta_twitter_app_android": "",
         "meta_twitter_app_ipad": "",
         "meta_twitter_app_iphone": "",
@@ -106,7 +106,7 @@
         "meta_windows": false,
         "meta_windows_image": "tile_image.png",
         "meta_windows_color": "#000000",
-        "meta_oldBrowser": true
+        "meta_oldBrowser": false
       }
     ]
   }

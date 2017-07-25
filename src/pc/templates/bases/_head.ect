@@ -92,7 +92,11 @@
 <% content 'addStyles' %>
 
 <!-- JavaScript指定 -->
-<script src="<%- @path %>assets/common/js/lib/jquery-1.10.2.min.js"></script>
+<% if head.meta_oldBrowser : %>
+<script src="<%- @path %>assets/common/js/lib/jquery-1.12.4.min.js"></script>
+<% else: %>
+<script src="<%- @path %>assets/common/js/lib/jquery-3.2.1.min.js"></script>
+<% end %>
 <script src="<%- @path %>assets/common/js/common.js"></script>
 <% if @redirect : %>
 <script>redirectSP("<%- @REDIRECT_PATH %>");</script>
