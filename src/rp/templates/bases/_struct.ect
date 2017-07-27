@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="<%- @language %>" prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# mixi: http://mixi-platform.com/ns# website: http://ogp.me/ns/<%- @namespace %>#" class="no-js">
+<head>
+<% include 'bases/_head' %>
+</head>
+
+<body class="page-<%- @template %>">
+
+<% include 'partials/_header' %>
+
+
+<% content %>
+
+
+<% include 'partials/_footer' %>
+
+
+<script src="<%- @path %>assets/pc/js/app.js" async defer></script>
+<% content 'addScriptsFooter' %>
+</body>
+</html>

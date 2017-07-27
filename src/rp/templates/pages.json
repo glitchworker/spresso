@@ -1,0 +1,113 @@
+[
+  {
+    "path": "./",
+    "path_filename": "index.html",
+    "template": "index",
+    "language": "ja",
+    "namespace": "website",
+    "redirect": true,
+    "head": [
+      {
+        "meta_charset": "UTF-8",
+        "meta_title": "これはタイトルです",
+        "meta_robots": "index,follow",
+        "meta_keywords": "これはキーワードです",
+        "meta_description": "これはディスクリプションです",
+        "meta_author": "",
+        "meta_copyright": "",
+        "meta_viewport": "width=device-width,initial-scale=1,user-scalable=no,minimal-ui",
+        "meta_appleIcon": "favicon.png",
+        "meta_icon": "favicon.png",
+        "meta_iconXhtml": "favicon.ico",
+        "meta_facebook": true,
+        "meta_facebook_id": "",
+        "meta_facebook_image": "ogp_image.jpg",
+        "meta_twitter": false,
+        "meta_twitter_card": "summary_large_image",
+        "meta_twitter_account": "",
+        "meta_twitter_app_android": "",
+        "meta_twitter_app_ipad": "",
+        "meta_twitter_app_iphone": "",
+        "meta_google": false,
+        "meta_windows": false,
+        "meta_windows_image": "tile_image.png",
+        "meta_windows_color": "#000000",
+        "meta_oldBrowser": false
+      }
+    ]
+  },
+  {
+    "path": "../",
+    "path_filename": "hoge/index.html",
+    "template": "hoge",
+    "language": "ja",
+    "namespace": "article",
+    "redirect": true,
+    "head": [
+      {
+        "meta_charset": "UTF-8",
+        "meta_title": "これはタイトルです",
+        "meta_robots": "index,follow",
+        "meta_keywords": "これはキーワードです",
+        "meta_description": "これはディスクリプションです",
+        "meta_author": "",
+        "meta_copyright": "",
+        "meta_viewport": "width=device-width,initial-scale=1,user-scalable=no,minimal-ui",
+        "meta_appleIcon": "favicon.png",
+        "meta_icon": "favicon.png",
+        "meta_iconXhtml": "favicon.ico",
+        "meta_facebook": true,
+        "meta_facebook_id": "",
+        "meta_facebook_image": "ogp_image.jpg",
+        "meta_twitter": false,
+        "meta_twitter_card": "summary_large_image",
+        "meta_twitter_account": "",
+        "meta_twitter_app_android": "",
+        "meta_twitter_app_ipad": "",
+        "meta_twitter_app_iphone": "",
+        "meta_google": false,
+        "meta_windows": false,
+        "meta_windows_image": "tile_image.png",
+        "meta_windows_color": "#000000",
+        "meta_oldBrowser": false
+      }
+    ]
+  },
+  {
+    "path": "../",
+    "path_filename": "fuga/index.html",
+    "template": "fuga",
+    "language": "ja",
+    "namespace": "article",
+    "redirect": true,
+    "head": [
+      {
+        "meta_charset": "UTF-8",
+        "meta_title": "これはタイトルです",
+        "meta_robots": "index,follow",
+        "meta_keywords": "これはキーワードです",
+        "meta_description": "これはディスクリプションです",
+        "meta_author": "",
+        "meta_copyright": "",
+        "meta_viewport": "width=device-width,initial-scale=1,user-scalable=no,minimal-ui",
+        "meta_appleIcon": "favicon.png",
+        "meta_icon": "favicon.png",
+        "meta_iconXhtml": "favicon.ico",
+        "meta_facebook": true,
+        "meta_facebook_id": "",
+        "meta_facebook_image": "ogp_image.jpg",
+        "meta_twitter": false,
+        "meta_twitter_card": "summary_large_image",
+        "meta_twitter_account": "",
+        "meta_twitter_app_android": "",
+        "meta_twitter_app_ipad": "",
+        "meta_twitter_app_iphone": "",
+        "meta_google": false,
+        "meta_windows": false,
+        "meta_windows_image": "tile_image.png",
+        "meta_windows_color": "#000000",
+        "meta_oldBrowser": false
+      }
+    ]
+  }
+]

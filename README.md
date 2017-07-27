@@ -39,6 +39,10 @@ gulp / ect / sass / webpack (coffeescript)
 フォルダの場合は type に dir ファイルの場合は file を記述し data にフォルダ名またはファイル名を入力した後
 output の項目に出力先のパスを入力することによって書き出されます。
 
+**v1.2.7 から新たに src フォルダの app.config.json にレスポンシブ切り替え用の項目が追加されました。**
+```RESPONSIVE_TEMPLATE``` の項目に何でも良いので入力されている場合、PC用とSP用のビルドはスキップされ
+レスポンシブ用のテンプレートのみビルド対象になります。
+
 ## Setting
 
 ### project
@@ -49,6 +53,7 @@ output の項目に出力先のパスを入力することによって書き出�
 | /tasks/gulp.config.coffee | gulp に関する設定ファイル |
 | /tasks/webpack.config.base.coffee | webpack に関する設定ファイル |
 | /tasks/webpack.config.common.coffee | 共通の webpack に関する設定ファイル |
+| /tasks/webpack.config.rp.coffee | webpack に関する設定ファイル（Responsive） |
 | /tasks/webpack.config.pc.coffee | webpack に関する設定ファイル（PC） |
 | /tasks/webpack.config.sp.coffee | webpack に関する設定ファイル（SP） |
 
@@ -56,6 +61,7 @@ output の項目に出力先のパスを入力することによって書き出�
 
 | ファイル名 | 説明 |
 |----|---|
+| /src/rp/template/pages.json | template 内で使う規定値（Responsive） |
 | /src/pc/template/pages.json | template 内で使う規定値（PC） |
 | /src/sp/template/pages.json | template 内で使う規定値（SP） |
 | /src/common/stylesheets/_config.scss | stylesheet 内で使う規定値 |
@@ -75,7 +81,7 @@ output の項目に出力先のパスを入力することによって書き出�
 | <%- @SITE_URL %> | サイトURL |
 | <%- @SITE_NAME %> | サイト名 |
 
-/src/(pc か sp)/templates/pages.json 内で json を取得しています。 ```<%- @meta_title %>``` 等で参照できます。
+/src/(rp か pc か sp)/templates/pages.json 内で json を取得しています。 ```<%- @meta_title %>``` 等で参照できます。
 上記以外にも、pages.json に記入された内容は呼び出すことが可能です。
 ```<% for head in @head : %><% end %>``` で囲むことによって meta 情報の入れ子を以下の様に
 記述することによって取得可能にしています。
@@ -130,6 +136,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 |----|---|---|
 | yarn run start | gulp | 開発サーバーを起動する |
 | yarn run start-prod | gulp --env production | 開発サーバーを本番状態で起動する |
+| yarn run start-rp | gulp watch-rp | 開発サーバーを起動する（Responsive） |
 | yarn run start-pc | gulp watch-pc | 開発サーバーを起動する（PC） |
 | yarn run start-sp | gulp watch-sp | 開発サーバーを起動する（SP） |
 
@@ -140,9 +147,11 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
 | yarn run dev | gulp build | 開発用のファイルを出力 |
+| yarn run dev-rp | gulp build-rp | 開発用のファイルを出力（Responsive） |
 | yarn run dev-pc | gulp build-pc | 開発用のファイルを出力（PC） |
 | yarn run dev-sp | gulp build-sp | 開発用のファイルを出力（SP） |
 | yarn run prod | gulp build --env production | 本番用のファイルを出力 |
+| yarn run prod-rp | gulp build-rp --env production | 本番用のファイルを出力（Responsive） |
 | yarn run prod-pc | gulp build-pc --env production | 本番用のファイルを出力（PC） |
 | yarn run prod-sp | gulp build-sp --env production | 本番用のファイルを出力（SP） |
 
@@ -228,6 +237,48 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│   │       └── vars
 	│   │           ├── _color.scss
 	│   │           └── _easing.scss
+	│   ├── rp
+	│   │   ├── images
+	│   │   │   ├── index
+	│   │   │   │   └── image.png
+	│   │   │   ├── hoge
+	│   │   │   │   └── image.png
+	│   │   │   ├── fuga
+	│   │   │   │   └── image.png
+	│   │   │   └── image.png
+	│   │   ├── scripts
+	│   │   │   ├── coffee
+	│   │   │   │   ├── fuga.coffee
+	│   │   │   │   ├── hoge.coffee
+	│   │   │   │   ├── index.coffee
+	│   │   │   │   └── modules
+	│   │   │   ├── javascript
+	│   │   │   │   └── javascript.js
+	│   │   │   └── plugin
+	│   │   │       └── plugin.js
+	│   │   ├── stylesheets
+	│   │   │   ├── _fuga.scss
+	│   │   │   ├── _hoge.scss
+	│   │   │   ├── _index.scss
+	│   │   │   ├── app.scss
+	│   │   │   ├── partials
+	│   │   │   │   ├── _content.scss
+	│   │   │   │   ├── _footer.scss
+	│   │   │   │   └── _header.scss
+	│   │   │   └── bases
+	│   │   │       ├── _config.scss
+	│   │   │       └── _default.scss
+	│   │   └── templates
+	│   │       ├── bases
+	│   │       │   ├── _head.ect
+	│   │       │   └── _layout.ect
+	│   │       ├── partials
+	│   │       │   ├── _footer.ect
+	│   │       │   └── _header.ect
+	│   │       ├── fuga.ect
+	│   │       ├── hoge.ect
+	│   │       ├── index.ect
+	│   │       └── pages.json
 	│   ├── pc
 	│   │   ├── images
 	│   │   │   ├── index
@@ -339,6 +390,19 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│       ├── mixins
 	│       ├── utils
 	│       └── vars
+	├── rp
+	│   ├── images
+	│   ├── scripts
+	│   │   ├── coffee
+	│   │   │   └── modules
+	│   │   ├── javascript
+	│   │   └── plugin
+	│   ├── stylesheets
+	│   │   ├── bases
+	│   │   └── partials
+	│   └── templates
+	│       ├── bases
+	│       └── partials
 	├── pc
 	│   ├── images
 	│   ├── scripts
@@ -375,6 +439,10 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│   │   ├── images
 	│   │   └── js
 	│   │       └── lib
+	│   ├── rp
+	│   │   ├── css
+	│   │   ├── images
+	│   │   └── js
 	│   ├── pc
 	│   │   ├── css
 	│   │   ├── images
@@ -413,6 +481,12 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 - [GitHub Issues](https://github.com/glitchworker/spresso/issues)
 
 ## Version History
+
+### v1.2.7
+
+- レスポンシブ用のテンプレートを導入
+- 上記に伴い app.config.json にて RESPONSIVE_TEMPLATE の切り替え項目を追加
+- README.md の修正
 
 ### v1.2.6
 

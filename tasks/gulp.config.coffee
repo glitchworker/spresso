@@ -75,6 +75,25 @@ paths =
       dest: rootDir.htdocs + '/assets/common/js/lib/'
     import:
       json: rootDir.src + '/import/data.json'
+  rp:
+    dest: rootDir.htdocs + '/'
+    ect:
+      json: rootDir.src + '/rp/templates/pages.json'
+      watch: rootDir.src + '/rp/templates/**/*.ect'
+    css:
+      concat: 'app.css'
+      sass: rootDir.src + '/rp/stylesheets/app.scss'
+      watch: rootDir.src + '/rp/stylesheets/**/*.scss'
+      dest: rootDir.htdocs + '/assets/rp/css/'
+    js:
+      plugin: rootDir.src + '/rp/scripts/plugin/**/*.js'
+      javascript: rootDir.src + '/rp/scripts/javascript/**/*.js'
+      coffee: rootDir.src + '/rp/scripts/coffee/**/*.coffee'
+      dest: rootDir.htdocs + '/assets/rp/js/'
+    img:
+      src: rootDir.src + '/rp/images/**/*.*'
+      postcss: 'assets/rp/images/'
+      dest: rootDir.htdocs + '/assets/rp/images/'
   pc:
     dest: rootDir.htdocs + '/'
     ect:
@@ -157,7 +176,10 @@ pathSearch = (dir, dirName) ->
     filePath = $.slash(file.path)
     fileDir = filePath.match(dir + '.*')[0]
     if dirName == 'templates'
-      fileReplace = fileDir.replace(rootDir.src + '/', paths.pc.dest).replace('/pc', '').replace('/templates', '')
+      if appConfig.RESPONSIVE_TEMPLATE
+        fileReplace = fileDir.replace(rootDir.src + '/', paths.rp.dest).replace('/rp', '').replace('/templates', '')
+      else
+        fileReplace = fileDir.replace(rootDir.src + '/', paths.pc.dest).replace('/pc', '').replace('/templates', '')
     else if dirName == 'images'
       fileReplace = fileDir.replace(rootDir.src + '/', paths.pc.dest + 'assets/')
     else if dirName == 'js' or dirName == 'css'
@@ -236,7 +258,113 @@ g.task 'img', ['img-check'], ->
 
 # build
 g.task 'build', ->
-  return runSequence 'import', 'libcopy', 'coffee', 'coffee-pc', 'img-pc', 'coffee-sp', 'img-sp', 'img', 'ect-pc', 'css-pc', 'ect-sp', 'css-sp', 'remove-files'
+  if appConfig.RESPONSIVE_TEMPLATE
+    return runSequence 'import', 'libcopy', 'coffee', 'img', 'coffee-rp', 'img-rp', 'ect-rp', 'css-rp', 'remove-files'
+  else
+    return runSequence 'import', 'libcopy', 'coffee', 'coffee-pc', 'img-pc', 'coffee-sp', 'img-sp', 'img', 'ect-pc', 'css-pc', 'ect-sp', 'css-sp', 'remove-files'
+
+#------------------------------------------------------
+# Setting for Responsive
+# Responsive 向け設定
+#------------------------------------------------------
+
+# ect json process rp
+g.task 'ect-rp', ->
+  jsonData = JSON.parse fs.readFileSync(paths.rp.ect.json)
+  jsonDataLength = Object.keys(jsonData).length - 1
+  jsonData.forEach (page, i) ->
+    g.src rootDir.src + '/rp/templates/' + page.template + '.ect'
+    .pipe $.plumber(plumberConfig)
+    # ect で JSON ファイルを変数に読み込む
+    .pipe $.data (file)->
+      staticData = page
+      staticData.SITE_URL = APP_SITE_URL
+      staticData.SITE_NAME = appConfig.SITE_NAME
+      return staticData
+    .pipe $.ect(data: page)
+    # pages.json に記述された 'path_filename' で決めたパスに出力
+    .pipe $.rename page.path_filename
+    .pipe g.dest paths.rp.dest
+    # html を stream オプションでリアルタイムに反映
+    .pipe bs.stream()
+    # src フォルダに存在しないファイルを htdocs から削除する
+    .pipe pathSearch(paths.rp.dest, 'templates').on 'end', (cb) ->
+      if i == jsonDataLength
+        pathArray.unshift('!' + paths.rp.dest + 'index.html')
+        pathArray.unshift(paths.rp.dest + '**/*.html')
+      return
+
+# sass compile process rp
+g.task 'css-rp', ->
+  g.src paths.rp.css.sass
+  .pipe $.plumber(plumberConfig)
+  .pipe $.if not isProduction, $.sourcemaps.init()
+  # sass で JSON ファイルを変数に読み込む
+  .pipe $.sass({
+    outputStyle: 'expanded'
+    functions:
+      'getJson($path)': require './script/sassGetJson'
+  }).on('error', $.sass.logError) # エラーでも止めない
+  # postcss で画像サイズを取得し変換する
+  .pipe $.postcss([
+    require('postcss-assets')(
+      loadPaths: [paths.common.img.postcss, paths.rp.img.postcss]
+      basePath: paths.rp.dest
+      relative: rootDir.htdocs + '/**/**/'
+    )
+    require('css-mqpacker')
+    require('postcss-sorting')(
+      require '../src/postcss-sorting.json' # 並び順の設定ファイル
+    )
+  ]).on('error', $.util.log) # エラーでも止めない
+  .pipe $.autoprefixer browsers: ['> 0%']
+  .pipe $.concat paths.rp.css.concat
+  .pipe $.if isProduction, $.minifyCss({advanced:false})
+  .pipe $.if isProduction, $.header(commentsCss, pkg: appConfig, filename: paths.rp.css.concat)
+  .pipe $.if not isProduction, $.sourcemaps.write('./')
+  .pipe g.dest paths.rp.css.dest
+  # CSS を stream オプションでリアルタイムに反映
+  .pipe bs.stream()
+  # sourcemaps を本番ビルド時に削除する
+  .pipe $.if isProduction, pathSearch(paths.rp.css.dest, 'css').on 'end', (cb) ->
+    pathArray.unshift(paths.rp.css.dest + '**/*.map')
+    return
+
+# coffee compile process rp
+g.task 'coffee-rp', ->
+  g.src([paths.rp.js.plugin, paths.rp.js.javascript, paths.rp.js.coffee])
+  .pipe $.plumber(plumberConfig)
+  .pipe $.webpack require './webpack.config.rp.coffee'
+  .pipe $.if isProduction, $.header(commentsJs, pkg: appConfig, filename: 'メインスクリプト')
+  .pipe g.dest paths.rp.js.dest
+  # JS を stream オプションでリアルタイムに反映
+  .pipe bs.stream()
+  # sourcemaps を本番ビルド時に削除する
+  .pipe $.if isProduction, pathSearch(paths.rp.js.dest, 'js').on 'end', (cb) ->
+    pathArray.unshift(paths.rp.js.dest + '**/*.map')
+    return
+
+# img check rp
+g.task 'img-rp-check', ->
+  return g.src paths.rp.img.src
+  .pipe $.plumber(plumberConfig)
+  # src フォルダに存在しないファイルを htdocs から削除する
+  .pipe pathSearch(rootDir.src + '/rp/images/', 'images').on 'end', (cb) ->
+    pathArray.unshift(paths.rp.img.dest + '**/*.*')
+    return
+
+# img optimize rp
+g.task 'img-rp', ['img-rp-check'], ->
+  g.src paths.rp.img.src
+  .pipe $.plumber(plumberConfig)
+  # 画像に変更がない場合、出力しない
+  .pipe $.changed(paths.rp.img.dest, { hasChanged: $.changed.compareSha1Digest })
+  # .pipe $.imagemin()
+  .pipe g.dest paths.rp.img.dest
+
+# build rp
+g.task 'build-rp', ->
+  return runSequence 'import', 'libcopy', 'coffee', 'img', 'coffee-rp', 'img-rp', 'ect-rp', 'css-rp', 'remove-files'
 
 #------------------------------------------------------
 # Setting for PC
@@ -467,7 +595,10 @@ g.task 'build-sp', ->
 
 # diff process
 g.task 'diff', ['clean', 'clean-temp'], ->
-  return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-pc', 'css-pc', 'coffee-pc', 'img-pc', 'ect-sp', 'css-sp', 'coffee-sp', 'img-sp', 'temp'
+  if appConfig.RESPONSIVE_TEMPLATE
+    return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-rp', 'css-rp', 'coffee-rp', 'img-rp', 'temp'
+  else
+    return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-pc', 'css-pc', 'coffee-pc', 'img-pc', 'ect-sp', 'css-sp', 'coffee-sp', 'img-sp', 'temp'
 
 # temp process
 g.task 'temp', ->
@@ -511,7 +642,10 @@ g.task 'remove-files', (cb) ->
 
 # clean
 g.task 'clean', (cb) ->
-  return rimraf paths.pc.dest, cb
+  if appConfig.RESPONSIVE_TEMPLATE
+    return rimraf paths.rp.dest, cb
+  else
+    return rimraf paths.pc.dest, cb
 
 # clean sp
 g.task 'clean-sp', (cb) ->
@@ -549,6 +683,14 @@ g.task 'watch', ['bs'], ->
   $.watch paths.common.img.src, ->
     g.start 'img' # img ファイルが変更または追加されたらビルド出力
 
+# watch rp
+g.task 'watch-rp', ['bs'], ->
+  g.watch [paths.rp.ect.watch, paths.rp.ect.json], ['ect-rp']
+  g.watch paths.rp.css.watch, ['css-rp']
+  g.watch [paths.rp.js.plugin, paths.rp.js.javascript, paths.rp.js.coffee], ['coffee-rp']
+  $.watch paths.rp.img.src, ->
+    g.start 'img-rp' # img ファイルが変更または追加されたらビルド出力
+
 # watch pc
 g.task 'watch-pc', ['bs'], ->
   g.watch [paths.pc.ect.watch, paths.pc.ect.json], ['ect-pc']
@@ -566,4 +708,7 @@ g.task 'watch-sp', ['bs'], ->
     g.start 'img-sp' # img ファイルが変更または追加されたらビルド出力
 
 # default task
-g.task 'default', ['bs', 'watch-pc', 'watch-sp', 'watch']
+if appConfig.RESPONSIVE_TEMPLATE
+  g.task 'default', ['bs', 'watch-rp', 'watch']
+else
+  g.task 'default', ['bs', 'watch-pc', 'watch-sp', 'watch']
