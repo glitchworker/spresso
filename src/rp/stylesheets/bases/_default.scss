@@ -8,6 +8,9 @@ body {
   color: $FONT_COLOR;
   font-size: $FONT_SIZE;
   font-family: $FONT_FAMILY;
+  // iPhone text fix
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
 }
 
 a {

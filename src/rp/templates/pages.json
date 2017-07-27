@@ -5,7 +5,7 @@
     "template": "index",
     "language": "ja",
     "namespace": "website",
-    "redirect": true,
+    "redirect": false,
     "head": [
       {
         "meta_charset": "UTF-8",
@@ -42,7 +42,7 @@
     "template": "hoge",
     "language": "ja",
     "namespace": "article",
-    "redirect": true,
+    "redirect": false,
     "head": [
       {
         "meta_charset": "UTF-8",
@@ -79,7 +79,7 @@
     "template": "fuga",
     "language": "ja",
     "namespace": "article",
-    "redirect": true,
+    "redirect": false,
     "head": [
       {
         "meta_charset": "UTF-8",

@@ -486,6 +486,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 - レスポンシブ用のテンプレートを導入
 - 上記に伴い app.config.json にて RESPONSIVE_TEMPLATE の切り替え項目を追加
+- scss 関係の要素の整理
 - README.md の修正
 
 ### v1.2.6
