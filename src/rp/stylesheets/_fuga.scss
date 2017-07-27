@@ -6,3 +6,15 @@
 .page-fuga {
   background: #fff;
 }
+
+@media only screen and (min-width: 781px) {
+  .page-fuga {
+    background: #fff;
+  }
+}
+
+@media only screen and (max-width: 780px) {
+  .page-fuga {
+    background: #fff;
+  }
+}
