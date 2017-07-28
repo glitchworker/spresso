@@ -364,15 +364,15 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│           ├── index.ect
 	│           └── pages.json
 	└── tasks
-		├── gulp.config.coffee
-		├── script
-		│   ├── getTime.coffee
-		│   ├── getTimeStamp.coffee
-		│   └── sassGetJson.coffee
-		├── webpack.config.base.coffee
-		├── webpack.config.pc.coffee
-		├── webpack.config.sp.coffee
-		└── webpack.config.common.coffee
+	    ├── gulp.config.coffee
+	    ├── script
+	    │   ├── getTime.coffee
+	    │   ├── getTimeStamp.coffee
+	    │   └── sassGetJson.coffee
+	    ├── webpack.config.base.coffee
+	    ├── webpack.config.pc.coffee
+	    ├── webpack.config.sp.coffee
+	    └── webpack.config.common.coffee
 
 ### src
 
@@ -417,18 +417,18 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│       ├── bases
 	│       └── partials
 	└── sp
-		├── images
-		├── scripts
-		│   ├── coffee
-		│   │   └── modules
-		│   ├── javascript
-		│   └── plugin
-		├── stylesheets
-		│   ├── bases
-		│   └── partials
-		└── templates
-			├── bases
-			└── partials
+	    ├── images
+	    ├── scripts
+	    │   ├── coffee
+	    │   │   └── modules
+	    │   ├── javascript
+	    │   └── plugin
+	    ├── stylesheets
+	    │   ├── bases
+	    │   └── partials
+	    └── templates
+	        ├── bases
+	        └── partials
 
 
 ### htdocs
