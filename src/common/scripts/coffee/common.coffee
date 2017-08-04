@@ -136,7 +136,7 @@ class Common
     rspace2: '-.5em'
 
   # カーニングのやつ @param $target
-  textKerning = ($target) ->
+  @textKerning: ($target) ->
     Array::forEach.call document.querySelectorAll($target), (el, i) ->
       __$target = el
 
