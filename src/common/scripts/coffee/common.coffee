@@ -111,7 +111,6 @@ class Common
         url = 'http://line.me/R/msg/text/?'
         url += encodeURIComponent(i_text)
         url += '%20' + encodeURIComponent(i_url)
-        console.log url
         window.open url, 'share', [
           'width=550'
           'height=450'
@@ -131,58 +130,69 @@ class Common
   #------------------------------------------------------
 
   # CSS設定 @type {{first: string, rspace: string, rspace2: string}}
-  _defaultCSS =
+  textKerningCSS =
     first: '-.5em'
     rspace: '-.75em'
     rspace2: '-.5em'
 
   # カーニングのやつ @param $target
-  @textKerning: ($target) ->
-    $target.each ->
-      __$target = $(this)
+  textKerning = ($target) ->
+    Array::forEach.call document.querySelectorAll($target), (el, i) ->
+      __$target = el
 
       # altとtitleをいったん格納する
       __alt = []
       __title = []
-      __$img = __$target.find('img')
-      __$a = __$target.find('a')
+      __$img = __$target.getElementsByTagName('img')
+      __$a = __$target.getElementsByTagName('a')
       if __$img.length > 0
-        __$img.each ->
-          __alt.push $(this).attr('alt')
-          $(this).removeAttr 'alt'
+        Array::forEach.call __$img, (el, i) ->
+          __alt.push el.getAttribute('alt')
+          el.setAttribute 'alt', ''
           return
       if __$a.length > 0
-        __$a.each ->
-          __title.push $(this).attr('title')
-          $(this).removeAttr 'title'
+        Array::forEach.call __$a, (el, i) ->
+          __title.push el.getAttribute('title')
+          el.setAttribute 'title', ''
           return
 
       # もにょもにょする
-      __text = __$target.html()
+      __text = __$target.innerHTML
       __text = __text.replace(/^(\s|\t|\n)+|(\s|\t|\n)+$/g, '') #文章の頭とケツの半角・全角スペース、タブ、改行削除
       __text = __text.replace(/(\n)((\s|\t)+)/g, '') #改行後の頭の半角・全角スペース、タブ削除
       __text = __text.replace(/^(（|〔|［|｛|〈|《|「|『|【)/g, '<span class=\'rspace-first\'>$1</span>') #文頭調整
       __text = __text.replace(/(<br \/>|<br>)(（|〔|［|｛|〈|《|「|『|【)/g, '$1<span class=\'rspace-first\'>$2</span>') #br改行後の文頭調整
       __text = __text.replace(/(、|。|，|．|）|〕|］|｝|〉|》|」|』|】)(、|。|，|．|）|〕|］|｝|〉|》|」|』|】)(（|〔|［|｛|〈|《|「|『|【)/g, '<span class=\'rspace2\'>$1</span><span class=\'rspace\'>$2</span>$3')
       __text = __text.replace(/(、|。|，|．|）|〕|］|｝|〉|》|」|』|】)(（|〔|［|｛|〈|《|「|『|【)/g, '<span class=\'rspace2\'>$1</span>$2')
-      __$target.html __text
-      __$target.find('.rspace-first').css
-        position: 'relative'
-        left: _defaultCSS.first
-        letterSpacing: _defaultCSS.first
-      __$target.find('.rspace').css letterSpacing: _defaultCSS.rspace
-      __$target.find('.rspace2').css letterSpacing: _defaultCSS.rspace2
+      __$target.innerHTML = __text
+      target = __$target.querySelectorAll('.rspace-first')
+      target2 = __$target.querySelectorAll('.rspace')
+      target3 = __$target.querySelectorAll('.rspace2')
+      i = 0
+      while i < target.length
+        target[i].style.position = 'relative'
+        target[i].style.left = textKerningCSS.first
+        target[i].style.letterSpacing = textKerningCSS.first
+        i++
+      i = 0
+      while i < target2.length
+        target2[i].style.letterSpacing = textKerningCSS.rspace
+        i++
+      i = 0
+      while i < target3.length
+        target3[i].style.letterSpacing = textKerningCSS.rspace2
+        i++
 
       # altとtitleつけなおす
-      __$img = __$target.find('img')
-      __$a = __$target.find('a')
+      __$img = __$target.getElementsByTagName('img')
+      __$a = __$target.getElementsByTagName('a')
       if __$img.length > 0
-        __$img.each (i) ->
-          $(this).attr 'alt': __alt[i]
+        Array::forEach.call __$img, (el, i) ->
+          el.setAttribute 'alt', __alt[i]
           return
       if __$a.length > 0
-        __$a.each (i) ->
-          $(this).attr 'title': __title[i]
+        Array::forEach.call __$a, (el, i) ->
+          el.setAttribute 'title', __title[i]
           return
 
       return
