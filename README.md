@@ -248,6 +248,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│   │   │   └── image.png
 	│   │   ├── scripts
 	│   │   │   ├── coffee
+	│   │   │   │   ├── common.coffee
 	│   │   │   │   ├── fuga.coffee
 	│   │   │   │   ├── hoge.coffee
 	│   │   │   │   ├── index.coffee
@@ -290,6 +291,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│   │   │   └── image.png
 	│   │   ├── scripts
 	│   │   │   ├── coffee
+	│   │   │   │   ├── common.coffee
 	│   │   │   │   ├── fuga.coffee
 	│   │   │   │   ├── hoge.coffee
 	│   │   │   │   ├── index.coffee
@@ -332,6 +334,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│       │   └── image.png
 	│       ├── scripts
 	│       │   ├── coffee
+	│       │   │   ├── common.coffee
 	│       │   │   ├── fuga.coffee
 	│       │   │   ├── hoge.coffee
 	│       │   │   ├── index.coffee
@@ -481,6 +484,13 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 - [GitHub Issues](https://github.com/glitchworker/spresso/issues)
 
 ## Version History
+
+### v1.2.8
+
+- 文字をカーニング調整するスクリプトを Common に追加
+- Common.textKerning $('.kerning') などをスクリプト内に書けば使用出来ます。
+- 各 src 内の coffee 内に common.coffee のファイルを追加
+- README.md の修正
 
 ### v1.2.7
 

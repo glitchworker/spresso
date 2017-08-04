@@ -126,4 +126,66 @@ class Common
       ), false
     return
 
+  #------------------------------------------------------
+  # 文字をカーニング調整
+  #------------------------------------------------------
+
+  # CSS設定 @type {{first: string, rspace: string, rspace2: string}}
+  _defaultCSS =
+    first: '-.5em'
+    rspace: '-.75em'
+    rspace2: '-.5em'
+
+  # カーニングのやつ @param $target
+  @textKerning: ($target) ->
+    $target.each ->
+      __$target = $(this)
+
+      # altとtitleをいったん格納する
+      __alt = []
+      __title = []
+      __$img = __$target.find('img')
+      __$a = __$target.find('a')
+      if __$img.length > 0
+        __$img.each ->
+          __alt.push $(this).attr('alt')
+          $(this).removeAttr 'alt'
+          return
+      if __$a.length > 0
+        __$a.each ->
+          __title.push $(this).attr('title')
+          $(this).removeAttr 'title'
+          return
+
+      # もにょもにょする
+      __text = __$target.html()
+      __text = __text.replace(/^(\s|\t|\n)+|(\s|\t|\n)+$/g, '') #文章の頭とケツの半角・全角スペース、タブ、改行削除
+      __text = __text.replace(/(\n)((\s|\t)+)/g, '') #改行後の頭の半角・全角スペース、タブ削除
+      __text = __text.replace(/^(（|〔|［|｛|〈|《|「|『|【)/g, '<span class=\'rspace-first\'>$1</span>') #文頭調整
+      __text = __text.replace(/(<br \/>|<br>)(（|〔|［|｛|〈|《|「|『|【)/g, '$1<span class=\'rspace-first\'>$2</span>') #br改行後の文頭調整
+      __text = __text.replace(/(、|。|，|．|）|〕|］|｝|〉|》|」|』|】)(、|。|，|．|）|〕|］|｝|〉|》|」|』|】)(（|〔|［|｛|〈|《|「|『|【)/g, '<span class=\'rspace2\'>$1</span><span class=\'rspace\'>$2</span>$3')
+      __text = __text.replace(/(、|。|，|．|）|〕|］|｝|〉|》|」|』|】)(（|〔|［|｛|〈|《|「|『|【)/g, '<span class=\'rspace2\'>$1</span>$2')
+      __$target.html __text
+      __$target.find('.rspace-first').css
+        position: 'relative'
+        left: _defaultCSS.first
+        letterSpacing: _defaultCSS.first
+      __$target.find('.rspace').css letterSpacing: _defaultCSS.rspace
+      __$target.find('.rspace2').css letterSpacing: _defaultCSS.rspace2
+
+      # altとtitleつけなおす
+      __$img = __$target.find('img')
+      __$a = __$target.find('a')
+      if __$img.length > 0
+        __$img.each (i) ->
+          $(this).attr 'alt': __alt[i]
+          return
+      if __$a.length > 0
+        __$a.each (i) ->
+          $(this).attr 'title': __title[i]
+          return
+
+      return
+    return
+
 module.exports = Common

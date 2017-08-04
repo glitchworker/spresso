@@ -22,10 +22,12 @@ class Index
       (_isMobile) and (location.href = url + location.search)
 
     #------------------------------------------------------
-    # Social Share - SNSシェアボタンの処理
+    # DOMContentLoaded - 初回読み込み後に実行
     #------------------------------------------------------
 
     document.addEventListener 'DOMContentLoaded', (->
+
+      # Social Share - SNSシェアボタンの処理
       SITE_URL = location.href.replace('#', '') + location.search
       SITE_SHARE = document.querySelector('meta[property="og:description"]').getAttribute('content')
       Common.twitterShare '.tw', SITE_URL, SITE_SHARE
