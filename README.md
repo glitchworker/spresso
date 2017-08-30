@@ -478,12 +478,25 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 - [Gulp](http://gulpjs.com/)
 - [npm](https://www.npmjs.com/)
 - [Yarn](https://yarnpkg.com/)
+- [ect](http://ectjs.com/)
+- [Scss](http://sass-lang.com/)
+- [PostCSS](http://postcss.org/)
+- [CoffeeScript](http://coffeescript.org/)
+- [webpack](https://webpack.js.org/)
+- [Browsersync](https://www.browsersync.io/)
 
 ## Issues
 
 - [GitHub Issues](https://github.com/glitchworker/spresso/issues)
 
 ## Version History
+
+### v1.2.9
+
+- package.json の全バージョンの更新
+- coffee-loader を 0.8.0 にした際のモジュールエラーを修正
+- 上記に伴い coffee-script から coffeescript に変更
+- README.md の修正
 
 ### v1.2.8
 
