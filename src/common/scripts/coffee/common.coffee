@@ -60,7 +60,8 @@ class Common
 
   @twitterShare: (i_target, i_url, i_text) ->
     if document.querySelector(i_target) != null
-      document.querySelector(i_target).addEventListener 'click', (->
+      document.querySelector(i_target).addEventListener 'click', ((e) ->
+        e.preventDefault()
         url = 'http://twitter.com/share?url='
         url += encodeURIComponent(i_url)
         url += '&text=' + encodeURIComponent(i_text)
@@ -84,7 +85,8 @@ class Common
 
   @facebookShare: (i_target, i_url) ->
     if document.querySelector(i_target) != null
-      document.querySelector(i_target).addEventListener 'click', (->
+      document.querySelector(i_target).addEventListener 'click', ((e) ->
+        e.preventDefault()
         url = 'http://www.facebook.com/share.php?u='
         url += encodeURIComponent(i_url)
         window.open url, 'share', [
@@ -107,7 +109,8 @@ class Common
 
   @lineShare: (i_target, i_url, i_text) ->
     if document.querySelector(i_target) != null
-      document.querySelector(i_target).addEventListener 'click', (->
+      document.querySelector(i_target).addEventListener 'click', ((e) ->
+        e.preventDefault()
         url = 'http://line.me/R/msg/text/?'
         url += encodeURIComponent(i_text)
         url += '%20' + encodeURIComponent(i_url)
