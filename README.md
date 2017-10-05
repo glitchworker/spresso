@@ -491,6 +491,16 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ## Version History
 
+### v1.3.0
+
+- package.json の全バージョンの更新
+- mixin にレスポンシブ用の font_vw() & font_calc() 関数を追加
+- common.coffee の LINE シェアロジックを PC 用と SP 用に振り分けるように実装
+- common.coffee に Google+ 用のシェア追加
+- iOS 9 での viewport の設定で inital-scale が無視されるのを shrink-to-fit=no を追加して対応
+- meta タグに googlebot のGoogle検索用のボットを追加
+- README.md の修正
+
 ### v1.2.9
 
 - package.json の全バージョンの更新
@@ -501,7 +511,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 ### v1.2.8
 
 - 文字をカーニング調整するスクリプトを Common に追加
-- Common.textKerning('.kerning') などをスクリプト内に書けば使用出来ます。
+- カーニングしたい要素に kerning のクラス名を追加すれば自動的に使用出来ます。
 - 各 src 内の coffee 内に common.coffee のファイルを追加
 - README.md の修正
 

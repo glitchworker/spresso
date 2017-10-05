@@ -111,9 +111,37 @@ class Common
     if document.querySelector(i_target) != null
       document.querySelector(i_target).addEventListener 'click', ((e) ->
         e.preventDefault()
-        url = 'http://line.me/R/msg/text/?'
-        url += encodeURIComponent(i_text)
-        url += '%20' + encodeURIComponent(i_url)
+        if mobileType[0] is 'mobile'
+          url = 'http://line.me/R/msg/text/?'
+          url += encodeURIComponent(i_text)
+          url += '%20' + encodeURIComponent(i_url)
+        else
+          url = 'https://timeline.line.me/social-plugin/share?url='
+          url += encodeURIComponent(i_url)
+        window.open url, 'share', [
+          'width=550'
+          'height=450'
+          'location=yes'
+          'resizable=yes'
+          'toolbar=no'
+          'menubar=no'
+          'scrollbars=no'
+          'status=no'
+        ].join(',')
+        false
+      ), false
+    return
+
+  #------------------------------------------------------
+  # Google+のシェアダイアログを表示
+  #------------------------------------------------------
+
+  @googleShare: (i_target, i_url) ->
+    if document.querySelector(i_target) != null
+      document.querySelector(i_target).addEventListener 'click', ((e) ->
+        e.preventDefault()
+        url = 'https://plus.google.com/share?url='
+        url += encodeURIComponent(i_url)
         window.open url, 'share', [
           'width=550'
           'height=450'

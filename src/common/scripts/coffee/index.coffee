@@ -14,7 +14,7 @@ class Index
     # Redirect Scripts - PCとSPのリダイレクト処理
     #------------------------------------------------------
 
-    _isMobile = mobileType[0] is "mobile"
+    _isMobile = mobileType[0] is 'mobile'
 
     window.redirectPC = (url) ->
       _isMobile or (location.href = url + location.search)
@@ -30,9 +30,15 @@ class Index
       # Social Share - SNSシェアボタンの処理
       SITE_URL = location.href.replace('#', '') + location.search
       SITE_SHARE = document.querySelector('meta[property="og:description"]').getAttribute('content')
+
       Common.twitterShare '.tw', SITE_URL, SITE_SHARE
       Common.facebookShare '.fb', SITE_URL
       Common.lineShare '.li', SITE_URL, SITE_SHARE
+      Common.googleShare '.gp', SITE_URL
+
+      # Font Kerning - フォントのカーニング処理
+      Common.textKerning '.kerning'
+
       return
     ), false
 
