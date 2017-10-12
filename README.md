@@ -493,7 +493,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ### v1.3.0
 
-- package.json の全バージョンの更新
+- package.json の全バージョンの更新（coffeescript 以外）
 - mixin の fonsSize に font_vw() & font_calc() 関数を追加
 - mixin にCSS3アニメーション時のチラツキを治す css3fix() 関数を追加
 - common.coffee の LINE シェアロジックを PC 用と SP 用に振り分けるように実装
