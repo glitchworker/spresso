@@ -47,6 +47,7 @@ else
 appConfig.UPDATE = update # app.config.json に UPDATE 項目を追加
 appConfig.TIMESTAMP = timestamp # app.config.json に TIMESTAMP 項目を追加
 appConfig.APP_SITE_URL = APP_SITE_URL # app.config.json に APP_SITE_URL 項目を追加
+appConfig.RESPONSIVE_TEMPLATE = String(appConfig.RESPONSIVE_TEMPLATE) # app.config.json の RESPONSIVE_TEMPLATE 項目を String 型に変換
 
 #------------------------------------------------------
 # Path Settings
@@ -176,7 +177,7 @@ pathSearch = (dir, dirName) ->
     filePath = $.slash(file.path)
     fileDir = filePath.match(dir + '.*')[0]
     if dirName == 'templates'
-      if appConfig.RESPONSIVE_TEMPLATE
+      if appConfig.RESPONSIVE_TEMPLATE == 'true'
         fileReplace = fileDir.replace(rootDir.src + '/', paths.rp.dest).replace('/rp', '').replace('/templates', '')
       else
         fileReplace = fileDir.replace(rootDir.src + '/', paths.pc.dest).replace('/pc', '').replace('/templates', '')
@@ -258,7 +259,7 @@ g.task 'img', ['img-check'], ->
 
 # build
 g.task 'build', ->
-  if appConfig.RESPONSIVE_TEMPLATE
+  if appConfig.RESPONSIVE_TEMPLATE == 'true'
     return runSequence 'import', 'libcopy', 'coffee', 'img', 'coffee-rp', 'img-rp', 'ect-rp', 'css-rp', 'remove-files'
   else
     return runSequence 'import', 'libcopy', 'coffee', 'coffee-pc', 'img-pc', 'coffee-sp', 'img-sp', 'img', 'ect-pc', 'css-pc', 'ect-sp', 'css-sp', 'remove-files'
@@ -595,7 +596,7 @@ g.task 'build-sp', ->
 
 # diff process
 g.task 'diff', ['clean', 'clean-temp'], ->
-  if appConfig.RESPONSIVE_TEMPLATE
+  if appConfig.RESPONSIVE_TEMPLATE == 'true'
     return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-rp', 'css-rp', 'coffee-rp', 'img-rp', 'temp'
   else
     return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-pc', 'css-pc', 'coffee-pc', 'img-pc', 'ect-sp', 'css-sp', 'coffee-sp', 'img-sp', 'temp'
@@ -642,7 +643,7 @@ g.task 'remove-files', (cb) ->
 
 # clean
 g.task 'clean', (cb) ->
-  if appConfig.RESPONSIVE_TEMPLATE
+  if appConfig.RESPONSIVE_TEMPLATE == 'true'
     return rimraf paths.rp.dest, cb
   else
     return rimraf paths.pc.dest, cb
@@ -708,7 +709,7 @@ g.task 'watch-sp', ['bs'], ->
     g.start 'img-sp' # img ファイルが変更または追加されたらビルド出力
 
 # default task
-if appConfig.RESPONSIVE_TEMPLATE
+if appConfig.RESPONSIVE_TEMPLATE == 'true'
   g.task 'default', ['bs', 'watch-rp', 'watch']
 else
   g.task 'default', ['bs', 'watch-pc', 'watch-sp', 'watch']

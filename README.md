@@ -43,6 +43,9 @@ output の項目に出力先のパスを入力することによって書き出�
 ```RESPONSIVE_TEMPLATE``` の項目に何でも良いので入力されている場合、PC用とSP用のビルドはスキップされ
 レスポンシブ用のテンプレートのみビルド対象になります。
 
+**v1.3.0 から src フォルダの app.config.json のレスポンシブ切り替え用の項目を Boolean 型に変更しました。
+```RESPONSIVE_TEMPLATE``` に設定するものは、 true または false を入力してください。
+
 ## Setting
 
 ### project
@@ -500,6 +503,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 - common.coffee に Google+ 用のシェア追加
 - iOS 9 での viewport の設定で inital-scale が無視されるのを shrink-to-fit=no を追加して対応
 - meta タグに googlebot のGoogle検索用のボットを追加
+- app.config.json の RESPONSIVE_TEMPLATE 項目を Boolean 型に変更
 - README.md の修正
 
 ### v1.2.9
