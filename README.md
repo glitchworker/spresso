@@ -43,7 +43,7 @@ output の項目に出力先のパスを入力することによって書き出�
 ```RESPONSIVE_TEMPLATE``` の項目に何でも良いので入力されている場合、PC用とSP用のビルドはスキップされ
 レスポンシブ用のテンプレートのみビルド対象になります。
 
-**v1.3.0 から src フォルダの app.config.json のレスポンシブ切り替え用の項目を Boolean 型に変更しました。
+**v1.3.0 から src フォルダの app.config.json のレスポンシブ切り替え用の項目を Boolean 型に変更しました。**
 ```RESPONSIVE_TEMPLATE``` に設定するものは、 true または false を入力してください。
 
 ## Setting
@@ -377,6 +377,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	    │   └── sassGetJson.coffee
 	    ├── webpack.config.base.coffee
 	    ├── webpack.config.pc.coffee
+	    ├── webpack.config.rp.coffee
 	    ├── webpack.config.sp.coffee
 	    └── webpack.config.common.coffee
 
