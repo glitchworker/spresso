@@ -495,7 +495,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 
 ## Version History
 
-### v1.3.0
+### v1.3.1
 
 - package.json の全バージョンの更新（coffeescript 以外）
 - utils に tooltips の scss を追加
