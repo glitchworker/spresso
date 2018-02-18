@@ -116,6 +116,10 @@ output の項目に出力先のパスを入力することによって書き出�
 /src/common/stylesheets/_config.scss 内で json を取得しています。 ```#{$SITE_NAME}``` 等で参照できます。
 また sass の map 形式に変換されるので、 ```map-get($appConfig, [hash])``` 等で参照できます。
 
+**v1.3.2 から Gulp のタスク内に参照先を変更しました。**
+今まで sass の function 機能を使い、独自モジュールを使って上記の様に取得していたが
+sass に依存してしまうので gulp-header を使い Gulp タスク内で完結するようにしました。
+
 #### coffeescriptの場合
 
 | 記述 | 説明 |
