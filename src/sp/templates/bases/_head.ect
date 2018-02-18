@@ -13,8 +13,8 @@
 <% if head.meta_copyright?.length : %>
 <meta name="copyright" content="<%- head.meta_copyright %>">
 <% end %>
-<link rel="index" href="<%- @SITE_URL %>sp/">
-<link rel="canonical" href="<%- @SITE_URL %>">
+<link rel="index" href="<%- @SITE_URL %>sp/<%- @FILE_PATH %>">
+<link rel="canonical" href="<%- @SITE_URL %><%- @FILE_PATH %>">
 
 <!-- Viewportの設定 -->
 <meta name="viewport" content="<%- head.meta_viewport %>">

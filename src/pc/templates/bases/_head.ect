@@ -17,8 +17,8 @@
 <meta name="copyright" content="<%- head.meta_copyright %>">
 <% end %>
 <link rel="index" href="<%- @SITE_URL %>">
-<link rel="canonical" href="<%- @SITE_URL %>">
-<link rel="alternate" media="only screen and (max-width: 640px)" href="<%- @SITE_URL %>sp/">
+<link rel="canonical" href="<%- @SITE_URL %><%- @FILE_PATH %>">
+<link rel="alternate" media="only screen and (max-width: 640px)" href="<%- @SITE_URL %>sp/<%- @FILE_PATH %>">
 
 <!-- Viewportの設定 -->
 <meta name="viewport" content="<%- head.meta_viewport %>">

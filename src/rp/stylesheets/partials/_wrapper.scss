@@ -1,20 +1,20 @@
 /* ------------------------------------------- SASS Information
- Name:      partials/_header.scss
+ Name:      partials/_wrapper.scss
  Author:    #{$AUTHOR}
  Modifier:  #{$MODIFIER}
 ----------------------------------------------------------- */
-#section-header {
+#section-wrapper {
 
 }
 
 @include RESPONSIVE('PC', $MIN_WIDTH) {
-  #section-header {
+  #section-wrapper {
 
   }
 }
 
 @include RESPONSIVE('SP', $MIN_WIDTH) {
-  #section-header {
+  #section-wrapper {
 
   }
 }

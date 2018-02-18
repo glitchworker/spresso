@@ -17,8 +17,7 @@
 <meta name="copyright" content="<%- head.meta_copyright %>">
 <% end %>
 <link rel="index" href="<%- @SITE_URL %>">
-<link rel="canonical" href="<%- @SITE_URL %>">
-<link rel="alternate" media="only screen and (max-width: 640px)" href="<%- @SITE_URL %>sp/">
+<link rel="canonical" href="<%- @SITE_URL %><%- @FILE_PATH %>">
 
 <!-- Viewportの設定 -->
 <meta name="viewport" content="<%- head.meta_viewport %>">
@@ -99,9 +98,6 @@
 <script src="<%- @path %>assets/common/js/lib/jquery-3.2.1.min.js"></script>
 <% end %>
 <script src="<%- @path %>assets/common/js/common.js"></script>
-<% if @redirect : %>
-<script>redirectSP("<%- @REDIRECT_PATH %>");</script>
-<% end %>
 <% content 'addScriptsHeader' %>
 <% if head.meta_oldBrowser : %>
 

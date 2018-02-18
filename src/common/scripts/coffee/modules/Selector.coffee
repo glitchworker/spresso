@@ -22,6 +22,7 @@ class Selector
       l = l.concat(screenInfo.getPixelRatio())
       l = l.concat(screenInfo.getInfo())
       l = l.concat([ "js" ])
+
       updateScreen = ->
         e.className = e.className.replace(RegExp(" ?orientation_\\w+", "g"), "").replace(RegExp(" [min|max|cl]+[w|h]_\\d+", "g"), "")
         e.className = e.className + " " + screenInfo.getInfo().join(" ")
@@ -32,6 +33,7 @@ class Selector
       else
         window.attachEvent "resize", updateScreen
         window.attachEvent "orientationchange", updateScreen
+
       data = dataUriInfo.getImg()
       data.onload = data.onerror = ->
         e.className += " " + dataUriInfo.checkSupport().join(" ")
@@ -59,6 +61,7 @@ class Selector
       l[0] = (if n then n + l[0] else l[0])
       e.className = l.join(" " + n)
       e.className
+
     userAgent =
       ua: ""
       is: (t) ->
@@ -75,21 +78,26 @@ class Selector
         v
 
       getIphoneDeviceName: ->
-        ua = navigator.userAgent
-        if ua.indexOf('iPhone') > 0
-          if (window.screen.width >= 414 and window.screen.height >= 736) or (window.screen.width >= 736 and window.screen.height >= 414) and window.devicePixelRatio == 3
-            version = 'iphone6_7_plus iphone6_7s_plus'
-          else if (window.screen.width >= 375 and window.screen.height >= 667) or (window.screen.width >= 667 and window.screen.height >= 375) and window.devicePixelRatio == 2
-            version = 'iphone6_7 iphone6_7s'
-          else if (window.screen.width >= 568 and window.screen.height >= 320) or (window.screen.width >= 320 and window.screen.height >= 568) and window.devicePixelRatio == 2
-            version = 'iphone5 iphone5s iphone5c'
-          else if (window.screen.width >= 480 and window.screen.height >= 320) or (window.screen.width >= 320 and window.screen.height >= 480) and window.devicePixelRatio == 2
-            version = 'iphone4 iphone4s'
-          else if (window.screen.width >= 480 and window.screen.height >= 320) or (window.screen.width >= 320 and window.screen.height >= 480) and window.devicePixelRatio == 1
-            version = 'iphone3g iphone3gs'
+        is_ = userAgent.is
+        if is_('iphone')
+          version = ' '
+          if (window.screen.width == 375 and window.screen.height == 812) or (window.screen.width == 812 and window.screen.height == 375) and window.devicePixelRatio == 3
+            version += 'iphoneX'
+          else if (window.screen.width == 414 and window.screen.height == 736) or (window.screen.width == 736 and window.screen.height == 414) and window.devicePixelRatio == 3
+            version += 'iphone6_plus iphone7_plus iphone6s_plus iphone7s_plus iphone8_plus'
+          else if (window.screen.width == 375 and window.screen.height == 667) or (window.screen.width == 667 and window.screen.height == 375) and window.devicePixelRatio == 2
+            version += 'iphone6 iphone6s iphone7 iphone7s iphone8'
+          else if (window.screen.width == 320 and window.screen.height == 568) or (window.screen.width == 568 and window.screen.height == 320) and window.devicePixelRatio == 2
+            version += 'iphone5 iphone5s iphone5c'
+          else if (window.screen.width == 320 and window.screen.height == 480) or (window.screen.width == 480 and window.screen.height == 320) and window.devicePixelRatio == 2
+            version += 'iphone4 iphone4s'
+          else if (window.screen.width == 320 and window.screen.height == 480) or (window.screen.width == 480 and window.screen.height == 320) and window.devicePixelRatio == 1
+            version += 'iphone3 iphone3g iphone3gs'
+          else
+            version = ''
         else
           version = ''
-        return ' ' + version
+        return version
 
       getPlatform: ->
         ua = userAgent.ua

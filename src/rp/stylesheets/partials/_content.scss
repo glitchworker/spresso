@@ -7,13 +7,13 @@
 
 }
 
-@media only screen and (min-width: $MIN_WIDTH + 1) {
+@include RESPONSIVE('PC', $MIN_WIDTH) {
   #section-contents {
 
   }
 }
 
-@media only screen and (max-width: $MIN_WIDTH) {
+@include RESPONSIVE('SP', $MIN_WIDTH) {
   #section-contents {
 
   }

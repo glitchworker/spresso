@@ -1,20 +1,8 @@
 /* ------------------------------------------- SASS Information
- Name:      _fuga.scss
+ Name:      partials/_wrapper.scss
  Author:    #{$AUTHOR}
  Modifier:  #{$MODIFIER}
 ----------------------------------------------------------- */
-.page-fuga {
+#section-wrapper {
 
-}
-
-@include RESPONSIVE('PC', $MIN_WIDTH) {
-  .page-fuga {
-
-  }
-}
-
-@include RESPONSIVE('SP', $MIN_WIDTH) {
-  .page-fuga {
-
-  }
 }

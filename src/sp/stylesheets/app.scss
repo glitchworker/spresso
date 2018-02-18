@@ -29,6 +29,8 @@
 @import '../../common/stylesheets/mixins/opacity';
 @import '../../common/stylesheets/mixins/inlineBlock';
 @import '../../common/stylesheets/mixins/mediaqueries';
+@import '../../common/stylesheets/mixins/css3fix';
+@import '../../common/stylesheets/mixins/inlinefix';
 
 // -----------------------------------------------------------
 //  STYLES: bases
@@ -55,6 +57,7 @@
 //  STYLES: partials
 // -----------------------------------------------------------
 
+@import 'partials/wrapper';
 @import 'partials/header';
 @import 'partials/content';
 @import 'partials/footer';

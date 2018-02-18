@@ -223,9 +223,11 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│   │       ├── _reset.scss
 	│   │       ├── mixins
 	│   │       │   ├── _clearfix.scss
+	│   │       │   ├── _css3fix.scss
 	│   │       │   ├── _fontSize.scss
 	│   │       │   ├── _hideaway.scss
 	│   │       │   ├── _inlineBlock.scss
+	│   │       │   ├── _inlinefix.scss
 	│   │       │   ├── _mediaqueries.scss
 	│   │       │   └── _opacity.scss
 	│   │       ├── utils
@@ -235,6 +237,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│   │       │   ├── _font.scss
 	│   │       │   ├── _margin.scss
 	│   │       │   ├── _padding.scss
+	│   │       │   ├── _tooltips.scss
 	│   │       │   ├── _visibility.scss
 	│   │       │   └── _width.scss
 	│   │       └── vars
@@ -489,11 +492,30 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 - [webpack](https://webpack.js.org/)
 - [Browsersync](https://www.browsersync.io/)
 
+## Thanks
+
+- [Adobe Blank](https://github.com/adobe-fonts/adobe-blank)
+
 ## Issues
 
 - [GitHub Issues](https://github.com/glitchworker/spresso/issues)
 
 ## Version History
+
+### v1.3.2
+
+- package.json の全バージョンの更新（coffeescript 以外）
+- iPhoneX の UserAgent 振り分けを Selector.coffee に追加
+- iPhoneX の SafeArea 対応（UIWebViewにも対応する為、UserAgent を使用し動的なメディアクエリを追加）
+- pages.json の meta_viewport に minimum-scale=1 と viewport-fit=cover を追加
+- pages.json の meta_viewport から user-scalable=no と minimal-ui を削除
+- _reset.scss に inlinefix の追加（inline-block の隙間を Adobe Blank で解決）
+- レスポンシブ用の pages.json の redirect の項目を削除
+- アダプティブ用の REDIRECT_PATH の処理を調整
+- 上記に伴い、canonical と alternate タグの見直し
+- gulp-sass の function で変数を読み込んでいたのを gulp-header を使用して gulp 内で完結するように変更
+- section-wrapper で要素を囲うように templates を修正
+- README.md の修正
 
 ### v1.3.1
 

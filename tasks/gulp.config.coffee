@@ -281,6 +281,8 @@ g.task 'ect-rp', ->
       staticData = page
       staticData.SITE_URL = APP_SITE_URL
       staticData.SITE_NAME = appConfig.SITE_NAME
+      # 'index.html' を含まないファイルパスを出す
+      staticData.FILE_PATH = staticData.path_filename.replace 'index.html', ''
       return staticData
     .pipe $.ect(data: page)
     # pages.json に記述された 'path_filename' で決めたパスに出力
@@ -300,11 +302,19 @@ g.task 'css-rp', ->
   g.src paths.rp.css.sass
   .pipe $.plumber(plumberConfig)
   .pipe $.if not isProduction, $.sourcemaps.init()
-  # sass で JSON ファイルを変数に読み込む
+  # gulp-header を使用して JSON ファイルを sass 変数に読み込む
+  .pipe $.header(
+    '$SITE_URL: "' + appConfig.APP_SITE_URL + '";\n' +
+    '$SITE_NAME: "' + appConfig.SITE_NAME + '";\n' +
+    '$AUTHOR: "' + appConfig.AUTHOR + '";\n' +
+    '$MODIFIER: "' + appConfig.MODIFIER + '";\n' +
+    '$UPDATE: "' + appConfig.UPDATE + '";\n' +
+    '$TIMESTAMP: "?v=' + appConfig.TIMESTAMP + '";\n'
+  )
   .pipe $.sass({
     outputStyle: 'expanded'
-    functions:
-      'getJson($path)': require './script/sassGetJson'
+    # functions:
+    #   'getJson($path)': require './script/sassGetJson'
   }).on('error', $.sass.logError) # エラーでも止めない
   # postcss で画像サイズを取得し変換する
   .pipe $.postcss([
@@ -384,14 +394,10 @@ g.task 'ect-pc', ->
       staticData = page
       staticData.SITE_URL = APP_SITE_URL
       staticData.SITE_NAME = appConfig.SITE_NAME
-      # 'index.html' を含むファイルパスを '/' に置き換え、含まない場合はファイルパスを出す
-      if staticData.path_filename.indexOf('index.html') != -1
-        if staticData.template == 'index'
-          staticData.REDIRECT_PATH = staticData.path + 'sp/'
-        else
-          staticData.REDIRECT_PATH = staticData.path + 'sp/' + staticData.template + '/'
-      else
-        staticData.REDIRECT_PATH = staticData.path + 'sp/' + staticData.path_filename
+      # 'index.html' を含まないファイルパスを出す
+      staticData.FILE_PATH = staticData.path_filename.replace 'index.html', ''
+      # 'index.html' を含まないリダイレクトパスを出す
+      staticData.REDIRECT_PATH = staticData.path + 'sp/' + staticData.path_filename.replace 'index.html', ''
       return staticData
     .pipe $.ect(data: page)
     # pages.json に記述された 'path_filename' で決めたパスに出力
@@ -412,11 +418,19 @@ g.task 'css-pc', ->
   g.src paths.pc.css.sass
   .pipe $.plumber(plumberConfig)
   .pipe $.if not isProduction, $.sourcemaps.init()
-  # sass で JSON ファイルを変数に読み込む
+  # gulp-header を使用して JSON ファイルを sass 変数に読み込む
+  .pipe $.header(
+    '$SITE_URL: "' + appConfig.APP_SITE_URL + '";\n' +
+    '$SITE_NAME: "' + appConfig.SITE_NAME + '";\n' +
+    '$AUTHOR: "' + appConfig.AUTHOR + '";\n' +
+    '$MODIFIER: "' + appConfig.MODIFIER + '";\n' +
+    '$UPDATE: "' + appConfig.UPDATE + '";\n' +
+    '$TIMESTAMP: "?v=' + appConfig.TIMESTAMP + '";\n'
+  )
   .pipe $.sass({
     outputStyle: 'expanded'
-    functions:
-      'getJson($path)': require './script/sassGetJson'
+    # functions:
+    #   'getJson($path)': require './script/sassGetJson'
   }).on('error', $.sass.logError) # エラーでも止めない
   # postcss で画像サイズを取得し変換する
   .pipe $.postcss([
@@ -496,14 +510,10 @@ g.task 'ect-sp', ->
       staticData = page
       staticData.SITE_URL = APP_SITE_URL
       staticData.SITE_NAME = appConfig.SITE_NAME
-      # 'index.html' を含むファイルパスを '/' に置き換え、含まない場合はファイルパスを出す
-      if staticData.path_filename.indexOf('index.html') != -1
-        if staticData.template == 'index'
-          staticData.REDIRECT_PATH = staticData.path
-        else
-          staticData.REDIRECT_PATH = staticData.path + staticData.template + '/'
-      else
-        staticData.REDIRECT_PATH = staticData.path + staticData.path_filename
+      # 'index.html' を含まないファイルパスを出す
+      staticData.FILE_PATH = staticData.path_filename.replace 'index.html', ''
+      # 'index.html' を含まないリダイレクトパスを出す
+      staticData.REDIRECT_PATH = staticData.path + staticData.path_filename.replace 'index.html', ''
       return staticData
     .pipe $.ect(data: page)
     # pages.json に記述された 'path_filename' で決めたパスに出力
@@ -523,11 +533,19 @@ g.task 'css-sp', ->
   g.src paths.sp.css.sass
   .pipe $.plumber(plumberConfig)
   .pipe $.if not isProduction, $.sourcemaps.init()
-  # sass で JSON ファイルを変数に読み込む
+  # gulp-header を使用して JSON ファイルを sass 変数に読み込む
+  .pipe $.header(
+    '$SITE_URL: "' + appConfig.APP_SITE_URL + '";\n' +
+    '$SITE_NAME: "' + appConfig.SITE_NAME + '";\n' +
+    '$AUTHOR: "' + appConfig.AUTHOR + '";\n' +
+    '$MODIFIER: "' + appConfig.MODIFIER + '";\n' +
+    '$UPDATE: "' + appConfig.UPDATE + '";\n' +
+    '$TIMESTAMP: "?v=' + appConfig.TIMESTAMP + '";\n'
+  )
   .pipe $.sass({
     outputStyle: 'expanded'
-    functions:
-      'getJson($path)': require './script/sassGetJson'
+    # functions:
+    #   'getJson($path)': require './script/sassGetJson'
   }).on('error', $.sass.logError) # エラーでも止めない
   # postcss で画像サイズを取得し変換する
   .pipe $.postcss([

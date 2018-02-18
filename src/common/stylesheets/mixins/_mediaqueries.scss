@@ -47,3 +47,22 @@ $screen-lg: 1200px !default; // Large screen(lg） ->wide desktop
     }
   }
 }
+
+// Responsive & print
+@mixin RESPONSIVE($DEVICE, $BREAK_POINT) {
+  @if $DEVICE == "PRINT" {
+    @media print {
+      @content;
+    }
+  }
+  @else if $DEVICE == "PC" {
+    @media print, screen and (min-width: $BREAK_POINT + 1) {
+      @content;
+    }
+  }
+  @else if $DEVICE == "SP" {
+    @media only screen and (max-width: $BREAK_POINT) {
+      @content;
+    }
+  }
+}
