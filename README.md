@@ -504,6 +504,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 - 上記に伴い、canonical と alternate タグの見直し
 - gulp-sass の function で変数を読み込んでいたのを gulp-header を使用して gulp 内で完結するように変更
 - section-wrapper で要素を囲うように templates を修正
+- gulp.config.coffee の postcss の処理を調整
 - README.md の修正
 
 ### v1.3.1

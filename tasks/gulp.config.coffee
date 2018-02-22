@@ -85,6 +85,7 @@ paths =
       concat: 'app.css'
       sass: rootDir.src + '/rp/stylesheets/app.scss'
       watch: rootDir.src + '/rp/stylesheets/**/*.scss'
+      postcss: 'assets/rp/css/'
       dest: rootDir.htdocs + '/assets/rp/css/'
     js:
       plugin: rootDir.src + '/rp/scripts/plugin/**/*.js'
@@ -104,6 +105,7 @@ paths =
       concat: 'app.css'
       sass: rootDir.src + '/pc/stylesheets/app.scss'
       watch: rootDir.src + '/pc/stylesheets/**/*.scss'
+      postcss: 'assets/pc/css/'
       dest: rootDir.htdocs + '/assets/pc/css/'
     js:
       plugin: rootDir.src + '/pc/scripts/plugin/**/*.js'
@@ -123,6 +125,7 @@ paths =
       concat: 'app.css'
       sass: rootDir.src + '/sp/stylesheets/app.scss'
       watch: rootDir.src + '/sp/stylesheets/**/*.scss'
+      postcss: 'assets/sp/css/'
       dest: rootDir.htdocs + '/assets/sp/css/'
     js:
       plugin: rootDir.src + '/sp/scripts/plugin/**/*.js'
@@ -321,7 +324,7 @@ g.task 'css-rp', ->
     require('postcss-assets')(
       loadPaths: [paths.common.img.postcss, paths.rp.img.postcss]
       basePath: paths.rp.dest
-      relative: rootDir.htdocs + '/**/**/'
+      relative: paths.rp.css.postcss
     )
     require('css-mqpacker')
     require('postcss-sorting')(
@@ -437,7 +440,7 @@ g.task 'css-pc', ->
     require('postcss-assets')(
       loadPaths: [paths.common.img.postcss, paths.pc.img.postcss]
       basePath: paths.pc.dest
-      relative: rootDir.htdocs + '/**/**/'
+      relative: paths.pc.css.postcss
     )
     require('css-mqpacker')
     require('postcss-sorting')(
@@ -552,6 +555,7 @@ g.task 'css-sp', ->
     require('postcss-assets')(
       loadPaths: [paths.common.img.postcss, paths.sp.img.postcss]
       basePath: paths.pc.dest
+      relative: paths.sp.css.postcss
     )
     require('css-mqpacker')
     require('postcss-sorting')(
