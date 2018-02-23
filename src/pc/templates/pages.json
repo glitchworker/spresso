@@ -74,9 +74,9 @@
     ]
   },
   {
-    "path": "../",
-    "path_filename": "fuga/index.html",
-    "template": "fuga",
+    "path": "../../",
+    "path_filename": "hoge/fuga/index.html",
+    "template": "hoge_fuga",
     "language": "ja",
     "namespace": "article",
     "redirect": true,

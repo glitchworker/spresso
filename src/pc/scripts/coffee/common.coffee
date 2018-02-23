@@ -1,12 +1,9 @@
 class Common
 
   constructor: ->
-    @init()
+    @common()
 
-  init: ->
-    @main()
-
-  main: ->
+  common: ->
     # console.log 'Common'
 
 new Common()

@@ -3,6 +3,14 @@
  Author:    #{$AUTHOR}
  Modifier:  #{$MODIFIER}
 ----------------------------------------------------------- */
+html {
+  box-sizing: border-box;
+}
+
+*, *:after, *:before {
+  box-sizing: inherit;
+}
+
 body {
   background: $BASE_COLOR;
   color: $FONT_COLOR;
@@ -11,6 +19,7 @@ body {
   // iPhone text fix
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 a {
@@ -34,7 +43,7 @@ img {
 @include RESPONSIVE('PRINT', $MAX_WIDTH) {
   width: $MAX_WIDTH;
   transform: scale(.8);
-  transform-origin: 0 0
+  transform-origin: 0 0;
 }
 
 .iphoneX {

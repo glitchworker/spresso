@@ -1,0 +1,20 @@
+/* ------------------------------------------- SASS Information
+ Name:      _hoge_fuga.scss
+ Author:    #{$AUTHOR}
+ Modifier:  #{$MODIFIER}
+----------------------------------------------------------- */
+.page-hoge_fuga {
+
+}
+
+@include RESPONSIVE('PC', $MIN_WIDTH) {
+  .page-hoge_fuga {
+
+  }
+}
+
+@include RESPONSIVE('SP', $MIN_WIDTH) {
+  .page-hoge_fuga {
+
+  }
+}

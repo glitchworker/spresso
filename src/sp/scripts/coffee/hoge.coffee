@@ -2,12 +2,14 @@ class Hoge
 
   constructor: ->
     if Common.getName 'Hoge'
-      @init()
+      @hoge()
+    else if Common.getName 'Hoge_fuga'
+      @hoge_fuga()
 
-  init: ->
-    @main()
+  hoge: ->
+    # console.log 'hoge'
 
-  main: ->
-    # console.log 'Hoge'
+  hoge_fuga: ->
+    # console.log 'hoge_fuga'
 
 new Hoge()

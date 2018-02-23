@@ -3,6 +3,14 @@
  Author:    #{$AUTHOR}
  Modifier:  #{$MODIFIER}
 ----------------------------------------------------------- */
+html {
+  box-sizing: border-box;
+}
+
+*, *:after, *:before {
+  box-sizing: inherit;
+}
+
 body {
   background: $BASE_COLOR;
   color: $FONT_COLOR;

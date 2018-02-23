@@ -33,7 +33,7 @@
 <meta property="og:site_name" content="<%- @SITE_NAME %>">
 <meta property="og:title" content="<%- head.meta_title %>">
 <meta property="og:description" content="<%- head.meta_description %>">
-<meta property="og:url" content="<%- @SITE_URL %>">
+<meta property="og:url" content="<%- @SITE_URL %><%- @FILE_PATH %>">
 <meta property="og:image" content="<%- @SITE_URL %>assets/common/images/<%- head.meta_facebook_image %>">
 <meta property="og:locale" content="ja_JP">
 <% if head.meta_facebook_id?.length : %>
@@ -44,7 +44,7 @@
 
 <!-- Twitter用CARD指定 -->
 <meta name="twitter:card" content="<%- head.meta_twitter_card %>">
-<meta name="twitter:url" content="<%- @SITE_URL %>">
+<meta name="twitter:url" content="<%- @SITE_URL %><%- @FILE_PATH %>">
 <meta name="twitter:title" content="<%- head.meta_title %>">
 <meta name="twitter:description" content="<%- head.meta_description %>">
 <% if head.meta_twitter_account?.length : %>
@@ -74,7 +74,7 @@
 <!-- Windows用ピン指定 -->
 <meta name="application-name" content="<%- @SITE_NAME %>">
 <meta name="msapplication-tooltip" content="<%- head.meta_title %>">
-<meta name="msapplication-starturl" content="<%- @SITE_URL %>">
+<meta name="msapplication-starturl" content="<%- @SITE_URL %><%- @FILE_PATH %>">
 <meta name="msapplication-TileImage" content="<%- @path %>assets/common/images/<%- head.meta_windows_image %>">
 <meta name="msapplication-TileColor" content="<%- head.meta_windows_color %>">
 <% end %>

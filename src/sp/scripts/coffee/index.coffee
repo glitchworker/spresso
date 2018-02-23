@@ -2,12 +2,9 @@ class Index
 
   constructor: ->
     if Common.getName 'Index'
-      @init()
+      @index()
 
-  init: ->
-    @main()
-
-  main: ->
+  index: ->
     # console.log 'Index'
 
 new Index()
