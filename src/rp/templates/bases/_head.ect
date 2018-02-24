@@ -34,7 +34,7 @@
 <meta property="og:title" content="<%- head.meta_title %>">
 <meta property="og:description" content="<%- head.meta_description %>">
 <meta property="og:url" content="<%- @SITE_URL %><%- @FILE_PATH %>">
-<meta property="og:image" content="<%- @SITE_URL %><%- @ASSETS_DIR %>common/images/<%- head.meta_facebook_image %>">
+<meta property="og:image" content="<%- @BASE_SITE_URL %><%- @ASSETS_DIR %>common/images/<%- head.meta_facebook_image %>">
 <meta property="og:locale" content="ja_JP">
 <% if head.meta_facebook_id?.length : %>
 <meta property="fb:app_id" content="<%- head.meta_facebook_id %>">
@@ -51,7 +51,7 @@
 <meta name="twitter:site" content="@<%- head.meta_twitter_account %>">
 <meta name="twitter:creator" content="@<%- head.meta_twitter_account %>">
 <% end %>
-<meta name="twitter:image:src" content="<%- @SITE_URL %><%- @ASSETS_DIR %>common/images/<%- head.meta_facebook_image %>">
+<meta name="twitter:image:src" content="<%- @BASE_SITE_URL %><%- @ASSETS_DIR %>common/images/<%- head.meta_facebook_image %>">
 <% if head.meta_twitter_app_android?.length : %>
 <meta name="twitter:app:android" content="<%- head.meta_twitter_app_android %>">
 <% end %>
@@ -67,7 +67,7 @@
 <!-- Google+用CARD指定 -->
 <meta itemprop="name" content="<%- head.meta_title %>">
 <meta itemprop="description" content="<%- head.meta_description %>">
-<meta itemprop="image" content="<%- @SITE_URL %><%- @ASSETS_DIR %>common/images/<%- head.meta_facebook_image %>">
+<meta itemprop="image" content="<%- @BASE_SITE_URL %><%- @ASSETS_DIR %>common/images/<%- head.meta_facebook_image %>">
 <% end %>
 <% if head.meta_windows : %>
 
@@ -81,7 +81,7 @@
 
 <!-- アイコン指定(iOS/Android込) -->
 <% if head.meta_facebook : %>
-<link rel="image_src" href="<%- @SITE_URL %><%- @ASSETS_DIR %>common/images/<%- head.meta_facebook_image %>">
+<link rel="image_src" href="<%- @BASE_SITE_URL %><%- @ASSETS_DIR %>common/images/<%- head.meta_facebook_image %>">
 <% end %>
 <link rel="apple-touch-icon-precomposed" href="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/images/<%- head.meta_appleIcon %>">
 <link rel="shortcut icon" href="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/images/<%- head.meta_iconXhtml %>" type="image/x-icon">

@@ -49,6 +49,7 @@ config = {
     new webpack.ProvidePlugin
       Common: commonPath # common.coffee を Common という名前で共通で require する
     new webpack.DefinePlugin
+      'APP_BASE_SITE_URL': JSON.stringify APP_SITE_URL
       'APP_SITE_URL': JSON.stringify APP_SITE_URL + appConfig.CURRENT_DIR
       'APP_SITE_NAME': JSON.stringify appConfig.SITE_NAME
       'APP_AUTHOR': JSON.stringify appConfig.AUTHOR

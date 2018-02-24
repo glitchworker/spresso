@@ -46,6 +46,7 @@ else
 
 appConfig.UPDATE = update # app.config.json に UPDATE 項目を追加
 appConfig.TIMESTAMP = timestamp # app.config.json に TIMESTAMP 項目を追加
+appConfig.BASE_SITE_URL = APP_SITE_URL # app.config.json に BASE_SITE_URL 項目を追加
 appConfig.APP_SITE_URL = APP_SITE_URL + appConfig.CURRENT_DIR # app.config.json に APP_SITE_URL 項目を追加
 appConfig.RESPONSIVE_TEMPLATE = String(appConfig.RESPONSIVE_TEMPLATE) # app.config.json の RESPONSIVE_TEMPLATE 項目を String 型に変換
 
@@ -302,9 +303,12 @@ g.task 'ect-rp', ->
     # ect で JSON ファイルを変数に読み込む
     .pipe $.data (file)->
       staticData = page
-      staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + abspath2rel staticData.path_filename, ''
+      # サイトのURLおよびサイト名の取得
+      staticData.BASE_SITE_URL = appConfig.BASE_SITE_URL
       staticData.SITE_URL = appConfig.APP_SITE_URL
       staticData.SITE_NAME = appConfig.SITE_NAME
+      # ディレクトリの相対パス、アセットディレクトリのパスを取得
+      staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + abspath2rel staticData.path_filename, ''
       staticData.ASSETS_DIR = appConfig.ASSETS_DIR
       # 'index.html' を含まないファイルパスを出す
       staticData.FILE_PATH = staticData.path_filename.replace appConfig.CURRENT_DIR, ''
@@ -330,6 +334,7 @@ g.task 'css-rp', ->
   .pipe $.if not isProduction, $.sourcemaps.init()
   # gulp-header を使用して JSON ファイルを sass 変数に読み込む
   .pipe $.header(
+    '$BASE_SITE_URL: "' + appConfig.BASE_SITE_URL + '";\n' +
     '$SITE_URL: "' + appConfig.APP_SITE_URL + '";\n' +
     '$SITE_NAME: "' + appConfig.SITE_NAME + '";\n' +
     '$AUTHOR: "' + appConfig.AUTHOR + '";\n' +
@@ -418,9 +423,12 @@ g.task 'ect-pc', ->
     # ect で JSON ファイルを変数に読み込む
     .pipe $.data (file)->
       staticData = page
-      staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + abspath2rel staticData.path_filename, ''
+      # サイトのURLおよびサイト名の取得
+      staticData.BASE_SITE_URL = appConfig.BASE_SITE_URL
       staticData.SITE_URL = appConfig.APP_SITE_URL
       staticData.SITE_NAME = appConfig.SITE_NAME
+      # ディレクトリの相対パス、アセットディレクトリのパスを取得
+      staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + abspath2rel staticData.path_filename, ''
       staticData.ASSETS_DIR = appConfig.ASSETS_DIR
       # 'index.html' を含まないファイルパスを出す
       staticData.FILE_PATH = staticData.path_filename.replace appConfig.CURRENT_DIR, ''
@@ -449,6 +457,7 @@ g.task 'css-pc', ->
   .pipe $.if not isProduction, $.sourcemaps.init()
   # gulp-header を使用して JSON ファイルを sass 変数に読み込む
   .pipe $.header(
+    '$BASE_SITE_URL: "' + appConfig.BASE_SITE_URL + '";\n' +
     '$SITE_URL: "' + appConfig.APP_SITE_URL + '";\n' +
     '$SITE_NAME: "' + appConfig.SITE_NAME + '";\n' +
     '$AUTHOR: "' + appConfig.AUTHOR + '";\n' +
@@ -537,9 +546,12 @@ g.task 'ect-sp', ->
     # ect で JSON ファイルを変数に読み込む
     .pipe $.data (file)->
       staticData = page
-      staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + '../' + abspath2rel staticData.path_filename, ''
+      # サイトのURLおよびサイト名の取得
+      staticData.BASE_SITE_URL = appConfig.BASE_SITE_URL
       staticData.SITE_URL = appConfig.APP_SITE_URL
       staticData.SITE_NAME = appConfig.SITE_NAME
+      # ディレクトリの相対パス、アセットディレクトリのパスを取得
+      staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + '../' + abspath2rel staticData.path_filename, ''
       staticData.ASSETS_DIR = appConfig.ASSETS_DIR
       # 'index.html' を含まないファイルパスを出す
       staticData.FILE_PATH = staticData.path_filename.replace appConfig.CURRENT_DIR, ''
@@ -567,6 +579,7 @@ g.task 'css-sp', ->
   .pipe $.if not isProduction, $.sourcemaps.init()
   # gulp-header を使用して JSON ファイルを sass 変数に読み込む
   .pipe $.header(
+    '$BASE_SITE_URL: "' + appConfig.BASE_SITE_URL + '";\n' +
     '$SITE_URL: "' + appConfig.APP_SITE_URL + '";\n' +
     '$SITE_NAME: "' + appConfig.SITE_NAME + '";\n' +
     '$AUTHOR: "' + appConfig.AUTHOR + '";\n' +

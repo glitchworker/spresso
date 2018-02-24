@@ -83,7 +83,8 @@ output の項目に出力先のパスを入力することによって書き出�
 | <%- @CURRENT_DIR %> | カレントディレクトリ |
 | <%- @ASSETS_DIR %> | アセットディレクトリ |
 | <%- @path_filename %> | ファイルパス |
-| <%- @SITE_URL %> | サイトURL |
+| <%- @BASE_SITE_URL %> | サイトURL |
+| <%- @SITE_URL %> | サイトURL（カレントディレクトリを含む） |
 | <%- @SITE_NAME %> | サイト名 |
 
 /src/(rp か pc か sp)/templates/pages.json 内で json を取得しています。 ```<%- @meta_title %>``` 等で参照できます。
@@ -108,7 +109,8 @@ output の項目に出力先のパスを入力することによって書き出�
 
 | 記述 | 説明 |
 |----|---|
-| #{$SITE_URL} | サイトURL |
+| #{$BASE_SITE_URL} | サイトURL |
+| #{$SITE_URL} | サイトURL（カレントディレクトリを含む） |
 | #{$SITE_NAME} | サイト名 |
 | #{$AUTHOR} | サイト制作者 |
 | #{$MODIFIER} | サイト編集者 |
@@ -126,7 +128,8 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 
 | 記述 | 説明 |
 |----|---|
-| APP_SITE_URL | サイトURL |
+| APP_BASE_SITE_URL | サイトURL |
+| APP_SITE_URL | サイトURL（カレントディレクトリを含む） |
 | APP_SITE_NAME | サイト名 |
 | APP_AUTHOR | サイト制作者 |
 | APP_MODIFIER | サイト編集者 |
@@ -502,6 +505,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 - ect で呼び出せる変数に RELATIVE_PATH を追加（動的に取得された相対パスを取得）
 - app.config.json に ASSETS_DIR の項目を追加（ディレクトリ名の最後は必ず / で閉じる）
 - 上記に伴い assets フォルダの名称および設置場所を自由に出来るように変更
+- gulp.config.coffee に BASE_SITE_URL を追加
 - README.md の修正
 
 ### v1.3.2
