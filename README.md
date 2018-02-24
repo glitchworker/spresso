@@ -81,6 +81,7 @@ output の項目に出力先のパスを入力することによって書き出�
 |----|---|
 | <%- @RELATIVE_PATH %> | ディレクトリ相対パス |
 | <%- @CURRENT_DIR %> | カレントディレクトリ |
+| <%- @ASSETS_DIR %> | アセットディレクトリ |
 | <%- @path_filename %> | ファイルパス |
 | <%- @SITE_URL %> | サイトURL |
 | <%- @SITE_NAME %> | サイト名 |
