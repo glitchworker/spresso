@@ -3,6 +3,8 @@
 
 gulp / ect / sass / webpack (coffeescript)
 
+[![license](https://img.shields.io/github/license/glitchworker/spresso.svg)](https://github.com/glitchworker/spresso/blob/master/LICENSE)
+
 ## Usage
 
 1. [NodeJS](https://nodejs.org/en/) をダウンロードしインストールする
