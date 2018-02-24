@@ -344,8 +344,6 @@ g.task 'css-rp', ->
   )
   .pipe $.sass({
     outputStyle: 'expanded'
-    # functions:
-    #   'getJson($path)': require './script/sassGetJson'
   }).on('error', $.sass.logError) # エラーでも止めない
   # postcss で画像サイズを取得し変換する
   .pipe $.postcss([
@@ -467,8 +465,6 @@ g.task 'css-pc', ->
   )
   .pipe $.sass({
     outputStyle: 'expanded'
-    # functions:
-    #   'getJson($path)': require './script/sassGetJson'
   }).on('error', $.sass.logError) # エラーでも止めない
   # postcss で画像サイズを取得し変換する
   .pipe $.postcss([
@@ -589,8 +585,6 @@ g.task 'css-sp', ->
   )
   .pipe $.sass({
     outputStyle: 'expanded'
-    # functions:
-    #   'getJson($path)': require './script/sassGetJson'
   }).on('error', $.sass.logError) # エラーでも止めない
   # postcss で画像サイズを取得し変換する
   .pipe $.postcss([

@@ -506,6 +506,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 - app.config.json に ASSETS_DIR の項目を追加（ディレクトリ名の最後は必ず / で閉じる）
 - 上記に伴い assets フォルダの名称および設置場所を自由に出来るように変更
 - gulp.config.coffee に BASE_SITE_URL を追加
+- 未使用のファイルなどを削除＆整理
 - README.md の修正
 
 ### v1.3.2
