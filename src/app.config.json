@@ -1,7 +1,8 @@
 {
   "DEV_SITE_URL": "http://dev.hoge.com/",
   "PROD_SITE_URL": "http://prod.hoge.com/",
-  "CURRENT_DIR": "",
+  "CURRENT_DIR": "company/",
+  "ASSETS_DIR": "assets/",
   "SITE_NAME": "これはサイト名です",
   "AUTHOR": "これは作成者です",
   "MODIFIER": "これは編集者です",

@@ -57,6 +57,7 @@ appConfig.RESPONSIVE_TEMPLATE = String(appConfig.RESPONSIVE_TEMPLATE) # app.conf
 rootDir =
   src: 'src'
   htdocs: 'htdocs'
+  assets: appConfig.ASSETS_DIR
   archive: 'archives'
   temp: 'temp'
 
@@ -66,14 +67,14 @@ paths =
       plugin: rootDir.src + '/common/scripts/plugin/**/*.js'
       javascript: rootDir.src + '/common/scripts/javascript/**/*.js'
       coffee: rootDir.src + '/common/scripts/coffee/**/*.coffee'
-      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'common/js/'
+      dest: rootDir.htdocs + '/' + rootDir.assets + 'common/js/'
     img:
       src: rootDir.src + '/common/images/**/*.*'
-      postcss: 'assets/' + appConfig.CURRENT_DIR + 'common/images/'
-      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'common/images/'
+      postcss: '/' + rootDir.assets + 'common/images/'
+      dest: rootDir.htdocs + '/' + rootDir.assets + 'common/images/'
     libcopy:
       lib: rootDir.src + '/common/scripts/lib/**/*.js'
-      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'common/js/lib/'
+      dest: rootDir.htdocs + '/' + rootDir.assets + 'common/js/lib/'
     import:
       json: rootDir.src + '/import/data.json'
   rp:
@@ -85,17 +86,17 @@ paths =
       concat: 'app.css'
       sass: rootDir.src + '/rp/stylesheets/app.scss'
       watch: rootDir.src + '/rp/stylesheets/**/*.scss'
-      postcss: 'assets/' + appConfig.CURRENT_DIR + 'rp/css/'
-      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'rp/css/'
+      postcss: '/' + rootDir.assets + 'rp/css/'
+      dest: rootDir.htdocs + '/' + rootDir.assets + 'rp/css/'
     js:
       plugin: rootDir.src + '/rp/scripts/plugin/**/*.js'
       javascript: rootDir.src + '/rp/scripts/javascript/**/*.js'
       coffee: rootDir.src + '/rp/scripts/coffee/**/*.coffee'
-      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'rp/js/'
+      dest: rootDir.htdocs + '/' + rootDir.assets + 'rp/js/'
     img:
       src: rootDir.src + '/rp/images/**/*.*'
-      postcss: 'assets/' + appConfig.CURRENT_DIR + 'rp/images/'
-      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'rp/images/'
+      postcss: '/' + rootDir.assets + 'rp/images/'
+      dest: rootDir.htdocs + '/' + rootDir.assets + 'rp/images/'
   pc:
     dest: rootDir.htdocs + '/'
     ect:
@@ -105,17 +106,17 @@ paths =
       concat: 'app.css'
       sass: rootDir.src + '/pc/stylesheets/app.scss'
       watch: rootDir.src + '/pc/stylesheets/**/*.scss'
-      postcss: 'assets/' + appConfig.CURRENT_DIR + 'pc/css/'
-      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'pc/css/'
+      postcss: '/' + rootDir.assets + 'pc/css/'
+      dest: rootDir.htdocs + '/' + rootDir.assets + 'pc/css/'
     js:
       plugin: rootDir.src + '/pc/scripts/plugin/**/*.js'
       javascript: rootDir.src + '/pc/scripts/javascript/**/*.js'
       coffee: rootDir.src + '/pc/scripts/coffee/**/*.coffee'
-      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'pc/js/'
+      dest: rootDir.htdocs + '/' + rootDir.assets + 'pc/js/'
     img:
       src: rootDir.src + '/pc/images/**/*.*'
-      postcss: 'assets/' + appConfig.CURRENT_DIR + 'pc/images/'
-      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'pc/images/'
+      postcss: '/' + rootDir.assets + 'pc/images/'
+      dest: rootDir.htdocs + '/' + rootDir.assets + 'pc/images/'
   sp:
     dest: rootDir.htdocs + '/sp/'
     ect:
@@ -125,17 +126,17 @@ paths =
       concat: 'app.css'
       sass: rootDir.src + '/sp/stylesheets/app.scss'
       watch: rootDir.src + '/sp/stylesheets/**/*.scss'
-      postcss: 'assets/sp/css/'
-      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'sp/css/'
+      postcss: '/sp/css/'
+      dest: rootDir.htdocs + '/' + rootDir.assets + 'sp/css/'
     js:
       plugin: rootDir.src + '/sp/scripts/plugin/**/*.js'
       javascript: rootDir.src + '/sp/scripts/javascript/**/*.js'
       coffee: rootDir.src + '/sp/scripts/coffee/**/*.coffee'
-      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'sp/js/'
+      dest: rootDir.htdocs + '/' + rootDir.assets + 'sp/js/'
     img:
       src: rootDir.src + '/sp/images/**/*.*'
-      postcss: 'assets/' + appConfig.CURRENT_DIR + 'sp/images/'
-      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'sp/images/'
+      postcss: '/' + rootDir.assets + 'sp/images/'
+      dest: rootDir.htdocs + '/' + rootDir.assets + 'sp/images/'
   archive:
     src: rootDir.htdocs + '/**/*'
     temp: rootDir.temp + '/'
@@ -185,7 +186,7 @@ pathSearch = (dir, dirName) ->
       else
         fileReplace = fileDir.replace(rootDir.src + '/', paths.pc.dest).replace('/pc', '').replace('/templates', '')
     else if dirName == 'images'
-      fileReplace = fileDir.replace(rootDir.src + '/', paths.pc.dest + 'assets/' + appConfig.CURRENT_DIR)
+      fileReplace = fileDir.replace(rootDir.src + '/', paths.pc.dest + '/' + rootDir.assets)
     else if dirName == 'js' or dirName == 'css'
       fileReplace = fileDir
     pathArray.push '!' + fileReplace
@@ -304,7 +305,7 @@ g.task 'ect-rp', ->
       staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + abspath2rel staticData.path_filename, ''
       staticData.SITE_URL = appConfig.APP_SITE_URL
       staticData.SITE_NAME = appConfig.SITE_NAME
-      staticData.CURRENT_DIR = appConfig.CURRENT_DIR
+      staticData.ASSETS_DIR = appConfig.ASSETS_DIR
       # 'index.html' を含まないファイルパスを出す
       staticData.FILE_PATH = staticData.path_filename.replace appConfig.CURRENT_DIR, ''
       staticData.FILE_PATH = staticData.FILE_PATH.replace 'index.html', ''
@@ -420,7 +421,7 @@ g.task 'ect-pc', ->
       staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + abspath2rel staticData.path_filename, ''
       staticData.SITE_URL = appConfig.APP_SITE_URL
       staticData.SITE_NAME = appConfig.SITE_NAME
-      staticData.CURRENT_DIR = appConfig.CURRENT_DIR
+      staticData.ASSETS_DIR = appConfig.ASSETS_DIR
       # 'index.html' を含まないファイルパスを出す
       staticData.FILE_PATH = staticData.path_filename.replace appConfig.CURRENT_DIR, ''
       staticData.FILE_PATH = staticData.FILE_PATH.replace 'index.html', ''
@@ -539,7 +540,7 @@ g.task 'ect-sp', ->
       staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + '../' + abspath2rel staticData.path_filename, ''
       staticData.SITE_URL = appConfig.APP_SITE_URL
       staticData.SITE_NAME = appConfig.SITE_NAME
-      staticData.CURRENT_DIR = appConfig.CURRENT_DIR
+      staticData.ASSETS_DIR = appConfig.ASSETS_DIR
       # 'index.html' を含まないファイルパスを出す
       staticData.FILE_PATH = staticData.path_filename.replace appConfig.CURRENT_DIR, ''
       staticData.FILE_PATH = staticData.FILE_PATH.replace 'index.html', ''

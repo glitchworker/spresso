@@ -499,6 +499,8 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 - app.config.json に CURRENT_DIR の項目を追加（ディレクトリ名の最後は必ず / で閉じる）
 - 上記に伴い相対パスを内部的に取得するようになった為、 pages.json から path の項目を削除
 - ect で呼び出せる変数に RELATIVE_PATH を追加（動的に取得された相対パスを取得）
+- app.config.json に ASSETS_DIR の項目を追加（ディレクトリ名の最後は必ず / で閉じる）
+- 上記に伴い assets フォルダの名称および設置場所を自由に出来るように変更
 - README.md の修正
 
 ### v1.3.2
