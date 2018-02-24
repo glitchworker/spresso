@@ -6,6 +6,7 @@
 path = require 'path' # パス解析
 webpack = require('gulp-webpack').webpack # Webpack 読み込み
 minimist = require 'minimist' # Gulp で引数を解析
+IfPlugin = require 'if-webpack-plugin' # Webpack の Plugins 内で条件分岐
 
 appConfig = require '../src/app.config.json' # サイト共通設定
 update = do require './script/getTime' # 現在日時取得
@@ -24,6 +25,11 @@ envOption =
 
 isProduction = if options.env == 'production' then true else false
 
+if isProduction
+  APP_SITE_URL = appConfig.PROD_SITE_URL
+else
+  APP_SITE_URL = appConfig.DEV_SITE_URL
+
 #------------------------------------------------------
 # WebPack Modules
 # WebPack のモジュール設定
@@ -39,31 +45,24 @@ config = {
     loaders: [
       {test: /\.coffee$/, loader: 'coffee-loader'} # CoffeeScript をコンパイルするための設定
     ]
-  plugins: if not isProduction then [
+  plugins: [
     new webpack.ProvidePlugin
       Common: commonPath # common.coffee を Common という名前で共通で require する
     new webpack.DefinePlugin
-      'APP_SITE_URL': JSON.stringify appConfig.DEV_SITE_URL
+      'APP_SITE_URL': JSON.stringify APP_SITE_URL + appConfig.CURRENT_DIR
       'APP_SITE_NAME': JSON.stringify appConfig.SITE_NAME
       'APP_AUTHOR': JSON.stringify appConfig.AUTHOR
       'APP_MODIFIER': JSON.stringify appConfig.MODIFIER
       'APP_UPDATE': JSON.stringify update
       'APP_TIMESTAMP':JSON.stringify timestamp
-  ] else [
-    new webpack.ProvidePlugin
-      Common: commonPath # common.coffee を Common という名前で共通で require する
-    new webpack.DefinePlugin
-      'APP_SITE_URL': JSON.stringify appConfig.PROD_SITE_URL
-      'APP_SITE_NAME': JSON.stringify appConfig.SITE_NAME
-      'APP_AUTHOR': JSON.stringify appConfig.AUTHOR
-      'APP_MODIFIER': JSON.stringify appConfig.MODIFIER
-      'APP_UPDATE': JSON.stringify update
-      'APP_TIMESTAMP':JSON.stringify timestamp
-    new webpack.optimize.UglifyJsPlugin
-      preserveComments: 'some' # Licence 表記を消さない
-      compress:
-        warnings: false
-        drop_console: true
+    new IfPlugin(
+      isProduction
+      new webpack.optimize.UglifyJsPlugin
+        preserveComments: 'some' # Licence 表記を消さない
+        compress:
+          warnings: false
+          drop_console: true
+    )
   ]
 }
 

@@ -1,6 +1,5 @@
 [
   {
-    "path": "./",
     "path_filename": "index.html",
     "template": "index",
     "language": "ja",
@@ -37,7 +36,6 @@
     ]
   },
   {
-    "path": "../",
     "path_filename": "hoge/index.html",
     "template": "hoge",
     "language": "ja",
@@ -74,7 +72,6 @@
     ]
   },
   {
-    "path": "../../",
     "path_filename": "hoge/fuga/index.html",
     "template": "hoge_fuga",
     "language": "ja",

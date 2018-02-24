@@ -35,7 +35,7 @@
 <meta property="og:title" content="<%- head.meta_title %>">
 <meta property="og:description" content="<%- head.meta_description %>">
 <meta property="og:url" content="<%- @SITE_URL %><%- @FILE_PATH %>">
-<meta property="og:image" content="<%- @SITE_URL %>assets/common/images/<%- head.meta_facebook_image %>">
+<meta property="og:image" content="<%- @SITE_URL %>assets/<%- @CURRENT_DIR %>common/images/<%- head.meta_facebook_image %>">
 <meta property="og:locale" content="ja_JP">
 <% if head.meta_facebook_id?.length : %>
 <meta property="fb:app_id" content="<%- head.meta_facebook_id %>">
@@ -52,7 +52,7 @@
 <meta name="twitter:site" content="@<%- head.meta_twitter_account %>">
 <meta name="twitter:creator" content="@<%- head.meta_twitter_account %>">
 <% end %>
-<meta name="twitter:image:src" content="<%- @SITE_URL %>assets/common/images/<%- head.meta_facebook_image %>">
+<meta name="twitter:image:src" content="<%- @SITE_URL %>assets/<%- @CURRENT_DIR %>common/images/<%- head.meta_facebook_image %>">
 <% if head.meta_twitter_app_android?.length : %>
 <meta name="twitter:app:android" content="<%- head.meta_twitter_app_android %>">
 <% end %>
@@ -68,7 +68,7 @@
 <!-- Google+用CARD指定 -->
 <meta itemprop="name" content="<%- head.meta_title %>">
 <meta itemprop="description" content="<%- head.meta_description %>">
-<meta itemprop="image" content="<%- @SITE_URL %>assets/common/images/<%- head.meta_facebook_image %>">
+<meta itemprop="image" content="<%- @SITE_URL %>assets/<%- @CURRENT_DIR %>common/images/<%- head.meta_facebook_image %>">
 <% end %>
 <% if head.meta_windows : %>
 
@@ -76,29 +76,29 @@
 <meta name="application-name" content="<%- @SITE_NAME %>">
 <meta name="msapplication-tooltip" content="<%- head.meta_title %>">
 <meta name="msapplication-starturl" content="<%- @SITE_URL %><%- @FILE_PATH %>">
-<meta name="msapplication-TileImage" content="<%- @path %>assets/common/images/<%- head.meta_windows_image %>">
+<meta name="msapplication-TileImage" content="<%- @RELATIVE_PATH %>assets/<%- @CURRENT_DIR %>common/images/<%- head.meta_windows_image %>">
 <meta name="msapplication-TileColor" content="<%- head.meta_windows_color %>">
 <% end %>
 
 <!-- アイコン指定(iOS/Android込) -->
 <% if head.meta_facebook : %>
-<link rel="image_src" href="<%- @SITE_URL %>assets/common/images/<%- head.meta_facebook_image %>">
+<link rel="image_src" href="<%- @SITE_URL %>assets/<%- @CURRENT_DIR %>common/images/<%- head.meta_facebook_image %>">
 <% end %>
-<link rel="apple-touch-icon-precomposed" href="<%- @path %>assets/common/images/<%- head.meta_appleIcon %>">
-<link rel="shortcut icon" href="<%- @path %>assets/common/images/<%- head.meta_iconXhtml %>" type="image/x-icon">
-<link rel="icon" href="<%- @path %>assets/common/images/<%- head.meta_icon %>" type="image/png">
+<link rel="apple-touch-icon-precomposed" href="<%- @RELATIVE_PATH %>assets/<%- @CURRENT_DIR %>common/images/<%- head.meta_appleIcon %>">
+<link rel="shortcut icon" href="<%- @RELATIVE_PATH %>assets/<%- @CURRENT_DIR %>common/images/<%- head.meta_iconXhtml %>" type="image/x-icon">
+<link rel="icon" href="<%- @RELATIVE_PATH %>assets/<%- @CURRENT_DIR %>common/images/<%- head.meta_icon %>" type="image/png">
 
 <!-- スタイルシート指定 -->
-<link rel="stylesheet" href="<%- @path %>assets/pc/css/app.css">
+<link rel="stylesheet" href="<%- @RELATIVE_PATH %>assets/<%- @CURRENT_DIR %>pc/css/app.css">
 <% content 'addStyles' %>
 
 <!-- JavaScript指定 -->
 <% if head.meta_oldBrowser : %>
-<script src="<%- @path %>assets/common/js/lib/jquery-1.12.4.min.js"></script>
+<script src="<%- @RELATIVE_PATH %>assets/<%- @CURRENT_DIR %>common/js/lib/jquery-1.12.4.min.js"></script>
 <% else: %>
-<script src="<%- @path %>assets/common/js/lib/jquery-3.2.1.min.js"></script>
+<script src="<%- @RELATIVE_PATH %>assets/<%- @CURRENT_DIR %>common/js/lib/jquery-3.3.1.min.js"></script>
 <% end %>
-<script src="<%- @path %>assets/common/js/common.js"></script>
+<script src="<%- @RELATIVE_PATH %>assets/<%- @CURRENT_DIR %>common/js/common.js"></script>
 <% if @redirect : %>
 <script>redirectSP("<%- @REDIRECT_PATH %>");</script>
 <% end %>
@@ -106,8 +106,8 @@
 <% if head.meta_oldBrowser : %>
 
 <!--[if lt IE 9]>
-<script src="<%- @path %>assets/common/js/lib/html5shiv.min.js"></script>
-<script src="<%- @path %>assets/common/js/lib/selectivizr.min.js"></script>
+<script src="<%- @RELATIVE_PATH %>assets/<%- @CURRENT_DIR %>common/js/lib/html5shiv.min.js"></script>
+<script src="<%- @RELATIVE_PATH %>assets/<%- @CURRENT_DIR %>common/js/lib/selectivizr.min.js"></script>
 <![endif]-->
 <% end %>
 <% end %>

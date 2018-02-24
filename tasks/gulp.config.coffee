@@ -46,7 +46,7 @@ else
 
 appConfig.UPDATE = update # app.config.json に UPDATE 項目を追加
 appConfig.TIMESTAMP = timestamp # app.config.json に TIMESTAMP 項目を追加
-appConfig.APP_SITE_URL = APP_SITE_URL # app.config.json に APP_SITE_URL 項目を追加
+appConfig.APP_SITE_URL = APP_SITE_URL + appConfig.CURRENT_DIR # app.config.json に APP_SITE_URL 項目を追加
 appConfig.RESPONSIVE_TEMPLATE = String(appConfig.RESPONSIVE_TEMPLATE) # app.config.json の RESPONSIVE_TEMPLATE 項目を String 型に変換
 
 #------------------------------------------------------
@@ -66,14 +66,14 @@ paths =
       plugin: rootDir.src + '/common/scripts/plugin/**/*.js'
       javascript: rootDir.src + '/common/scripts/javascript/**/*.js'
       coffee: rootDir.src + '/common/scripts/coffee/**/*.coffee'
-      dest: rootDir.htdocs + '/assets/common/js/'
+      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'common/js/'
     img:
       src: rootDir.src + '/common/images/**/*.*'
-      postcss: 'assets/common/images/'
-      dest: rootDir.htdocs + '/assets/common/images/'
+      postcss: 'assets/' + appConfig.CURRENT_DIR + 'common/images/'
+      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'common/images/'
     libcopy:
       lib: rootDir.src + '/common/scripts/lib/**/*.js'
-      dest: rootDir.htdocs + '/assets/common/js/lib/'
+      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'common/js/lib/'
     import:
       json: rootDir.src + '/import/data.json'
   rp:
@@ -85,17 +85,17 @@ paths =
       concat: 'app.css'
       sass: rootDir.src + '/rp/stylesheets/app.scss'
       watch: rootDir.src + '/rp/stylesheets/**/*.scss'
-      postcss: 'assets/rp/css/'
-      dest: rootDir.htdocs + '/assets/rp/css/'
+      postcss: 'assets/' + appConfig.CURRENT_DIR + 'rp/css/'
+      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'rp/css/'
     js:
       plugin: rootDir.src + '/rp/scripts/plugin/**/*.js'
       javascript: rootDir.src + '/rp/scripts/javascript/**/*.js'
       coffee: rootDir.src + '/rp/scripts/coffee/**/*.coffee'
-      dest: rootDir.htdocs + '/assets/rp/js/'
+      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'rp/js/'
     img:
       src: rootDir.src + '/rp/images/**/*.*'
-      postcss: 'assets/rp/images/'
-      dest: rootDir.htdocs + '/assets/rp/images/'
+      postcss: 'assets/' + appConfig.CURRENT_DIR + 'rp/images/'
+      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'rp/images/'
   pc:
     dest: rootDir.htdocs + '/'
     ect:
@@ -105,17 +105,17 @@ paths =
       concat: 'app.css'
       sass: rootDir.src + '/pc/stylesheets/app.scss'
       watch: rootDir.src + '/pc/stylesheets/**/*.scss'
-      postcss: 'assets/pc/css/'
-      dest: rootDir.htdocs + '/assets/pc/css/'
+      postcss: 'assets/' + appConfig.CURRENT_DIR + 'pc/css/'
+      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'pc/css/'
     js:
       plugin: rootDir.src + '/pc/scripts/plugin/**/*.js'
       javascript: rootDir.src + '/pc/scripts/javascript/**/*.js'
       coffee: rootDir.src + '/pc/scripts/coffee/**/*.coffee'
-      dest: rootDir.htdocs + '/assets/pc/js/'
+      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'pc/js/'
     img:
       src: rootDir.src + '/pc/images/**/*.*'
-      postcss: 'assets/pc/images/'
-      dest: rootDir.htdocs + '/assets/pc/images/'
+      postcss: 'assets/' + appConfig.CURRENT_DIR + 'pc/images/'
+      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'pc/images/'
   sp:
     dest: rootDir.htdocs + '/sp/'
     ect:
@@ -126,16 +126,16 @@ paths =
       sass: rootDir.src + '/sp/stylesheets/app.scss'
       watch: rootDir.src + '/sp/stylesheets/**/*.scss'
       postcss: 'assets/sp/css/'
-      dest: rootDir.htdocs + '/assets/sp/css/'
+      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'sp/css/'
     js:
       plugin: rootDir.src + '/sp/scripts/plugin/**/*.js'
       javascript: rootDir.src + '/sp/scripts/javascript/**/*.js'
       coffee: rootDir.src + '/sp/scripts/coffee/**/*.coffee'
-      dest: rootDir.htdocs + '/assets/sp/js/'
+      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'sp/js/'
     img:
       src: rootDir.src + '/sp/images/**/*.*'
-      postcss: 'assets/sp/images/'
-      dest: rootDir.htdocs + '/assets/sp/images/'
+      postcss: 'assets/' + appConfig.CURRENT_DIR + 'sp/images/'
+      dest: rootDir.htdocs + '/assets/' + appConfig.CURRENT_DIR + 'sp/images/'
   archive:
     src: rootDir.htdocs + '/**/*'
     temp: rootDir.temp + '/'
@@ -185,12 +185,31 @@ pathSearch = (dir, dirName) ->
       else
         fileReplace = fileDir.replace(rootDir.src + '/', paths.pc.dest).replace('/pc', '').replace('/templates', '')
     else if dirName == 'images'
-      fileReplace = fileDir.replace(rootDir.src + '/', paths.pc.dest + 'assets/')
+      fileReplace = fileDir.replace(rootDir.src + '/', paths.pc.dest + 'assets/' + appConfig.CURRENT_DIR)
     else if dirName == 'js' or dirName == 'css'
       fileReplace = fileDir
     pathArray.push '!' + fileReplace
     done()
     return
+
+#------------------------------------------------------
+# Convert absolute path to relative path
+# 絶対パスから相対パスに変換
+#------------------------------------------------------
+
+abspath2rel = (base_path, target_path) ->
+  tmp_str = ''
+  base_path = base_path.split('/')
+  base_path.pop()
+  target_path = target_path.split('/')
+  while base_path[0] == target_path[0]
+    base_path.shift()
+    target_path.shift()
+  i = 0
+  while i < base_path.length
+    tmp_str += '../'
+    i++
+  tmp_str + target_path.join('/')
 
 #------------------------------------------------------
 # Plumber Settings
@@ -282,14 +301,17 @@ g.task 'ect-rp', ->
     # ect で JSON ファイルを変数に読み込む
     .pipe $.data (file)->
       staticData = page
-      staticData.SITE_URL = APP_SITE_URL
+      staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + abspath2rel staticData.path_filename, ''
+      staticData.SITE_URL = appConfig.APP_SITE_URL
       staticData.SITE_NAME = appConfig.SITE_NAME
+      staticData.CURRENT_DIR = appConfig.CURRENT_DIR
       # 'index.html' を含まないファイルパスを出す
-      staticData.FILE_PATH = staticData.path_filename.replace 'index.html', ''
+      staticData.FILE_PATH = staticData.path_filename.replace appConfig.CURRENT_DIR, ''
+      staticData.FILE_PATH = staticData.FILE_PATH.replace 'index.html', ''
       return staticData
     .pipe $.ect(data: page)
     # pages.json に記述された 'path_filename' で決めたパスに出力
-    .pipe $.rename page.path_filename
+    .pipe $.rename appConfig.CURRENT_DIR + page.path_filename
     .pipe g.dest paths.rp.dest
     # html を stream オプションでリアルタイムに反映
     .pipe bs.stream()
@@ -395,16 +417,19 @@ g.task 'ect-pc', ->
     # ect で JSON ファイルを変数に読み込む
     .pipe $.data (file)->
       staticData = page
-      staticData.SITE_URL = APP_SITE_URL
+      staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + abspath2rel staticData.path_filename, ''
+      staticData.SITE_URL = appConfig.APP_SITE_URL
       staticData.SITE_NAME = appConfig.SITE_NAME
+      staticData.CURRENT_DIR = appConfig.CURRENT_DIR
       # 'index.html' を含まないファイルパスを出す
-      staticData.FILE_PATH = staticData.path_filename.replace 'index.html', ''
+      staticData.FILE_PATH = staticData.path_filename.replace appConfig.CURRENT_DIR, ''
+      staticData.FILE_PATH = staticData.FILE_PATH.replace 'index.html', ''
       # 'index.html' を含まないリダイレクトパスを出す
-      staticData.REDIRECT_PATH = staticData.path + 'sp/' + staticData.path_filename.replace 'index.html', ''
+      staticData.REDIRECT_PATH = staticData.RELATIVE_PATH + 'sp/' + appConfig.CURRENT_DIR + staticData.path_filename.replace 'index.html', ''
       return staticData
     .pipe $.ect(data: page)
     # pages.json に記述された 'path_filename' で決めたパスに出力
-    .pipe $.rename page.path_filename
+    .pipe $.rename appConfig.CURRENT_DIR + page.path_filename
     .pipe g.dest paths.pc.dest
     # html を stream オプションでリアルタイムに反映
     .pipe bs.stream()
@@ -511,16 +536,19 @@ g.task 'ect-sp', ->
     # ect で JSON ファイルを変数に読み込む
     .pipe $.data (file)->
       staticData = page
-      staticData.SITE_URL = APP_SITE_URL
+      staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + '../' + abspath2rel staticData.path_filename, ''
+      staticData.SITE_URL = appConfig.APP_SITE_URL
       staticData.SITE_NAME = appConfig.SITE_NAME
+      staticData.CURRENT_DIR = appConfig.CURRENT_DIR
       # 'index.html' を含まないファイルパスを出す
-      staticData.FILE_PATH = staticData.path_filename.replace 'index.html', ''
+      staticData.FILE_PATH = staticData.path_filename.replace appConfig.CURRENT_DIR, ''
+      staticData.FILE_PATH = staticData.FILE_PATH.replace 'index.html', ''
       # 'index.html' を含まないリダイレクトパスを出す
-      staticData.REDIRECT_PATH = staticData.path + staticData.path_filename.replace 'index.html', ''
+      staticData.REDIRECT_PATH = staticData.RELATIVE_PATH + appConfig.CURRENT_DIR + staticData.path_filename.replace 'index.html', ''
       return staticData
     .pipe $.ect(data: page)
     # pages.json に記述された 'path_filename' で決めたパスに出力
-    .pipe $.rename page.path_filename
+    .pipe $.rename appConfig.CURRENT_DIR + page.path_filename
     .pipe g.dest paths.sp.dest
     # html を stream オプションでリアルタイムに反映
     .pipe bs.stream()

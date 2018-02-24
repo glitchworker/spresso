@@ -79,7 +79,8 @@ output の項目に出力先のパスを入力することによって書き出�
 
 | 記述 | 説明 |
 |----|---|
-| <%- @path %> | ディレクトリパス |
+| <%- @RELATIVE_PATH %> | ディレクトリ相対パス |
+| <%- @CURRENT_DIR %> | カレントディレクトリ |
 | <%- @path_filename %> | ファイルパス |
 | <%- @SITE_URL %> | サイトURL |
 | <%- @SITE_NAME %> | サイト名 |
@@ -218,7 +219,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│   │   │   ├── lib
 	│   │   │   │   ├── html5shiv.min.js
 	│   │   │   │   ├── jquery-1.12.4.min.js
-	│   │   │   │   ├── jquery-3.2.1.min.js
+	│   │   │   │   ├── jquery-3.3.1.min.js
 	│   │   │   │   └── selectivizr.min.js
 	│   │   │   └── plugin
 	│   │   │       └── plugin.js
@@ -490,6 +491,15 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 - [GitHub Issues](https://github.com/glitchworker/spresso/issues)
 
 ## Version History
+
+### v1.3.3
+- package.json に if-webpack-plugin を追加（Webpack の Plugins 内で条件分岐が出来るようにする）
+- 上記に伴い webpack.config.base.coffee 内の条件分岐周りを調整
+- jQuery のバージョンを 3.2.1 から 3.3.1 に更新
+- app.config.json に CURRENT_DIR の項目を追加（ディレクトリ名の最後は必ず / で閉じる）
+- 上記に伴い相対パスを内部的に取得するようになった為、 pages.json から path の項目を削除
+- ect で呼び出せる変数に RELATIVE_PATH を追加（動的に取得された相対パスを取得）
+- README.md の修正
 
 ### v1.3.2
 
