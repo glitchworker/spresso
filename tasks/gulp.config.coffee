@@ -734,6 +734,7 @@ g.task 'bs', ->
     ghostMode: false
     logPrefix: appConfig.SITE_NAME
     logFileChanges: false
+    startPath: appConfig.CURRENT_DIR
   })
 
 # watch
