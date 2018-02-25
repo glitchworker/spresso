@@ -16,7 +16,7 @@ gulp / ect / sass / webpack (coffeescript)
 
 4. ```yarn global add gulp``` で Gulp をインストールする（npm の場合 ```npm install -g gulp```）
 
-5. ```yarn install``` で必要なパッケージをインストール（出来ない場合 ```sudo yarn install```）
+5. ```yarn install``` で必要なパッケージをインストール（出来ない場合 ```sudo npm install```）
 
 6. ```/src/app.config.json``` を開き各項目を編集しておく（後から変更可能）
 
