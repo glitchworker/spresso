@@ -1,12 +1,17 @@
 #------------------------------------------------------
-# Load module
-# モジュール読み込み
+# Load dependencies module
+# 依存モジュール読み込み
 #------------------------------------------------------
 
 path = require 'path' # パス解析
 webpack = require('gulp-webpack').webpack # Webpack 読み込み
 minimist = require 'minimist' # Gulp で引数を解析
 IfPlugin = require 'if-webpack-plugin' # Webpack の Plugins 内で条件分岐
+
+#------------------------------------------------------
+# Load original module
+# 独自モジュール読み込み
+#------------------------------------------------------
 
 appConfig = require '../src/app.config.json' # サイト共通設定
 update = do require './script/getTime' # 現在日時取得

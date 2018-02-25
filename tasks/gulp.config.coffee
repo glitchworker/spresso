@@ -1,6 +1,6 @@
 #------------------------------------------------------
-# Load module
-# モジュール読み込み
+# Load dependencies module
+# 依存モジュール読み込み
 #------------------------------------------------------
 
 path = require 'path' # パス解析
@@ -16,6 +16,11 @@ eventStream = require 'event-stream' # Gulp のイベントを取得する
 
 bs = require('browser-sync').create() # Web サーバー作成
 ssi = require 'browsersync-ssi' # SSI を有効化
+
+#------------------------------------------------------
+# Load original module
+# 独自モジュール読み込み
+#------------------------------------------------------
 
 appConfig = require '../src/app.config.json' # サイト共通設定
 update = do require './script/getTime' # 現在日時取得
@@ -175,7 +180,6 @@ commentsJs = [
 # ファイルパスを取得
 #------------------------------------------------------
 
-# path search process
 pathArray = []
 pathSearch = (dir, dirName) ->
   eventStream.map (file, done) ->

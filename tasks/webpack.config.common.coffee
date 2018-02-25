@@ -1,11 +1,17 @@
 #------------------------------------------------------
-# Load module
-# モジュール読み込み
+# Load dependencies module
+# 依存モジュール読み込み
 #------------------------------------------------------
 
 webpack = require('gulp-webpack').webpack # Webpack 読み込み
 minimist = require 'minimist' # Gulp で引数を解析
 merge = require 'webpack-merge' # 共通の Webpack 設定をマージ
+
+#------------------------------------------------------
+# Load original module
+# 独自モジュール読み込み
+#------------------------------------------------------
+
 baseConfig = require './webpack.config.base.coffee' # Webpack 共通設定
 
 #------------------------------------------------------
