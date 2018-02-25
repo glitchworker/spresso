@@ -36,19 +36,6 @@ gulp / ect / sass / webpack (coffeescript)
 ※作業を開始する前に実行しておくと作業開始時から編集後の差分データを出力することが出来る
 　つまり実行しなければ過去に実行した時点からの差分を出力することが可能
 
-**v1.1.0 から新たに src フォルダに import フォルダが追加されました。**
-この中にファイル又はフォルダを追加し data.json に設定を記述することによって
-本テンプレート以外にユーザーが自由に設定したファイル＆フォルダを htdocs に出力することが可能です。
-フォルダの場合は type に dir ファイルの場合は file を記述し data にフォルダ名またはファイル名を入力した後
-output の項目に出力先のパスを入力することによって書き出されます。
-
-**v1.2.7 から新たに src フォルダの app.config.json にレスポンシブ切り替え用の項目が追加されました。**
-```RESPONSIVE_TEMPLATE``` の項目に何でも良いので入力されている場合、PC用とSP用のビルドはスキップされ
-レスポンシブ用のテンプレートのみビルド対象になります。
-
-**v1.3.0 から src フォルダの app.config.json のレスポンシブ切り替え用の項目を Boolean 型に変更しました。**
-```RESPONSIVE_TEMPLATE``` に設定するものは、 true または false を入力してください。
-
 ## Setting
 
 ### project
@@ -63,6 +50,21 @@ output の項目に出力先のパスを入力することによって書き出�
 | /tasks/webpack.config.pc.coffee | webpack に関する設定ファイル（PC） |
 | /tasks/webpack.config.sp.coffee | webpack に関する設定ファイル（SP） |
 
+#### app.config.json
+
+```json
+{
+  "DEV_SITE_URL": "http://dev.hoge.com/",
+  "PROD_SITE_URL": "http://prod.hoge.com/",
+  "CURRENT_DIR": "",
+  "ASSETS_DIR": "assets/",
+  "SITE_NAME": "これはサイト名です",
+  "AUTHOR": "これは作成者です",
+  "MODIFIER": "これは編集者です",
+  "RESPONSIVE_TEMPLATE": false
+}
+```
+
 ### src
 
 | ファイル名 | 説明 |
@@ -72,6 +74,66 @@ output の項目に出力先のパスを入力することによって書き出�
 | /src/sp/template/pages.json | template 内で使う規定値（SP） |
 | /src/common/stylesheets/_config.scss | stylesheet 内で使う規定値 |
 | /src/import/data.json | import で使う規定値 |
+
+#### pages.json
+
+```json
+[
+  {
+    "path_filename": "index.html",
+    "template": "index",
+    "language": "ja",
+    "namespace": "website",
+    "redirect": true,
+    "head": [
+      {
+        "meta_charset": "UTF-8",
+        "meta_title": "これはタイトルです",
+        "meta_robots": "index,follow",
+        "meta_keywords": "これはキーワードです",
+        "meta_description": "これはディスクリプションです",
+        "meta_author": "",
+        "meta_copyright": "",
+        "meta_viewport": "width=1280",
+        "meta_appleIcon": "favicon.png",
+        "meta_icon": "favicon.png",
+        "meta_iconXhtml": "favicon.ico",
+        "meta_facebook": true,
+        "meta_facebook_id": "",
+        "meta_facebook_image": "ogp_image.jpg",
+        "meta_twitter": false,
+        "meta_twitter_card": "summary_large_image",
+        "meta_twitter_account": "",
+        "meta_twitter_app_android": "",
+        "meta_twitter_app_ipad": "",
+        "meta_twitter_app_iphone": "",
+        "meta_google": false,
+        "meta_windows": false,
+        "meta_windows_image": "tile_image.png",
+        "meta_windows_color": "#000000",
+        "meta_oldBrowser": false
+      }
+    ]
+  }
+]
+```
+
+#### data.json
+
+```json
+[
+  {
+    "type": "dir",
+    "data": "フォルダ名",
+    "output": "出力先のパス"
+  },
+  {
+    "type": "file",
+    "data": "ファイル名",
+    "output": "出力先のパス"
+  }
+]
+```
 
 ## 規定値をsrc内で共有する方法
 
@@ -124,8 +186,10 @@ output の項目に出力先のパスを入力することによって書き出�
 また sass の map 形式に変換されるので、 ```map-get($appConfig, [hash])``` 等で参照できます。
 
 **v1.3.2 から Gulp のタスク内に参照先を変更しました。**
-今まで sass の function 機能を使い、独自モジュールを使って上記の様に取得していたが
+
+今まで sass の function 機能を使い、独自モジュールを使って取得していましたが
 sass に依存してしまうので gulp-header を使い Gulp タスク内で完結するようにしました。
+それに伴い、/src/common/stylesheets/_config.scss 内の変数宣言を削除しました。
 
 #### coffeescriptの場合
 
@@ -260,14 +324,14 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│   │   │   ├── index
 	│   │   │   │   └── image.png
 	│   │   │   ├── hoge
-	│   │   │   │   └── image.png
-	│   │   │   ├── fuga
-	│   │   │   │   └── image.png
+	│   │   │   │   ├── image.png
+	│   │   │   │   └── fuga
+	│   │   │   │       └── image.png
 	│   │   │   └── image.png
 	│   │   ├── scripts
 	│   │   │   ├── coffee
 	│   │   │   │   ├── common.coffee
-	│   │   │   │   ├── fuga.coffee
+	│   │   │   │   ├── hoge_fuga.coffee
 	│   │   │   │   ├── hoge.coffee
 	│   │   │   │   ├── index.coffee
 	│   │   │   │   └── modules
@@ -276,7 +340,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│   │   │   └── plugin
 	│   │   │       └── plugin.js
 	│   │   ├── stylesheets
-	│   │   │   ├── _fuga.scss
+	│   │   │   ├── _hoge_fuga.scss
 	│   │   │   ├── _hoge.scss
 	│   │   │   ├── _index.scss
 	│   │   │   ├── app.scss
@@ -294,7 +358,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│   │       ├── partials
 	│   │       │   ├── _footer.ect
 	│   │       │   └── _header.ect
-	│   │       ├── fuga.ect
+	│   │       ├── hoge_fuga.ect
 	│   │       ├── hoge.ect
 	│   │       ├── index.ect
 	│   │       └── pages.json
@@ -303,14 +367,14 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│   │   │   ├── index
 	│   │   │   │   └── image.png
 	│   │   │   ├── hoge
-	│   │   │   │   └── image.png
-	│   │   │   ├── fuga
-	│   │   │   │   └── image.png
+	│   │   │   │   ├── image.png
+	│   │   │   │   └── fuga
+	│   │   │   │       └── image.png
 	│   │   │   └── image.png
 	│   │   ├── scripts
 	│   │   │   ├── coffee
 	│   │   │   │   ├── common.coffee
-	│   │   │   │   ├── fuga.coffee
+	│   │   │   │   ├── hoge_fuga.coffee
 	│   │   │   │   ├── hoge.coffee
 	│   │   │   │   ├── index.coffee
 	│   │   │   │   └── modules
@@ -319,7 +383,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│   │   │   └── plugin
 	│   │   │       └── plugin.js
 	│   │   ├── stylesheets
-	│   │   │   ├── _fuga.scss
+	│   │   │   ├── _hoge_fuga.scss
 	│   │   │   ├── _hoge.scss
 	│   │   │   ├── _index.scss
 	│   │   │   ├── app.scss
@@ -337,7 +401,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│   │       ├── partials
 	│   │       │   ├── _footer.ect
 	│   │       │   └── _header.ect
-	│   │       ├── fuga.ect
+	│   │       ├── hoge_fuga.ect
 	│   │       ├── hoge.ect
 	│   │       ├── index.ect
 	│   │       └── pages.json
@@ -346,14 +410,14 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│       │   ├── index
 	│       │   │   └── image.png
 	│       │   ├── hoge
-	│       │   │   └── image.png
-	│       │   ├── fuga
-	│       │   │   └── image.png
+	│       │   │   ├── image.png
+	│       │   │   └── fuga
+	│       │   │   	   └── image.png
 	│       │   └── image.png
 	│       ├── scripts
 	│       │   ├── coffee
 	│       │   │   ├── common.coffee
-	│       │   │   ├── fuga.coffee
+	│       │   │   ├── hoge_fuga.coffee
 	│       │   │   ├── hoge.coffee
 	│       │   │   ├── index.coffee
 	│       │   │   └── modules
@@ -362,7 +426,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│       │   └── plugin
 	│       │       └── plugin.js
 	│       ├── stylesheets
-	│       │   ├── _fuga.scss
+	│       │   ├── _hoge_fuga.scss
 	│       │   ├── _hoge.scss
 	│       │   ├── _index.scss
 	│       │   ├── app.scss
@@ -380,7 +444,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│           ├── partials
 	│           │   ├── _footer.ect
 	│           │   └── _header.ect
-	│           ├── fuga.ect
+	│           ├── hoge_fuga.ect
 	│           ├── hoge.ect
 	│           ├── index.ect
 	│           └── pages.json
@@ -388,8 +452,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	    ├── gulp.config.coffee
 	    ├── script
 	    │   ├── getTime.coffee
-	    │   ├── getTimeStamp.coffee
-	    │   └── sassGetJson.coffee
+	    │   └── getTimeStamp.coffee
 	    ├── webpack.config.base.coffee
 	    ├── webpack.config.pc.coffee
 	    ├── webpack.config.rp.coffee
@@ -489,13 +552,35 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 - [webpack](https://webpack.js.org/)
 - [Browsersync](https://www.browsersync.io/)
 
+## Issues
+
+- [GitHub Issues](https://github.com/glitchworker/spresso/issues)
+
 ## Thanks
 
 - [Adobe Blank](https://github.com/adobe-fonts/adobe-blank)
 
-## Issues
+## Important Notices
 
-- [GitHub Issues](https://github.com/glitchworker/spresso/issues)
+**v1.1.0 から新たに src フォルダに import フォルダが追加されました。**
+この中にファイル又はフォルダを追加し data.json に設定を記述することによって
+本テンプレート以外にユーザーが自由に設定したファイル＆フォルダを htdocs に出力することが可能です。
+フォルダの場合は type に ```dir``` ファイルの場合は ```file``` を記述し data にフォルダ名またはファイル名を入力した後
+```output``` の項目に出力先のパスを入力することによって書き出されます。
+
+**v1.2.7 から新たに src フォルダの app.config.json にレスポンシブ切り替え用の項目が追加されました。**
+```RESPONSIVE_TEMPLATE``` の項目に何でも良いので入力されている場合、PC用とSP用のビルドはスキップされ
+レスポンシブ用のテンプレートのみビルド対象になります。
+
+**v1.3.0 から src フォルダの app.config.json のレスポンシブ切り替え用の項目を Boolean 型に変更しました。**
+```RESPONSIVE_TEMPLATE``` に設定するものは、 true または false を入力してください。
+
+**v1.3.2 および v1.3.3 から ディレクトリやタスク処理を大幅に変更しました。**
+
+より汎用性と自動化をはかるためにファイルやフォルダ構成の整理を含む
+各 json ファイルや gulp.config.coffee などの内部的処理を大幅に変更しました。
+マイナーアップデートでありながらも規定値の設定方法などガラッと変わっていますのでご注意ください。
+変数等の名称に変更があるので、お手数ですが README.md の再読をよろしくお願い致します。
 
 ## Version History
 
