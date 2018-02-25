@@ -12,17 +12,17 @@ gulp / ect / sass / webpack (coffeescript)
 
 2. ターミナルまたはコマンドプロンプトを管理者権限で開く
 
-3. ```npm install -g yarnpkg``` で Yarn をインストールする
+3. ```npm install -g yarnpkg``` で Yarn をインストールする（npm のままビルドする場合は不要）
 
 4. ```yarn global add gulp``` で Gulp をインストールする（npm の場合 ```npm install -g gulp```）
 
-5. ```yarn install``` で必要なパッケージをインストール（出来ない場合 ```sudo npm install```）
+5. ```yarn install``` で必要なパッケージをインストール（npm の場合 ```npm install```）
 
 6. ```/src/app.config.json``` を開き各項目を編集しておく（後から変更可能）
 
-7. ```yarn run dev``` で一度ビルドしておく
+7. ```yarn run dev``` で一度ビルドしておく（npm の場合 ```npm run dev```）
 
-8. ```yarn run start``` で開発環境を起動する（自動的に既存のブラウザが起動）
+8. ```yarn run start``` で開発環境を起動する（自動的に既存のブラウザが起動）（npm の場合 ```npm run start```）
 
 9. 後は ```/src/``` フォルダ内のファイルを編集し作業をする
 
