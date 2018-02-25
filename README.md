@@ -412,7 +412,7 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│       │   ├── hoge
 	│       │   │   ├── image.png
 	│       │   │   └── fuga
-	│       │   │   	   └── image.png
+	│       │   │       └── image.png
 	│       │   └── image.png
 	│       ├── scripts
 	│       │   ├── coffee
@@ -538,6 +538,11 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│       └── js
 	└── sp
 
+**v1.3.3 から assets フォルダの名称および設置場所を自由に出来るようになりました。**
+
+初期値は上記のようなディレクトリ構成になっていますが
+app.config.json に ASSETS_DIR の項目が追加されたことによって
+assets フォルダの名称および設置場所を自由に変更出来るようになりました。
 
 ## Dependencies
 
