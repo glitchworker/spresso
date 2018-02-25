@@ -331,7 +331,6 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│   │   ├── scripts
 	│   │   │   ├── coffee
 	│   │   │   │   ├── common.coffee
-	│   │   │   │   ├── hoge_fuga.coffee
 	│   │   │   │   ├── hoge.coffee
 	│   │   │   │   ├── index.coffee
 	│   │   │   │   └── modules
@@ -374,7 +373,6 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│   │   ├── scripts
 	│   │   │   ├── coffee
 	│   │   │   │   ├── common.coffee
-	│   │   │   │   ├── hoge_fuga.coffee
 	│   │   │   │   ├── hoge.coffee
 	│   │   │   │   ├── index.coffee
 	│   │   │   │   └── modules
@@ -417,7 +415,6 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│       ├── scripts
 	│       │   ├── coffee
 	│       │   │   ├── common.coffee
-	│       │   │   ├── hoge_fuga.coffee
 	│       │   │   ├── hoge.coffee
 	│       │   │   ├── index.coffee
 	│       │   │   └── modules
