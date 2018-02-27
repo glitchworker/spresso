@@ -76,7 +76,7 @@ paths =
       dest: rootDir.htdocs + '/' + rootDir.assets + 'common/js/'
     img:
       src: rootDir.src + '/common/images/**/*.*'
-      postcss: '/' + rootDir.assets + 'common/images/'
+      postcss: rootDir.assets + 'common/images/'
       dest: rootDir.htdocs + '/' + rootDir.assets + 'common/images/'
     libcopy:
       lib: rootDir.src + '/common/scripts/lib/**/*.js'
@@ -92,7 +92,7 @@ paths =
       concat: 'app.css'
       sass: rootDir.src + '/rp/stylesheets/app.scss'
       watch: rootDir.src + '/rp/stylesheets/**/*.scss'
-      postcss: '/' + rootDir.assets + 'rp/css/'
+      postcss: rootDir.assets + 'rp/css/'
       dest: rootDir.htdocs + '/' + rootDir.assets + 'rp/css/'
     js:
       plugin: rootDir.src + '/rp/scripts/plugin/**/*.js'
@@ -101,7 +101,7 @@ paths =
       dest: rootDir.htdocs + '/' + rootDir.assets + 'rp/js/'
     img:
       src: rootDir.src + '/rp/images/**/*.*'
-      postcss: '/' + rootDir.assets + 'rp/images/'
+      postcss: rootDir.assets + 'rp/images/'
       dest: rootDir.htdocs + '/' + rootDir.assets + 'rp/images/'
   pc:
     dest: rootDir.htdocs + '/'
@@ -112,7 +112,7 @@ paths =
       concat: 'app.css'
       sass: rootDir.src + '/pc/stylesheets/app.scss'
       watch: rootDir.src + '/pc/stylesheets/**/*.scss'
-      postcss: '/' + rootDir.assets + 'pc/css/'
+      postcss: rootDir.assets + 'pc/css/'
       dest: rootDir.htdocs + '/' + rootDir.assets + 'pc/css/'
     js:
       plugin: rootDir.src + '/pc/scripts/plugin/**/*.js'
@@ -121,7 +121,7 @@ paths =
       dest: rootDir.htdocs + '/' + rootDir.assets + 'pc/js/'
     img:
       src: rootDir.src + '/pc/images/**/*.*'
-      postcss: '/' + rootDir.assets + 'pc/images/'
+      postcss: rootDir.assets + 'pc/images/'
       dest: rootDir.htdocs + '/' + rootDir.assets + 'pc/images/'
   sp:
     dest: rootDir.htdocs + '/sp/'
@@ -132,7 +132,7 @@ paths =
       concat: 'app.css'
       sass: rootDir.src + '/sp/stylesheets/app.scss'
       watch: rootDir.src + '/sp/stylesheets/**/*.scss'
-      postcss: '/sp/css/'
+      postcss: rootDir.assets + 'sp/css/'
       dest: rootDir.htdocs + '/' + rootDir.assets + 'sp/css/'
     js:
       plugin: rootDir.src + '/sp/scripts/plugin/**/*.js'
@@ -141,7 +141,7 @@ paths =
       dest: rootDir.htdocs + '/' + rootDir.assets + 'sp/js/'
     img:
       src: rootDir.src + '/sp/images/**/*.*'
-      postcss: '/' + rootDir.assets + 'sp/images/'
+      postcss: rootDir.assets + 'sp/images/'
       dest: rootDir.htdocs + '/' + rootDir.assets + 'sp/images/'
   archive:
     src: rootDir.htdocs + '/**/*'
@@ -352,9 +352,9 @@ g.task 'css-rp', ->
   # postcss で画像サイズを取得し変換する
   .pipe $.postcss([
     require('postcss-assets')(
-      loadPaths: [paths.common.img.postcss, paths.rp.img.postcss]
-      basePath: paths.rp.dest
-      relative: paths.rp.css.postcss
+      basePath: paths.rp.dest # 公開フォルダのパス
+      loadPaths: [paths.common.img.postcss, paths.rp.img.postcss] # basePath からみた images フォルダの位置
+      relative: paths.rp.css.postcss # basePath と対になる css フォルダの位置
     )
     require('css-mqpacker')
     require('postcss-sorting')(
@@ -473,9 +473,9 @@ g.task 'css-pc', ->
   # postcss で画像サイズを取得し変換する
   .pipe $.postcss([
     require('postcss-assets')(
-      loadPaths: [paths.common.img.postcss, paths.pc.img.postcss]
-      basePath: paths.pc.dest
-      relative: paths.pc.css.postcss
+      basePath: paths.pc.dest # 公開フォルダのパス
+      loadPaths: [paths.common.img.postcss, paths.pc.img.postcss] # basePath からみた images フォルダの位置
+      relative: paths.pc.css.postcss # basePath と対になる css フォルダの位置
     )
     require('css-mqpacker')
     require('postcss-sorting')(
@@ -593,9 +593,9 @@ g.task 'css-sp', ->
   # postcss で画像サイズを取得し変換する
   .pipe $.postcss([
     require('postcss-assets')(
-      loadPaths: [paths.common.img.postcss, paths.sp.img.postcss]
-      basePath: paths.pc.dest
-      relative: paths.sp.css.postcss
+      basePath: paths.pc.dest # 公開フォルダのパス
+      loadPaths: [paths.common.img.postcss, paths.sp.img.postcss] # basePath からみた images フォルダの位置
+      relative: paths.sp.css.postcss # basePath と対になる css フォルダの位置
     )
     require('css-mqpacker')
     require('postcss-sorting')(
