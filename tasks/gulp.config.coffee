@@ -54,6 +54,7 @@ appConfig.TIMESTAMP = timestamp # app.config.json に TIMESTAMP 項目を追加
 appConfig.BASE_SITE_URL = APP_SITE_URL # app.config.json に BASE_SITE_URL 項目を追加
 appConfig.APP_SITE_URL = APP_SITE_URL + appConfig.CURRENT_DIR # app.config.json に APP_SITE_URL 項目を追加
 appConfig.RESPONSIVE_TEMPLATE = String(appConfig.RESPONSIVE_TEMPLATE) # app.config.json の RESPONSIVE_TEMPLATE 項目を String 型に変換
+appConfig.ABSOLUTE_PATH = String(appConfig.ABSOLUTE_PATH) # app.config.json の ABSOLUTE_PATH 項目を String 型に変換
 
 #------------------------------------------------------
 # Path Settings
@@ -312,7 +313,10 @@ g.task 'ect-rp', ->
       staticData.SITE_URL = appConfig.APP_SITE_URL
       staticData.SITE_NAME = appConfig.SITE_NAME
       # ディレクトリの相対パス、アセットディレクトリのパスを取得
-      staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + abspath2rel staticData.path_filename, ''
+      if appConfig.ABSOLUTE_PATH == 'true'
+        staticData.RELATIVE_PATH = '/' + appConfig.CURRENT_DIR
+      else
+        staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + abspath2rel staticData.path_filename, ''
       staticData.ASSETS_DIR = appConfig.ASSETS_DIR
       # 'index.html' を含まないファイルパスを出す
       staticData.FILE_PATH = staticData.path_filename.replace appConfig.CURRENT_DIR, ''
@@ -354,7 +358,7 @@ g.task 'css-rp', ->
     require('postcss-assets')(
       basePath: paths.rp.dest # 公開フォルダのパス
       loadPaths: [paths.common.img.postcss, paths.rp.img.postcss] # basePath からみた images フォルダの位置
-      relative: paths.rp.css.postcss # basePath と対になる css フォルダの位置
+      relative: if appConfig.ABSOLUTE_PATH != 'true' then paths.rp.css.postcss # basePath と対になる css フォルダの位置
     )
     require('css-mqpacker')
     require('postcss-sorting')(
@@ -430,7 +434,10 @@ g.task 'ect-pc', ->
       staticData.SITE_URL = appConfig.APP_SITE_URL
       staticData.SITE_NAME = appConfig.SITE_NAME
       # ディレクトリの相対パス、アセットディレクトリのパスを取得
-      staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + abspath2rel staticData.path_filename, ''
+      if appConfig.ABSOLUTE_PATH == 'true'
+        staticData.RELATIVE_PATH = '/' + appConfig.CURRENT_DIR
+      else
+        staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + abspath2rel staticData.path_filename, ''
       staticData.ASSETS_DIR = appConfig.ASSETS_DIR
       # 'index.html' を含まないファイルパスを出す
       staticData.FILE_PATH = staticData.path_filename.replace appConfig.CURRENT_DIR, ''
@@ -475,7 +482,7 @@ g.task 'css-pc', ->
     require('postcss-assets')(
       basePath: paths.pc.dest # 公開フォルダのパス
       loadPaths: [paths.common.img.postcss, paths.pc.img.postcss] # basePath からみた images フォルダの位置
-      relative: paths.pc.css.postcss # basePath と対になる css フォルダの位置
+      relative: if appConfig.ABSOLUTE_PATH != 'true' then paths.pc.css.postcss # basePath と対になる css フォルダの位置
     )
     require('css-mqpacker')
     require('postcss-sorting')(
@@ -551,7 +558,10 @@ g.task 'ect-sp', ->
       staticData.SITE_URL = appConfig.APP_SITE_URL
       staticData.SITE_NAME = appConfig.SITE_NAME
       # ディレクトリの相対パス、アセットディレクトリのパスを取得
-      staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + '../' + abspath2rel staticData.path_filename, ''
+      if appConfig.ABSOLUTE_PATH == 'true'
+        staticData.RELATIVE_PATH = '/' + appConfig.CURRENT_DIR
+      else
+        staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + '../' + abspath2rel staticData.path_filename, ''
       staticData.ASSETS_DIR = appConfig.ASSETS_DIR
       # 'index.html' を含まないファイルパスを出す
       staticData.FILE_PATH = staticData.path_filename.replace appConfig.CURRENT_DIR, ''
@@ -595,7 +605,7 @@ g.task 'css-sp', ->
     require('postcss-assets')(
       basePath: paths.pc.dest # 公開フォルダのパス
       loadPaths: [paths.common.img.postcss, paths.sp.img.postcss] # basePath からみた images フォルダの位置
-      relative: paths.sp.css.postcss # basePath と対になる css フォルダの位置
+      relative: if appConfig.ABSOLUTE_PATH != 'true' then paths.sp.css.postcss # basePath と対になる css フォルダの位置
     )
     require('css-mqpacker')
     require('postcss-sorting')(

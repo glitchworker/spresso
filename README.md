@@ -61,7 +61,8 @@ gulp / ect / sass / webpack (coffeescript)
   "SITE_NAME": "これはサイト名です",
   "AUTHOR": "これは作成者です",
   "MODIFIER": "これは編集者です",
-  "RESPONSIVE_TEMPLATE": false
+  "RESPONSIVE_TEMPLATE": false,
+	"ABSOLUTE_PATH": false
 }
 ```
 
@@ -599,6 +600,7 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 - 未使用のファイルなどを削除＆整理
 - gulp.config.coffee の BrowserSync の設定に startPath を追加
 - gulp.congif.coffee の postcss-assets のパス設定が間違えていたのを修正
+- app.config.json に ABSOLUTE_PATH の項目を追加（サイト全体を絶対パスにする場合の設定）
 - README.md の修正
 
 ### v1.3.2
