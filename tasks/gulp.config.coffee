@@ -53,8 +53,8 @@ appConfig.UPDATE = update # app.config.json に UPDATE 項目を追加
 appConfig.TIMESTAMP = timestamp # app.config.json に TIMESTAMP 項目を追加
 appConfig.BASE_SITE_URL = APP_SITE_URL # app.config.json に BASE_SITE_URL 項目を追加
 appConfig.APP_SITE_URL = APP_SITE_URL + appConfig.CURRENT_DIR # app.config.json に APP_SITE_URL 項目を追加
-appConfig.RESPONSIVE_TEMPLATE = String(appConfig.RESPONSIVE_TEMPLATE) # app.config.json の RESPONSIVE_TEMPLATE 項目を String 型に変換
-appConfig.ABSOLUTE_PATH = String(appConfig.ABSOLUTE_PATH) # app.config.json の ABSOLUTE_PATH 項目を String 型に変換
+appConfig.RESPONSIVE_TEMPLATE = Boolean(appConfig.RESPONSIVE_TEMPLATE) # app.config.json の RESPONSIVE_TEMPLATE 項目を String 型に変換
+appConfig.ABSOLUTE_PATH = Boolean(appConfig.ABSOLUTE_PATH) # app.config.json の ABSOLUTE_PATH 項目を String 型に変換
 
 #------------------------------------------------------
 # Path Settings
@@ -187,7 +187,7 @@ pathSearch = (dir, dirName) ->
     filePath = $.slash(file.path)
     fileDir = filePath.match(dir + '.*')[0]
     if dirName == 'templates'
-      if appConfig.RESPONSIVE_TEMPLATE == 'true'
+      if appConfig.RESPONSIVE_TEMPLATE
         fileReplace = fileDir.replace(rootDir.src + '/', paths.rp.dest).replace('/rp', '').replace('/templates', '')
       else
         fileReplace = fileDir.replace(rootDir.src + '/', paths.pc.dest).replace('/pc', '').replace('/templates', '')
@@ -288,7 +288,7 @@ g.task 'img', ['img-check'], ->
 
 # build
 g.task 'build', ->
-  if appConfig.RESPONSIVE_TEMPLATE == 'true'
+  if appConfig.RESPONSIVE_TEMPLATE
     return runSequence 'import', 'libcopy', 'coffee', 'img', 'coffee-rp', 'img-rp', 'ect-rp', 'css-rp', 'remove-files'
   else
     return runSequence 'import', 'libcopy', 'coffee', 'coffee-pc', 'img-pc', 'coffee-sp', 'img-sp', 'img', 'ect-pc', 'css-pc', 'ect-sp', 'css-sp', 'remove-files'
@@ -313,7 +313,7 @@ g.task 'ect-rp', ->
       staticData.SITE_URL = appConfig.APP_SITE_URL
       staticData.SITE_NAME = appConfig.SITE_NAME
       # ディレクトリの相対パス、アセットディレクトリのパスを取得
-      if appConfig.ABSOLUTE_PATH == 'true'
+      if appConfig.ABSOLUTE_PATH
         staticData.RELATIVE_PATH = '/' + appConfig.CURRENT_DIR
       else
         staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + abspath2rel staticData.path_filename, ''
@@ -358,7 +358,7 @@ g.task 'css-rp', ->
     require('postcss-assets')(
       basePath: paths.rp.dest # 公開フォルダのパス
       loadPaths: [paths.common.img.postcss, paths.rp.img.postcss] # basePath からみた images フォルダの位置
-      relative: if appConfig.ABSOLUTE_PATH != 'true' then paths.rp.css.postcss # basePath と対になる css フォルダの位置
+      relative: if appConfig.ABSOLUTE_PATH then paths.rp.css.postcss # basePath と対になる css フォルダの位置
     )
     require('css-mqpacker')
     require('postcss-sorting')(
@@ -434,7 +434,7 @@ g.task 'ect-pc', ->
       staticData.SITE_URL = appConfig.APP_SITE_URL
       staticData.SITE_NAME = appConfig.SITE_NAME
       # ディレクトリの相対パス、アセットディレクトリのパスを取得
-      if appConfig.ABSOLUTE_PATH == 'true'
+      if appConfig.ABSOLUTE_PATH
         staticData.RELATIVE_PATH = '/' + appConfig.CURRENT_DIR
       else
         staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + abspath2rel staticData.path_filename, ''
@@ -482,7 +482,7 @@ g.task 'css-pc', ->
     require('postcss-assets')(
       basePath: paths.pc.dest # 公開フォルダのパス
       loadPaths: [paths.common.img.postcss, paths.pc.img.postcss] # basePath からみた images フォルダの位置
-      relative: if appConfig.ABSOLUTE_PATH != 'true' then paths.pc.css.postcss # basePath と対になる css フォルダの位置
+      relative: if appConfig.ABSOLUTE_PATH then paths.pc.css.postcss # basePath と対になる css フォルダの位置
     )
     require('css-mqpacker')
     require('postcss-sorting')(
@@ -558,7 +558,7 @@ g.task 'ect-sp', ->
       staticData.SITE_URL = appConfig.APP_SITE_URL
       staticData.SITE_NAME = appConfig.SITE_NAME
       # ディレクトリの相対パス、アセットディレクトリのパスを取得
-      if appConfig.ABSOLUTE_PATH == 'true'
+      if appConfig.ABSOLUTE_PATH
         staticData.RELATIVE_PATH = '/' + appConfig.CURRENT_DIR
       else
         staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + '../' + abspath2rel staticData.path_filename, ''
@@ -605,7 +605,7 @@ g.task 'css-sp', ->
     require('postcss-assets')(
       basePath: paths.pc.dest # 公開フォルダのパス
       loadPaths: [paths.common.img.postcss, paths.sp.img.postcss] # basePath からみた images フォルダの位置
-      relative: if appConfig.ABSOLUTE_PATH != 'true' then paths.sp.css.postcss # basePath と対になる css フォルダの位置
+      relative: if appConfig.ABSOLUTE_PATH then paths.sp.css.postcss # basePath と対になる css フォルダの位置
     )
     require('css-mqpacker')
     require('postcss-sorting')(
@@ -668,7 +668,7 @@ g.task 'build-sp', ->
 
 # diff process
 g.task 'diff', ['clean', 'clean-temp'], ->
-  if appConfig.RESPONSIVE_TEMPLATE == 'true'
+  if appConfig.RESPONSIVE_TEMPLATE
     return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-rp', 'css-rp', 'coffee-rp', 'img-rp', 'temp'
   else
     return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-pc', 'css-pc', 'coffee-pc', 'img-pc', 'ect-sp', 'css-sp', 'coffee-sp', 'img-sp', 'temp'
@@ -715,7 +715,7 @@ g.task 'remove-files', (cb) ->
 
 # clean
 g.task 'clean', (cb) ->
-  if appConfig.RESPONSIVE_TEMPLATE == 'true'
+  if appConfig.RESPONSIVE_TEMPLATE
     return rimraf paths.rp.dest, cb
   else
     return rimraf paths.pc.dest, cb
@@ -782,7 +782,7 @@ g.task 'watch-sp', ['bs'], ->
     g.start 'img-sp' # img ファイルが変更または追加されたらビルド出力
 
 # default task
-if appConfig.RESPONSIVE_TEMPLATE == 'true'
+if appConfig.RESPONSIVE_TEMPLATE
   g.task 'default', ['bs', 'watch-rp', 'watch']
 else
   g.task 'default', ['bs', 'watch-pc', 'watch-sp', 'watch']
