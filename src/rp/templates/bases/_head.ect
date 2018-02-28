@@ -1,105 +1,105 @@
-<% for head in @head : %>
-<meta charset="<%- head.meta_charset %>">
+<% for HEAD in @HEAD : %>
+<meta charset="<%- HEAD.META_CHARSET %>">
 <!--[if IE]>
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <![endif]-->
 
-<title><%- head.meta_title %></title>
+<title><%- HEAD.META_TITLE %></title>
 
-<meta name="robots" content="<%- head.meta_robots %>">
-<meta name="googlebot" content="<%- head.meta_robots %>">
-<meta name="keywords" content="<%- head.meta_keywords %>">
-<meta name="description" content="<%- head.meta_description %>">
-<% if head.meta_author?.length : %>
-<meta name="author" content="<%- head.meta_author %>">
+<meta name="robots" content="<%- HEAD.META_ROBOTS %>">
+<meta name="googlebot" content="<%- HEAD.META_ROBOTS %>">
+<meta name="keywords" content="<%- HEAD.META_KEYWORDS %>">
+<meta name="description" content="<%- HEAD.META_DESCRIPTION %>">
+<% if HEAD.META_AUTHOR?.length : %>
+<meta name="author" content="<%- HEAD.META_AUTHOR %>">
 <% end %>
-<% if head.meta_copyright?.length : %>
-<meta name="copyright" content="<%- head.meta_copyright %>">
+<% if HEAD.META_COPYRIGHT?.length : %>
+<meta name="copyright" content="<%- HEAD.META_COPYRIGHT %>">
 <% end %>
 <link rel="index" href="<%- @SITE_URL %>">
 <link rel="canonical" href="<%- @SITE_URL %><%- @FILE_PATH %>">
 
 <!-- Viewportの設定 -->
-<meta name="viewport" content="<%- head.meta_viewport %>">
+<meta name="viewport" content="<%- HEAD.META_VIEWPORT %>">
 <meta name="format-detection" content="telephone=no,address=no,email=no">
 
 <!-- iOS Safari & Chrome Android Full screen -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<% if head.meta_facebook : %>
+<% if HEAD.META_FACEBOOK : %>
 
 <!-- Facebook用OGP指定 -->
-<meta property="og:type" content="<%- @namespace %>">
+<meta property="og:type" content="<%- @NAMESPACE %>">
 <meta property="og:site_name" content="<%- @SITE_NAME %>">
-<meta property="og:title" content="<%- head.meta_title %>">
-<meta property="og:description" content="<%- head.meta_description %>">
+<meta property="og:title" content="<%- HEAD.META_TITLE %>">
+<meta property="og:description" content="<%- HEAD.META_DESCRIPTION %>">
 <meta property="og:url" content="<%- @SITE_URL %><%- @FILE_PATH %>">
-<meta property="og:image" content="<%- @BASE_SITE_URL %><%- @ASSETS_DIR %>common/images/<%- head.meta_facebook_image %>">
+<meta property="og:image" content="<%- @BASE_SITE_URL %><%- @ASSETS_DIR %>common/images/<%- HEAD.META_FACEBOOK_IMAGE %>">
 <meta property="og:locale" content="ja_JP">
-<% if head.meta_facebook_id?.length : %>
-<meta property="fb:app_id" content="<%- head.meta_facebook_id %>">
+<% if HEAD.META_FACEBOOK_ID?.length : %>
+<meta property="fb:app_id" content="<%- HEAD.META_FACEBOOK_ID %>">
 <% end %>
 <% end %>
-<% if head.meta_twitter : %>
+<% if HEAD.META_TWITTER : %>
 
 <!-- Twitter用CARD指定 -->
-<meta name="twitter:card" content="<%- head.meta_twitter_card %>">
+<meta name="twitter:card" content="<%- HEAD.META_TWITTER_CARD %>">
 <meta name="twitter:url" content="<%- @SITE_URL %><%- @FILE_PATH %>">
-<meta name="twitter:title" content="<%- head.meta_title %>">
-<meta name="twitter:description" content="<%- head.meta_description %>">
-<% if head.meta_twitter_account?.length : %>
-<meta name="twitter:site" content="@<%- head.meta_twitter_account %>">
-<meta name="twitter:creator" content="@<%- head.meta_twitter_account %>">
+<meta name="twitter:title" content="<%- HEAD.META_TITLE %>">
+<meta name="twitter:description" content="<%- HEAD.META_DESCRIPTION %>">
+<% if HEAD.META_TWITTER_ACCOUNT?.length : %>
+<meta name="twitter:site" content="@<%- HEAD.META_TWITTER_ACCOUNT %>">
+<meta name="twitter:creator" content="@<%- HEAD.META_TWITTER_ACCOUNT %>">
 <% end %>
-<meta name="twitter:image:src" content="<%- @BASE_SITE_URL %><%- @ASSETS_DIR %>common/images/<%- head.meta_facebook_image %>">
-<% if head.meta_twitter_app_android?.length : %>
-<meta name="twitter:app:android" content="<%- head.meta_twitter_app_android %>">
+<meta name="twitter:image:src" content="<%- @BASE_SITE_URL %><%- @ASSETS_DIR %>common/images/<%- HEAD.META_FACEBOOK_IMAGE %>">
+<% if HEAD.META_TWITTER_APP_ANDROID?.length : %>
+<meta name="twitter:app:android" content="<%- HEAD.META_TWITTER_APP_ANDROID %>">
 <% end %>
-<% if head.meta_twitter_app_ipad?.length : %>
-<meta name="twitter:app:id:ipad" content="<%- head.meta_twitter_app_ipad %>">
+<% if HEAD.META_TWITTER_APP_IPAD?.length : %>
+<meta name="twitter:app:id:ipad" content="<%- HEAD.META_TWITTER_APP_IPAD %>">
 <% end %>
-<% if head.meta_twitter_app_iphone?.length : %>
-<meta name="twitter:app:id:iphone" content="<%- head.meta_twitter_app_iphone %>">
+<% if HEAD.META_TWITTER_APP_IPHONE?.length : %>
+<meta name="twitter:app:id:iphone" content="<%- HEAD.META_TWITTER_APP_IPHONE %>">
 <% end %>
 <% end %>
-<% if head.meta_google : %>
+<% if HEAD.META_GOOGLE : %>
 
 <!-- Google+用CARD指定 -->
-<meta itemprop="name" content="<%- head.meta_title %>">
-<meta itemprop="description" content="<%- head.meta_description %>">
-<meta itemprop="image" content="<%- @BASE_SITE_URL %><%- @ASSETS_DIR %>common/images/<%- head.meta_facebook_image %>">
+<meta itemprop="name" content="<%- HEAD.META_TITLE %>">
+<meta itemprop="description" content="<%- HEAD.META_DESCRIPTION %>">
+<meta itemprop="image" content="<%- @BASE_SITE_URL %><%- @ASSETS_DIR %>common/images/<%- HEAD.META_FACEBOOK_IMAGE %>">
 <% end %>
-<% if head.meta_windows : %>
+<% if HEAD.META_WINDOWS : %>
 
 <!-- Windows用ピン指定 -->
 <meta name="application-name" content="<%- @SITE_NAME %>">
-<meta name="msapplication-tooltip" content="<%- head.meta_title %>">
+<meta name="msapplication-tooltip" content="<%- HEAD.META_TITLE %>">
 <meta name="msapplication-starturl" content="<%- @SITE_URL %><%- @FILE_PATH %>">
-<meta name="msapplication-TileImage" content="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/images/<%- head.meta_windows_image %>">
-<meta name="msapplication-TileColor" content="<%- head.meta_windows_color %>">
+<meta name="msapplication-TileImage" content="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/images/<%- HEAD.META_WINDOWS_IMAGE %>">
+<meta name="msapplication-TileColor" content="<%- HEAD.META_WINDOWS_COLOR %>">
 <% end %>
 
 <!-- アイコン指定(iOS/Android込) -->
-<% if head.meta_facebook : %>
-<link rel="image_src" href="<%- @BASE_SITE_URL %><%- @ASSETS_DIR %>common/images/<%- head.meta_facebook_image %>">
+<% if HEAD.META_FACEBOOK : %>
+<link rel="image_src" href="<%- @BASE_SITE_URL %><%- @ASSETS_DIR %>common/images/<%- HEAD.META_FACEBOOK_IMAGE %>">
 <% end %>
-<link rel="apple-touch-icon-precomposed" href="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/images/<%- head.meta_appleIcon %>">
-<link rel="shortcut icon" href="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/images/<%- head.meta_iconXhtml %>" type="image/x-icon">
-<link rel="icon" href="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/images/<%- head.meta_icon %>" type="image/png">
+<link rel="apple-touch-icon-precomposed" href="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/images/<%- HEAD.META_APPLE_ICON %>">
+<link rel="shortcut icon" href="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/images/<%- HEAD.META_XHTML_ICON %>" type="image/x-icon">
+<link rel="icon" href="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/images/<%- HEAD.META_ICON %>" type="image/png">
 
 <!-- スタイルシート指定 -->
 <link rel="stylesheet" href="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>rp/css/app.css">
 <% content 'addStyles' %>
 
 <!-- JavaScript指定 -->
-<% if head.meta_oldBrowser : %>
+<% if HEAD.META_OLD_BROWSER : %>
 <script src="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/js/lib/jquery-1.12.4.min.js"></script>
 <% else: %>
 <script src="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/js/lib/jquery-3.3.1.min.js"></script>
 <% end %>
 <script src="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/js/common.js"></script>
 <% content 'addScriptsHeader' %>
-<% if head.meta_oldBrowser : %>
+<% if HEAD.META_OLD_BROWSER : %>
 
 <!--[if lt IE 9]>
 <script src="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/js/lib/html5shiv.min.js"></script>

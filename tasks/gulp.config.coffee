@@ -53,8 +53,8 @@ appConfig.UPDATE = update # app.config.json に UPDATE 項目を追加
 appConfig.TIMESTAMP = timestamp # app.config.json に TIMESTAMP 項目を追加
 appConfig.BASE_SITE_URL = APP_SITE_URL # app.config.json に BASE_SITE_URL 項目を追加
 appConfig.APP_SITE_URL = APP_SITE_URL + appConfig.CURRENT_DIR # app.config.json に APP_SITE_URL 項目を追加
-appConfig.RESPONSIVE_TEMPLATE = Boolean(appConfig.RESPONSIVE_TEMPLATE) # app.config.json の RESPONSIVE_TEMPLATE 項目を String 型に変換
-appConfig.ABSOLUTE_PATH = Boolean(appConfig.ABSOLUTE_PATH) # app.config.json の ABSOLUTE_PATH 項目を String 型に変換
+appConfig.RESPONSIVE_TEMPLATE = Boolean(appConfig.RESPONSIVE_TEMPLATE) # app.config.json の RESPONSIVE_TEMPLATE 項目を Boolean 型に変換
+appConfig.ABSOLUTE_PATH = Boolean(appConfig.ABSOLUTE_PATH) # app.config.json の ABSOLUTE_PATH 項目を Boolean 型に変換
 
 #------------------------------------------------------
 # Path Settings
@@ -237,16 +237,16 @@ plumberConfig = (error) ->
 g.task 'import', ->
   jsonData = JSON.parse fs.readFileSync(paths.common.import.json)
   jsonData.forEach (page, i) ->
-    if page.type == 'dir'
-      g.src rootDir.src + '/import/' + page.data + '/**/*'
+    if page.TYPE == 'dir'
+      g.src rootDir.src + '/import/' + page.DATA + '/**/*'
       .pipe $.plumber(plumberConfig)
-      .pipe $.changed(page.output, { hasChanged: $.changed.compareSha1Digest })
-      .pipe g.dest rootDir.htdocs + '/' + page.output
+      .pipe $.changed(page.OUTPUT, { hasChanged: $.changed.compareSha1Digest })
+      .pipe g.dest rootDir.htdocs + '/' + page.OUTPUT
     else
-      g.src rootDir.src + '/import/' + page.data
+      g.src rootDir.src + '/import/' + page.DATA
       .pipe $.plumber(plumberConfig)
-      .pipe $.changed(page.output, { hasChanged: $.changed.compareSha1Digest })
-      .pipe g.dest rootDir.htdocs + '/' + page.output
+      .pipe $.changed(page.OUTPUT, { hasChanged: $.changed.compareSha1Digest })
+      .pipe g.dest rootDir.htdocs + '/' + page.OUTPUT
 
 # lib copy process
 g.task 'libcopy', ->
@@ -303,7 +303,7 @@ g.task 'ect-rp', ->
   jsonData = JSON.parse fs.readFileSync(paths.rp.ect.json)
   jsonDataLength = Object.keys(jsonData).length - 1
   jsonData.forEach (page, i) ->
-    g.src rootDir.src + '/rp/templates/' + page.template + '.ect'
+    g.src rootDir.src + '/rp/templates/' + page.TEMPLATE_ECT + '.ect'
     .pipe $.plumber(plumberConfig)
     # ect で JSON ファイルを変数に読み込む
     .pipe $.data (file)->
@@ -316,15 +316,15 @@ g.task 'ect-rp', ->
       if appConfig.ABSOLUTE_PATH
         staticData.RELATIVE_PATH = '/' + appConfig.CURRENT_DIR
       else
-        staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + abspath2rel staticData.path_filename, ''
+        staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + abspath2rel staticData.PATH_FILENAME, ''
       staticData.ASSETS_DIR = appConfig.ASSETS_DIR
       # 'index.html' を含まないファイルパスを出す
-      staticData.FILE_PATH = staticData.path_filename.replace appConfig.CURRENT_DIR, ''
+      staticData.FILE_PATH = staticData.PATH_FILENAME.replace appConfig.CURRENT_DIR, ''
       staticData.FILE_PATH = staticData.FILE_PATH.replace 'index.html', ''
       return staticData
     .pipe $.ect(data: page)
-    # pages.json に記述された 'path_filename' で決めたパスに出力
-    .pipe $.rename appConfig.CURRENT_DIR + page.path_filename
+    # pages.json に記述された 'PATH_FILENAME' で決めたパスに出力
+    .pipe $.rename appConfig.CURRENT_DIR + page.PATH_FILENAME
     .pipe g.dest paths.rp.dest
     # html を stream オプションでリアルタイムに反映
     .pipe bs.stream()
@@ -424,7 +424,7 @@ g.task 'ect-pc', ->
   jsonData = JSON.parse fs.readFileSync(paths.pc.ect.json)
   jsonDataLength = Object.keys(jsonData).length - 1
   jsonData.forEach (page, i) ->
-    g.src rootDir.src + '/pc/templates/' + page.template + '.ect'
+    g.src rootDir.src + '/pc/templates/' + page.TEMPLATE_ECT + '.ect'
     .pipe $.plumber(plumberConfig)
     # ect で JSON ファイルを変数に読み込む
     .pipe $.data (file)->
@@ -437,17 +437,17 @@ g.task 'ect-pc', ->
       if appConfig.ABSOLUTE_PATH
         staticData.RELATIVE_PATH = '/' + appConfig.CURRENT_DIR
       else
-        staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + abspath2rel staticData.path_filename, ''
+        staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + abspath2rel staticData.PATH_FILENAME, ''
       staticData.ASSETS_DIR = appConfig.ASSETS_DIR
       # 'index.html' を含まないファイルパスを出す
-      staticData.FILE_PATH = staticData.path_filename.replace appConfig.CURRENT_DIR, ''
+      staticData.FILE_PATH = staticData.PATH_FILENAME.replace appConfig.CURRENT_DIR, ''
       staticData.FILE_PATH = staticData.FILE_PATH.replace 'index.html', ''
       # 'index.html' を含まないリダイレクトパスを出す
-      staticData.REDIRECT_PATH = staticData.RELATIVE_PATH + 'sp/' + appConfig.CURRENT_DIR + staticData.path_filename.replace 'index.html', ''
+      staticData.REDIRECT_PATH = staticData.RELATIVE_PATH + 'sp/' + appConfig.CURRENT_DIR + staticData.PATH_FILENAME.replace 'index.html', ''
       return staticData
     .pipe $.ect(data: page)
-    # pages.json に記述された 'path_filename' で決めたパスに出力
-    .pipe $.rename appConfig.CURRENT_DIR + page.path_filename
+    # pages.json に記述された 'PATH_FILENAME' で決めたパスに出力
+    .pipe $.rename appConfig.CURRENT_DIR + page.PATH_FILENAME
     .pipe g.dest paths.pc.dest
     # html を stream オプションでリアルタイムに反映
     .pipe bs.stream()
@@ -548,7 +548,7 @@ g.task 'ect-sp', ->
   jsonData = JSON.parse fs.readFileSync(paths.sp.ect.json)
   jsonDataLength = Object.keys(jsonData).length - 1
   jsonData.forEach (page, i) ->
-    g.src rootDir.src + '/sp/templates/' + page.template + '.ect'
+    g.src rootDir.src + '/sp/templates/' + page.TEMPLATE_ECT + '.ect'
     .pipe $.plumber(plumberConfig)
     # ect で JSON ファイルを変数に読み込む
     .pipe $.data (file)->
@@ -561,17 +561,17 @@ g.task 'ect-sp', ->
       if appConfig.ABSOLUTE_PATH
         staticData.RELATIVE_PATH = '/' + appConfig.CURRENT_DIR
       else
-        staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + '../' + abspath2rel staticData.path_filename, ''
+        staticData.RELATIVE_PATH = abspath2rel appConfig.CURRENT_DIR, '' + '../' + abspath2rel staticData.PATH_FILENAME, ''
       staticData.ASSETS_DIR = appConfig.ASSETS_DIR
       # 'index.html' を含まないファイルパスを出す
-      staticData.FILE_PATH = staticData.path_filename.replace appConfig.CURRENT_DIR, ''
+      staticData.FILE_PATH = staticData.PATH_FILENAME.replace appConfig.CURRENT_DIR, ''
       staticData.FILE_PATH = staticData.FILE_PATH.replace 'index.html', ''
       # 'index.html' を含まないリダイレクトパスを出す
-      staticData.REDIRECT_PATH = staticData.RELATIVE_PATH + appConfig.CURRENT_DIR + staticData.path_filename.replace 'index.html', ''
+      staticData.REDIRECT_PATH = staticData.RELATIVE_PATH + appConfig.CURRENT_DIR + staticData.PATH_FILENAME.replace 'index.html', ''
       return staticData
     .pipe $.ect(data: page)
-    # pages.json に記述された 'path_filename' で決めたパスに出力
-    .pipe $.rename appConfig.CURRENT_DIR + page.path_filename
+    # pages.json に記述された 'PATH_FILENAME' で決めたパスに出力
+    .pipe $.rename appConfig.CURRENT_DIR + page.PATH_FILENAME
     .pipe g.dest paths.sp.dest
     # html を stream オプションでリアルタイムに反映
     .pipe bs.stream()

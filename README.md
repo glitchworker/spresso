@@ -4,7 +4,7 @@
 
 **sPresso StarterKit for modern websites**
 
-gulp / ect / sass / webpack (coffeescript)
+gulp / ect / sass ( scss ) / webpack (coffeescript)
 
 ## Usage
 
@@ -28,10 +28,10 @@ gulp / ect / sass / webpack (coffeescript)
 
 10. 以降8〜9の繰り返し
 
-本番環境にアップロードする場合、```yarn run prod``` を実行し ```/htdocs/``` 内をアップする
+> 本番環境にアップロードする場合、```yarn run prod``` を実行し ```/htdocs/``` 内をアップする
 ※ 各設定ファイルについては Setting 、開発用のコマンドについては Scripts を参照
-
-また、7 の時に ```yarn run diff``` としておくと ```/htdocs/``` と ```/temp/``` フォルダが生成され
+> 
+> また、7 の時に ```yarn run diff``` としておくと ```/htdocs/``` と ```/temp/``` フォルダが生成され
 作業後に ```yarn run export``` を実行すると差分データが ```/archive/``` フォルダに zip 形式で出力される
 ※作業を開始する前に実行しておくと作業開始時から編集後の差分データを出力することが出来る
 　つまり実行しなければ過去に実行した時点からの差分を出力することが可能
@@ -62,7 +62,7 @@ gulp / ect / sass / webpack (coffeescript)
   "AUTHOR": "これは作成者です",
   "MODIFIER": "これは編集者です",
   "RESPONSIVE_TEMPLATE": false,
-	"ABSOLUTE_PATH": false
+  "ABSOLUTE_PATH": false
 }
 ```
 
@@ -81,38 +81,38 @@ gulp / ect / sass / webpack (coffeescript)
 ```json
 [
   {
-    "path_filename": "index.html",
-    "template": "index",
-    "language": "ja",
-    "namespace": "website",
-    "redirect": true,
-    "head": [
+    "PATH_FILENAME": "index.html",
+    "TEMPLATE_ECT": "index",
+    "LANGUAGE": "ja",
+    "NAMESPACE": "website",
+    "REDIRECT": true,
+    "HEAD": [
       {
-        "meta_charset": "UTF-8",
-        "meta_title": "これはタイトルです",
-        "meta_robots": "index,follow",
-        "meta_keywords": "これはキーワードです",
-        "meta_description": "これはディスクリプションです",
-        "meta_author": "",
-        "meta_copyright": "",
-        "meta_viewport": "width=1280",
-        "meta_appleIcon": "favicon.png",
-        "meta_icon": "favicon.png",
-        "meta_iconXhtml": "favicon.ico",
-        "meta_facebook": true,
-        "meta_facebook_id": "",
-        "meta_facebook_image": "ogp_image.jpg",
-        "meta_twitter": false,
-        "meta_twitter_card": "summary_large_image",
-        "meta_twitter_account": "",
-        "meta_twitter_app_android": "",
-        "meta_twitter_app_ipad": "",
-        "meta_twitter_app_iphone": "",
-        "meta_google": false,
-        "meta_windows": false,
-        "meta_windows_image": "tile_image.png",
-        "meta_windows_color": "#000000",
-        "meta_oldBrowser": false
+        "META_CHARSET": "UTF-8",
+        "META_TITLE": "これはタイトルです",
+        "META_ROBOTS": "index,follow",
+        "META_KEYWORDS": "これはキーワードです",
+        "META_DESCRIPTION": "これはディスクリプションです",
+        "META_AUTHOR": "",
+        "META_COPYRIGHT": "",
+        "META_VIEWPORT": "width=1280",
+        "META_APPLE_ICON": "favicon.png",
+        "META_ICON": "favicon.png",
+        "META_XHTML_ICON": "favicon.ico",
+        "META_FACEBOOK": true,
+        "META_FACEBOOK_ID": "",
+        "META_FACEBOOK_IMAGE": "ogp_image.jpg",
+        "META_TWITTER": false,
+        "META_TWITTER_CARD": "summary_large_image",
+        "META_TWITTER_ACCOUNT": "",
+        "META_TWITTER_APP_ANDROID": "",
+        "META_TWITTER_APP_IPAD": "",
+        "META_TWITTER_APP_IPHONE": "",
+        "META_GOOGLE": false,
+        "META_WINDOWS": false,
+        "META_WINDOWS_IMAGE": "tile_image.png",
+        "META_WINDOWS_COLOR": "#000000",
+        "META_OLD_BROWSER": false
       }
     ]
   }
@@ -124,14 +124,14 @@ gulp / ect / sass / webpack (coffeescript)
 ```json
 [
   {
-    "type": "dir",
-    "data": "フォルダ名",
-    "output": "出力先のパス"
+    "TYPE": "dir",
+    "DATA": "フォルダ名",
+    "OUTPUT": "出力先のパス"
   },
   {
-    "type": "file",
-    "data": "ファイル名",
-    "output": "出力先のパス"
+    "TYPE": "file",
+    "DATA": "ファイル名",
+    "OUTPUT": "出力先のパス"
   }
 ]
 ```
@@ -139,7 +139,7 @@ gulp / ect / sass / webpack (coffeescript)
 ## 規定値をsrc内で共有する方法
 
 共通の規定値は app.config.json に定義してください。
-規定値の参照方法は以下
+規定値の参照方法などは以下をご覧ください。
 
 #### ectの場合
 
@@ -148,28 +148,28 @@ gulp / ect / sass / webpack (coffeescript)
 | <%- @RELATIVE_PATH %> | ディレクトリ相対パス |
 | <%- @CURRENT_DIR %> | カレントディレクトリ |
 | <%- @ASSETS_DIR %> | アセットディレクトリ |
-| <%- @path_filename %> | ファイルパス |
+| <%- @PATH_FILENAME %> | ファイルパス |
 | <%- @BASE_SITE_URL %> | サイトURL |
 | <%- @SITE_URL %> | サイトURL（カレントディレクトリを含む） |
 | <%- @SITE_NAME %> | サイト名 |
 
-/src/(rp か pc か sp)/templates/pages.json 内で json を取得しています。 ```<%- @meta_title %>``` 等で参照できます。
+> /src/(rp か pc か sp)/templates/pages.json 内で json を取得しています。 ```<%- @HEAD.META_TITLE %>``` 等で参照できます。
 上記以外にも、pages.json に記入された内容は呼び出すことが可能です。
-```<% for head in @head : %><% end %>``` で囲むことによって meta 情報の入れ子を以下の様に
+```<% for HEAD in @HEAD : %><% end %>``` で囲むことによって meta 情報の入れ子を以下の様に
 記述することによって取得可能にしています。
 
 | 記述 | 説明 |
 |----|---|
-| <%- head.meta_title %> | ページ名 |
-| <%- head.meta_keywords %> | ページキーワード |
-| <%- head.meta_description %> | ページデスクリプション |
-| <%- head.meta_author %> | ページ製作者 |
-| <%- head.meta_appleIcon %> | iPhone用アイコン |
-| <%- head.meta_icon %> | モダン用アイコン |
-| <%- head.meta_iconXhtml %> | 旧IE用アイコン |
-| <%- head.meta_facebook %> | facebookのmetaタグ |
-| <%- head.meta_twitter %> | twitterのmetaタグ |
-| <%- head.meta_windows %> | windowsのmetaタグ |
+| <%- HEAD.META_TITLE %> | ページ名 |
+| <%- HEAD.META_KEYWORDS %> | ページキーワード |
+| <%- HEAD.META_DESCRIPTION %> | ページデスクリプション |
+| <%- HEAD.META_AUTHOR %> | ページ製作者 |
+| <%- HEAD.META_APPLE_ICON %> | iPhone用アイコン |
+| <%- HEAD.META_ICON %> | モダン用アイコン |
+| <%- HEAD.META_XHTML_ICON %> | 旧IE用アイコン |
+| <%- HEAD.META_FACEBOOK %> | facebookのmetaタグ |
+| <%- HEAD.META_TWITTER %> | twitterのmetaタグ |
+| <%- HEAD.META_WINDOWS %> | windowsのmetaタグ |
 
 #### sassの場合
 
@@ -183,12 +183,12 @@ gulp / ect / sass / webpack (coffeescript)
 | #{$UPDATE} | ファイル更新日時 |
 | #{$TIMESTAMP} | ファイル更新日時Unix |
 
-/src/common/stylesheets/_config.scss 内で json を取得しています。 ```#{$SITE_NAME}``` 等で参照できます。
+> /src/common/stylesheets/_config.scss 内で json を取得しています。 ```#{$SITE_NAME}``` 等で参照できます。
 また sass の map 形式に変換されるので、 ```map-get($appConfig, [hash])``` 等で参照できます。
 
-**v1.3.2 から Gulp のタスク内に参照先を変更しました。**
+<u>**v1.3.2 から Gulp のタスク内に参照先を変更しました。**</u>
 
-今まで sass の function 機能を使い、独自モジュールを使って取得していましたが
+> 今まで sass の function 機能を使い、独自モジュールを使って取得していましたが
 sass に依存してしまうので gulp-header を使い Gulp タスク内で完結するようにしました。
 それに伴い、/src/common/stylesheets/_config.scss 内の変数宣言を削除しました。
 
@@ -204,7 +204,7 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 | APP_UPDATE | ファイル更新日時 |
 | APP_TIMESTAMP | ファイル更新日時Unix |
 
-webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` 等で参照できます。
+> webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` 等で参照できます。
 
 ## Scripts
 
@@ -536,9 +536,9 @@ webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` �
 	│       └── js
 	└── sp
 
-**v1.3.3 から assets フォルダの名称および設置場所を自由に出来るようになりました。**
+<u>**v1.3.3 から assets フォルダの名称および設置場所を自由に出来るようになりました。**</u>
 
-初期値は上記のようなディレクトリ構成になっていますが
+> 初期値は上記のようなディレクトリ構成になっていますが
 app.config.json に ASSETS_DIR の項目が追加されたことによって
 assets フォルダの名称および設置場所を自由に変更出来るようになりました。
 
@@ -565,27 +565,41 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 
 ## Important Notices
 
-**v1.1.0 から新たに src フォルダに import フォルダが追加されました。**
-この中にファイル又はフォルダを追加し data.json に設定を記述することによって
-本テンプレート以外にユーザーが自由に設定したファイル＆フォルダを htdocs に出力することが可能です。
-フォルダの場合は type に ```dir``` ファイルの場合は ```file``` を記述し data にフォルダ名またはファイル名を入力した後
-```output``` の項目に出力先のパスを入力することによって書き出されます。
+<u>**v1.3.4 から JSON で扱う項目名を全て大文字に変更しました。**</u>
 
-**v1.2.7 から新たに src フォルダの app.config.json にレスポンシブ切り替え用の項目が追加されました。**
-```RESPONSIVE_TEMPLATE``` の項目に何でも良いので入力されている場合、PC用とSP用のビルドはスキップされ
-レスポンシブ用のテンプレートのみビルド対象になります。
+> Gulp から受け渡す名称と、JSON に記述されている名称で大文字と小文字が混在している状況になり
+ルール化する為に全て大文字で統一いたしました。そのため一部項目名を変更している部分があるので
+お手数ですが README.md の再読をよろしくお願い致します。
 
-**v1.3.0 から src フォルダの app.config.json のレスポンシブ切り替え用の項目を Boolean 型に変更しました。**
-```RESPONSIVE_TEMPLATE``` に設定するものは、 true または false を入力してください。
+<u>**v1.3.2 および v1.3.3 から ディレクトリやタスク処理を大幅に変更しました。**</u>
 
-**v1.3.2 および v1.3.3 から ディレクトリやタスク処理を大幅に変更しました。**
-
-より汎用性と自動化をはかるためにファイルやフォルダ構成の整理を含む
+> より汎用性と自動化をはかるためにファイルやフォルダ構成の整理を含む
 各 json ファイルや gulp.config.coffee などの内部的処理を大幅に変更しました。
 マイナーアップデートでありながらも規定値の設定方法などガラッと変わっていますのでご注意ください。
 変数等の名称に変更があるので、お手数ですが README.md の再読をよろしくお願い致します。
 
+<u>**v1.3.0 から src フォルダの app.config.json のレスポンシブ切り替え用の項目を Boolean 型に変更しました。**</u>
+
+> ```RESPONSIVE_TEMPLATE``` に設定するものは、 true または false を入力してください。
+
+<u>**v1.2.7 から新たに src フォルダの app.config.json にレスポンシブ切り替え用の項目が追加されました。**</u>
+
+> ```RESPONSIVE_TEMPLATE``` の項目に何でも良いので入力されている場合、PC用とSP用のビルドはスキップされ
+レスポンシブ用のテンプレートのみビルド対象になります。
+
+<u>**v1.1.0 から新たに src フォルダに import フォルダが追加されました。**</u>
+
+> この中にファイル又はフォルダを追加し data.json に設定を記述することによって
+本テンプレート以外にユーザーが自由に設定したファイル＆フォルダを htdocs に出力することが可能です。
+フォルダの場合は type に ```dir``` ファイルの場合は ```file``` を記述し data にフォルダ名またはファイル名を入力した後
+```output``` の項目に出力先のパスを入力することによって書き出されます。
+
 ## Version History
+
+### v1.3.4
+- pages.json 内の項目を全て大文字で統一化
+- 上記に伴い gulp.config.coffee 内の処理および ect の各変数の調整
+- README.md の修正
 
 ### v1.3.3
 - package.json に if-webpack-plugin を追加（Webpack の Plugins 内で条件分岐が出来るようにする）
@@ -608,8 +622,8 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 - package.json の全バージョンの更新（coffeescript 以外）
 - iPhoneX の UserAgent 振り分けを Selector.coffee に追加
 - iPhoneX の SafeArea 対応（UIWebViewにも対応する為、UserAgent を使用し動的なメディアクエリを追加）
-- pages.json の meta_viewport に minimum-scale=1 と viewport-fit=cover を追加
-- pages.json の meta_viewport から user-scalable=no と minimal-ui を削除
+- pages.json の META_VIEWPORT に minimum-scale=1 と viewport-fit=cover を追加
+- pages.json の META_VIEWPORT から user-scalable=no と minimal-ui を削除
 - _reset.scss に inlinefix の追加（inline-block の隙間を Adobe Blank で解決）
 - レスポンシブ用の pages.json の redirect の項目を削除
 - アダプティブ用の REDIRECT_PATH の処理を調整

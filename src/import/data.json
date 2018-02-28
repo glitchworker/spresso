@@ -1,12 +1,12 @@
 [
   {
-    "type": "dir",
-    "data": "フォルダ名",
-    "output": "出力先のパス"
+    "TYPE": "dir",
+    "DATA": "フォルダ名",
+    "OUTPUT": "出力先のパス"
   },
   {
-    "type": "file",
-    "data": "ファイル名",
-    "output": "出力先のパス"
+    "TYPE": "file",
+    "DATA": "ファイル名",
+    "OUTPUT": "出力先のパス"
   }
 ]
