@@ -596,12 +596,12 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 
 ## Version History
 
-### v1.3.4
+### v1.3.4（2018年2月28日）
 - pages.json 内の項目を全て大文字で統一化
 - 上記に伴い gulp.config.coffee 内の処理および ect の各変数の調整
-- README.md の修正
+- README.md の修正（Version History に開発年度と日時を追加）
 
-### v1.3.3
+### v1.3.3（2018年2月27日）
 - package.json に if-webpack-plugin を追加（Webpack の Plugins 内で条件分岐が出来るようにする）
 - 上記に伴い webpack.config.base.coffee 内の条件分岐周りを調整
 - jQuery のバージョンを 3.2.1 から 3.3.1 に更新
@@ -617,7 +617,7 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 - app.config.json に ABSOLUTE_PATH の項目を追加（サイト全体を絶対パスにする場合の設定）
 - README.md の修正
 
-### v1.3.2
+### v1.3.2（2018年2月27日）
 
 - package.json の全バージョンの更新（coffeescript 以外）
 - iPhoneX の UserAgent 振り分けを Selector.coffee に追加
@@ -635,13 +635,13 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 - 全てのサンプルコードの見直し
 - README.md の修正
 
-### v1.3.1
+### v1.3.1（2017年12月11日）
 
 - package.json の全バージョンの更新（coffeescript 以外）
 - utils に tooltips の scss を追加
 - README.md の修正
 
-### v1.3.0
+### v1.3.0（2017年11月16日）
 
 - package.json の全バージョンの更新（coffeescript 以外）
 - mixin の fonsSize に font_vw() & font_calc() 関数を追加
@@ -653,58 +653,58 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 - app.config.json の RESPONSIVE_TEMPLATE 項目を Boolean 型に変更
 - README.md の修正
 
-### v1.2.9
+### v1.2.9（2017年9月1日）
 
 - package.json の全バージョンの更新
 - coffee-loader を 0.8.0 にした際のモジュールエラーを修正
 - 上記に伴い coffee-script から coffeescript に変更
 - README.md の修正
 
-### v1.2.8
+### v1.2.8（2017年8月4日）
 
 - 文字をカーニング調整するスクリプトを Common に追加
 - カーニングしたい要素に kerning のクラス名を追加すれば自動的に使用出来ます。
 - 各 src 内の coffee 内に common.coffee のファイルを追加
 - README.md の修正
 
-### v1.2.7
+### v1.2.7（2017年7月28日）
 
 - レスポンシブ用のテンプレートを導入
 - 上記に伴い app.config.json にて RESPONSIVE_TEMPLATE の切り替え項目を追加
 - scss 関係の要素の整理
 - README.md の修正
 
-### v1.2.6
+### v1.2.6（2017年7月25日）
 
 - head タグのテンプレート更新
 - jQuery Core を最新にアップデート
 - package.json の run-sequence の更新
 - README.md の修正
 
-### v1.2.5
+### v1.2.5（2017年7月25日）
 
 - head タグのテンプレート更新
 - package.json の全バージョンの更新
 - README.md の修正
 
-### v1.2.4
+### v1.2.4（2017年7月20日）
 
 - postcss の変数を初回ビルド時に使用した場合エラーが起きていたのを修正
 - package.json の全バージョンの更新
 - README.md の修正
 
-### v1.2.3
+### v1.2.3（2017年7月4日）
 
 - SNSシェアボタン処理の実装（Twitter、Facebook、LINE）
 - package.json の全バージョンの更新
 - README.md の修正
 
-### v1.2.2
+### v1.2.2（2017年6月20日）
 
 - package.json の全バージョンの更新
 - README.md の修正
 
-### v1.2.1
+### v1.2.1（2017年4月19日）
 
 - postcss の形式に変換する scss function を削除（どうやら無くても大丈夫みたい？）
 - postcss の resolve(), width(), height(), size(), inline() を scss で利用可能
@@ -712,7 +712,7 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 - plumberConfig 関数を追加し、エラーが出ても必ずタスクは継続されるように変更
 - README.md の修正
 
-### v1.2.0
+### v1.2.0（2017年4月19日）
 
 - gulp-util & gulp-postcss & postcss-assets & postcss-calc & postcss-sorting & css-mqpacker を追加
 - gulp.config.coffee に postcss の記述を追加
@@ -725,13 +725,13 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 - w(), h(), s() に関しては、第二引数に数値を入れることによって割る事が出来ます。
 - README.md の修正
 
-### v1.1.9
+### v1.1.9（2017年4月18日）
 
 - imagemin を一時的にコメントアウト
 - package.json の全バージョンの更新
 - README.md の修正
 
-### v1.1.8
+### v1.1.8（2017年3月9日）
 
 - common.coffee に getParam() shuffleArray() splitByLength() の共通関数を追加
 - 上記の getParam() はURLからパラメータを取得する
@@ -740,7 +740,7 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 - package.json の更新
 - README.md の修正
 
-### v1.1.7
+### v1.1.7（2017年3月8日）
 
 - yarn run start-prod の コマンドを追加
 - gulp.config.coffee の pathArray のロジック変更（ビルド時に htdocs 内を綺麗にするように）
@@ -750,59 +750,59 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 - meta タグの旧IE用コンディショナルコメントを pages.json 項目で個別に有効・無効出来るように変更
 - README.md の修正
 
-### v1.1.6
+### v1.1.6（2017年2月12日）
 
 - gulp-sass-glob が Windows で正常に動いていなかったのを修正
 - README.md の修正
 
-### v1.1.5
+### v1.1.5（2017年2月1日）
 
 - gulp のタスクで画像関連が機能していなかったのを修正
 - LICENSE の copyright の修正
 
-### v1.1.4
+### v1.1.4（2017年1月27日）
 
 - gulp-sass-glob の追加
 - sass の @import における glob を有効にする
 - package.json の更新
 
-### v1.1.3
+### v1.1.3（2016年12月23日）
 
 - Selector.coffee に iPhone 機種判別処理実装
 - package.json の更新
 
-### v1.1.2
+### v1.1.2（2016年12月22日）
 
 - タスク実行コマンドの大幅変更
 - webpack.config.xxxx.coffee 設定の調整
 - package.json の更新
 - README.md の修正
 
-### v1.1.1
+### v1.1.1（2016年12月21日）
 
 - meta タグの lang 属性を指定出来るように変更
 - webpack.config.xxxx.coffee 設定の最適化
 - README.md の修正
 
-### v1.1.0
+### v1.1.0（2016年12月20日）
 
 - インポートデータ機能の追加
 - package.json の更新
 - README.md の修正
 
-### v1.0.0
+### v1.0.0（2016年12月19日）
 
 - webpack.config.base.coffee の追加（共通設定）
 - 正式リリース
 
-### v0.2.1
+### v0.2.1（2016年12月15日）
 
 - webpack-merge のパッケージを追加（webpack.config ファイルの設定を共通化させるため）
 - sp の viewport を変更
 - addScripts を addScriptsHeader と addScriptsFooter に分け上下にタグを追加出来るように変更
 - package.json の更新
 
-### v0.2.0
+### v0.2.0（2016年12月12日）
 
 - yarn run zip を yarn run export に変更
 - gulp.config.coffee の整理
@@ -810,31 +810,31 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 - package.json の更新
 - README.md の修正
 
-### v0.1.9
+### v0.1.9（2016年12月6日）
 
 - 差分を書き出す際に、更新日時ではなく SHA1 で比較するように変更
 - UPDATE または TIMESTAMP を含めていると差分が取れないので一旦コメントアウト
 - temp フォルダを作る方法を変更（ yarn run diff ）で一時フォルダ作成
 
-### v0.1.8
+### v0.1.8（2016年12月5日）
 
 - build タスクを並列処理から直列処理に変更（pathSearch 関数の競合回避の為）
 - package.json の更新
 - README.md の修正
 
-### v0.1.7
+### v0.1.7（2016年12月5日）
 
 - ect のタスクがちゃんと出力されていなかったのを修正
 - package.json のプラグインを名前順に変更
 - Gulp のタスクを大幅に変更＆コメント記述
 
-### v0.1.6
+### v0.1.6（2016年12月2日）
 
 - html の削除部分で稀にエラーが出ていたのを修正
 - pathSearch の実装方法の変更（フォルダが深くなっても反映されるように）
 - Gulp タスクのロジック周りの微調整
 
-### v0.1.5
+### v0.1.5（2016年12月2日）
 
 - 差分データを zip ファイルに出力するタスク実装
 - 上記に伴い、archives と temp フォルダを削除するタスク実装
@@ -843,7 +843,7 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 - pathSearch を実装した事によって、src と htdocs のファイルの変更＆削除の同期処理を実装
 - 上記の実装を使って、本番ビルド時に sourcemaps の map ファイルを削除
 
-### v0.1.4
+### v0.1.4（2016年11月28日）
 
 - scss の サイトURLの取得を #{$SITE_URL} に統一するようにタスクを変更
 - meta タグの name 属性の author を pages.json 項目未入力の場合非表示にするように変更
@@ -854,7 +854,7 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 - package.json の更新
 - README.md の修正
 
-### v0.1.3
+### v0.1.3（2016年11月18日）
 
 - pages.json の meta 情報を入れ子で取得するように変更
 - BrowserSync の log 出力にプロジェクト名（サイト名）で表示するように変更
@@ -863,12 +863,12 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 - coffee を js 変更後にリロードするようにしていたのを stream に流してリアルタイムに反映するように変更
 - README.md の修正
 
-### v0.1.2
+### v0.1.2（2016年11月18日）
 
 - js を結合する際の順番を plugin javascript coffee の順番に変更（優先度の確立）
 - リダイレクト処理を大幅に変更＆パラメータに対応
 
-### v0.1.1
+### v0.1.1（2016年11月14日）
 
 - sourcemaps が本番ビルド時に sass に残っていたのを修正
 - uglify で圧縮するタイミングを webpack 内に移動（Gulp 側で実行すると怒られる為）
@@ -876,17 +876,17 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 - WebPack で複数の coffee を扱う際、自身のコンストラクタ名を取得し該当ページで実行されるように変更
 - README.md の修正
 
-### v0.1.0
+### v0.1.0（2016年11月11日）
 
 - sourcemaps のタイミングが間違っていたのを修正
 - ビルド対象を拡張子で厳密に判断するように変更
 
-### v0.0.9
+### v0.0.9（2016年11月10日）
 
 - gulp.config.coffee の調整
 - ect のタイムラグ対策に html ファイルが更新されたらリロードするように変更
 
-### v0.0.8
+### v0.0.8（2016年11月10日）
 
 - gulp-changed & gulp-imagemin & gulp-watch 追加
 - 上記を使い src ディレクトリで一元管理するように変更
@@ -896,41 +896,45 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 - pages.json の更新
 - README.md の修正
 
-### v0.0.7
+### v0.0.7（2016年10月24日）
 
 - packageの整理（jQuery と underscore 削除）
 - gulp-header & gulp-footer 追加
 - 上記を使いストリーム中のファイル先頭にコメント挿入
 - BrowserSync の設定調整
 
-### v0.0.6
+### v0.0.6（2016年10月24日）
 
 - BrowserSync のバグを修正
 
-### v0.0.5
+### v0.0.5（2016年10月24日）
 
 - package.json 修正
 - Gulpタスクの処理を調整
 - README.mdの修正
 
-### v0.0.4
+### v0.0.4（2016年9月26日）
 
 - package.json バージョン更新
 - templates/base/_head.ect の調整
 - README.md の修正
 
-### v0.0.3
+### v0.0.3（2016年7月19日）
 
 - WebPack の設定情報変更
 - DefinePlugin の設定変更
 - デバッグコードを削除するように uglify 設定変更
 - SCSSの mixin と utils を追加
 
-### v0.0.2
+### v0.0.2（2016年6月28日）
 
 - タスクファイル分割
 - 不要なファイルの整理
 
-### v0.0.1
+### v0.0.1（2016年6月8日）
 
 - 初回リリース
+
+### vX.X.X（2015年9月18日）
+
+- 開発スタート
