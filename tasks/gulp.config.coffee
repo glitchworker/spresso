@@ -362,7 +362,7 @@ g.task 'css-rp', ->
     require('postcss-assets')(
       basePath: paths.rp.dest # 公開フォルダのパス
       loadPaths: [paths.common.img.postcss, paths.rp.img.postcss] # basePath からみた images フォルダの位置
-      relative: if appConfig.ABSOLUTE_PATH then paths.rp.css.postcss # basePath と対になる css フォルダの位置
+      relative: if not appConfig.ABSOLUTE_PATH then paths.rp.css.postcss # basePath と対になる css フォルダの位置
     )
     require('css-mqpacker')
     require('postcss-sorting')(
@@ -486,7 +486,7 @@ g.task 'css-pc', ->
     require('postcss-assets')(
       basePath: paths.pc.dest # 公開フォルダのパス
       loadPaths: [paths.common.img.postcss, paths.pc.img.postcss] # basePath からみた images フォルダの位置
-      relative: if appConfig.ABSOLUTE_PATH then paths.pc.css.postcss # basePath と対になる css フォルダの位置
+      relative: if not appConfig.ABSOLUTE_PATH then paths.pc.css.postcss # basePath と対になる css フォルダの位置
     )
     require('css-mqpacker')
     require('postcss-sorting')(
@@ -609,7 +609,7 @@ g.task 'css-sp', ->
     require('postcss-assets')(
       basePath: paths.pc.dest # 公開フォルダのパス
       loadPaths: [paths.common.img.postcss, paths.sp.img.postcss] # basePath からみた images フォルダの位置
-      relative: if appConfig.ABSOLUTE_PATH then paths.sp.css.postcss # basePath と対になる css フォルダの位置
+      relative: if not appConfig.ABSOLUTE_PATH then paths.sp.css.postcss # basePath と対になる css フォルダの位置
     )
     require('css-mqpacker')
     require('postcss-sorting')(

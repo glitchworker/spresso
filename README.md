@@ -608,6 +608,7 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 - app.config.json に STG_SITE_URL を追加（本番同等のテストサーバー用のURLを指定）
 - 上記に伴い package.json に staging 用の script コマンドを追加
 - gulp.config.coffee の commentsJs 内の URL が本番URLのみになっていたのを修正
+- postcss-assets の relative の ABSOLUTE_PATH の条件が逆になっていたのを修正
 - README.md の修正
 
 ### v1.3.4（2018年2月28日）
