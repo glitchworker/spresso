@@ -25,7 +25,7 @@ envOption =
   string: 'env'
   default: env: process.env.NODE_ENV or 'development'
 
-isProduction = options.env == 'production'
+isProduction = options.env == 'production' or options.env == 'staging'
 
 #------------------------------------------------------
 # Merge Webpack settings of development & production environment

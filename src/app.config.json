@@ -1,5 +1,6 @@
 {
   "DEV_SITE_URL": "http://dev.hoge.com/",
+  "STG_SITE_URL": "http://stg.hoge.com/",
   "PROD_SITE_URL": "http://prod.hoge.com/",
   "CURRENT_DIR": "",
   "ASSETS_DIR": "assets/",

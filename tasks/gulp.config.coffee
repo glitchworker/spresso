@@ -37,10 +37,14 @@ envOption =
   string: 'env'
   default: env: process.env.NODE_ENV or 'development'
 
-isProduction = if options.env == 'production' then true else false
+isProduction = if options.env == 'production' or options.env == 'staging' then true else false
+isStaging = if options.env == 'staging' then true else false
 
 if isProduction
-  APP_SITE_URL = appConfig.PROD_SITE_URL
+  if isStaging
+    APP_SITE_URL = appConfig.STG_SITE_URL
+  else
+    APP_SITE_URL = appConfig.PROD_SITE_URL
 else
   APP_SITE_URL = appConfig.DEV_SITE_URL
 
@@ -170,7 +174,7 @@ commentsJs = [
   ' * --------------------'
   # ' * @update <%= pkg.UPDATE %>'
   ' * @author <%= pkg.AUTHOR %>'
-  ' * @link <%= pkg.PROD_SITE_URL %>'
+  ' * @link ' + appConfig.APP_SITE_URL
   ' * --------------------'
   ' */'
   ''

@@ -55,6 +55,7 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
 ```json
 {
   "DEV_SITE_URL": "http://dev.hoge.com/",
+  "STG_SITE_URL": "http://stg.hoge.com/",
   "PROD_SITE_URL": "http://prod.hoge.com/",
   "CURRENT_DIR": "",
   "ASSETS_DIR": "assets/",
@@ -215,6 +216,7 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
 | yarn run start | gulp | 開発サーバーを起動する |
+| yarn run start-stg | gulp --env staging | 開発サーバーを本番（テスト）状態で起動する |
 | yarn run start-prod | gulp --env production | 開発サーバーを本番状態で起動する |
 | yarn run start-rp | gulp watch-rp | 開発サーバーを起動する（Responsive） |
 | yarn run start-pc | gulp watch-pc | 開発サーバーを起動する（PC） |
@@ -230,6 +232,10 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 | yarn run dev-rp | gulp build-rp | 開発用のファイルを出力（Responsive） |
 | yarn run dev-pc | gulp build-pc | 開発用のファイルを出力（PC） |
 | yarn run dev-sp | gulp build-sp | 開発用のファイルを出力（SP） |
+| yarn run stg | gulp build --env staging | 本番（テスト）用のファイルを出力 |
+| yarn run stg-rp | gulp build-rp --env staging | 本番（テスト）用のファイルを出力（Responsive） |
+| yarn run stg-pc | gulp build-pc --env staging | 本番（テスト）用のファイルを出力（PC） |
+| yarn run stg-sp | gulp build-sp --env staging | 本番（テスト）用のファイルを出力（SP） |
 | yarn run prod | gulp build --env production | 本番用のファイルを出力 |
 | yarn run prod-rp | gulp build-rp --env production | 本番用のファイルを出力（Responsive） |
 | yarn run prod-pc | gulp build-pc --env production | 本番用のファイルを出力（PC） |
@@ -242,6 +248,7 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
 | yarn run diff | gulp diff | 開発用一時データを出力 |
+| yarn run diff-stg | gulp diff --env staging | 本番（テスト）用一時データを出力 |
 | yarn run diff-prod | gulp diff --env production | 本番用一時データを出力 |
 | yarn run export | gulp export | 差分データを出力 |
 
@@ -595,6 +602,13 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 ```output``` の項目に出力先のパスを入力することによって書き出されます。
 
 ## Version History
+
+### v1.3.5（2018年3月02日）
+- package.json の gulp-autoprefixer の更新
+- app.config.json に STG_SITE_URL を追加（本番同等のテストサーバー用のURLを指定）
+- 上記に伴い package.json に staging 用の script コマンドを追加
+- gulp.config.coffee の commentsJs 内の URL が本番URLのみになっていたのを修正
+- README.md の修正
 
 ### v1.3.4（2018年2月28日）
 - pages.json 内の項目を全て大文字で統一化
