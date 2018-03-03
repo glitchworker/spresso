@@ -743,7 +743,7 @@ g.task 'bs', ->
       baseDir: rootDir.htdocs,
       middleware: [
         ssi({
-          baseDir: __dirname + '/' + rootDir.htdocs,
+          baseDir: path.join(__dirname, '../' + rootDir.htdocs),
           ext: '.html'
         })
       ]
