@@ -28,12 +28,12 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
 
 10. 以降8〜9の繰り返し
 
-> 本番環境にアップロードする場合、```yarn run prod``` を実行し ```/htdocs/``` 内をアップする
+> 本番環境にアップロードする場合、```yarn run prod``` を実行し ```/htdocs/``` 内をアップする  
 ※ 各設定ファイルについては Setting 、開発用のコマンドについては Scripts を参照
 > 
-> また、7 の時に ```yarn run diff``` としておくと ```/htdocs/``` と ```/temp/``` フォルダが生成され
-作業後に ```yarn run export``` を実行すると差分データが ```/archive/``` フォルダに zip 形式で出力される
-※作業を開始する前に実行しておくと作業開始時から編集後の差分データを出力することが出来る
+> また、7 の時に ```yarn run diff``` としておくと ```/htdocs/``` と ```/temp/``` フォルダが生成され  
+作業後に ```yarn run export``` を実行すると差分データが ```/archive/``` フォルダに zip 形式で出力される  
+※作業を開始する前に実行しておくと作業開始時から編集後の差分データを出力することが出来る  
 　つまり実行しなければ過去に実行した時点からの差分を出力することが可能
 
 ## Setting
@@ -137,9 +137,9 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
 ]
 ```
 
-## 規定値をsrc内で共有する方法
+## How to use
 
-共通の規定値は app.config.json に定義してください。
+共通の規定値は app.config.json に定義してください。  
 規定値の参照方法などは以下をご覧ください。
 
 #### ectの場合
@@ -154,9 +154,10 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
 | <%- @SITE_URL %> | サイトURL（カレントディレクトリを含む） |
 | <%- @SITE_NAME %> | サイト名 |
 
-> /src/(rp か pc か sp)/templates/pages.json 内で json を取得しています。 ```<%- @HEAD.META_TITLE %>``` 等で参照できます。
-上記以外にも、pages.json に記入された内容は呼び出すことが可能です。
-```<% for HEAD in @HEAD : %><% end %>``` で囲むことによって meta 情報の入れ子を以下の様に
+> /src/(rp か pc か sp)/templates/pages.json 内で json を取得しています。  
+※ ```<%- @HEAD.META_TITLE %>``` 等で参照できます。  
+上記以外にも、pages.json に記入された内容は呼び出すことが可能です。  
+```<% for HEAD in @HEAD : %><% end %>``` で囲むことによって meta 情報の入れ子を以下の様に  
 記述することによって取得可能にしています。
 
 | 記述 | 説明 |
@@ -184,13 +185,13 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
 | #{$UPDATE} | ファイル更新日時 |
 | #{$TIMESTAMP} | ファイル更新日時Unix |
 
-> /src/common/stylesheets/_config.scss 内で json を取得しています。 ```#{$SITE_NAME}``` 等で参照できます。
+> /src/common/stylesheets/_config.scss 内で json を取得しています。 ```#{$SITE_NAME}``` 等で参照できます。  
 また sass の map 形式に変換されるので、 ```map-get($appConfig, [hash])``` 等で参照できます。
 
 <u>**v1.3.2 から Gulp のタスク内に参照先を変更しました。**</u>
 
-> 今まで sass の function 機能を使い、独自モジュールを使って取得していましたが
-sass に依存してしまうので gulp-header を使い Gulp タスク内で完結するようにしました。
+> 今まで sass の function 機能を使い、独自モジュールを使って取得していましたが  
+sass に依存してしまうので gulp-header を使い Gulp タスク内で完結するようにしました。  
 それに伴い、/src/common/stylesheets/_config.scss 内の変数宣言を削除しました。
 
 #### coffeescriptの場合
@@ -205,7 +206,8 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 | APP_UPDATE | ファイル更新日時 |
 | APP_TIMESTAMP | ファイル更新日時Unix |
 
-> webpack に DefinePlugin として渡しているので、 ```APP_SITE_URL``` 等で参照できます。
+> webpack に DefinePlugin として渡しているので  
+```APP_SITE_URL``` 等で参照できます。
 
 ## Scripts
 
@@ -545,8 +547,8 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 
 <u>**v1.3.3 から assets フォルダの名称および設置場所を自由に出来るようになりました。**</u>
 
-> 初期値は上記のようなディレクトリ構成になっていますが
-app.config.json に ASSETS_DIR の項目が追加されたことによって
+> 初期値は上記のようなディレクトリ構成になっていますが  
+app.config.json に ASSETS_DIR の項目が追加されたことによって  
 assets フォルダの名称および設置場所を自由に変更出来るようになりました。
 
 ## Dependencies
@@ -574,15 +576,15 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 
 <u>**v1.3.4 から JSON で扱う項目名を全て大文字に変更しました。**</u>
 
-> Gulp から受け渡す名称と、JSON に記述されている名称で大文字と小文字が混在している状況になり
-ルール化する為に全て大文字で統一いたしました。そのため一部項目名を変更している部分があるので
+> Gulp から受け渡す名称と、JSON に記述されている名称で大文字と小文字が混在している状況になり  
+ルール化する為に全て大文字で統一いたしました。そのため一部項目名を変更している部分があるので  
 お手数ですが README.md の再読をよろしくお願い致します。
 
 <u>**v1.3.2 および v1.3.3 から ディレクトリやタスク処理を大幅に変更しました。**</u>
 
-> より汎用性と自動化をはかるためにファイルやフォルダ構成の整理を含む
-各 json ファイルや gulp.config.coffee などの内部的処理を大幅に変更しました。
-マイナーアップデートでありながらも規定値の設定方法などガラッと変わっていますのでご注意ください。
+> より汎用性と自動化をはかるためにファイルやフォルダ構成の整理を含む  
+各 json ファイルや gulp.config.coffee などの内部的処理を大幅に変更しました。  
+マイナーアップデートでありながらも規定値の設定方法などガラッと変わっていますのでご注意ください。  
 変数等の名称に変更があるので、お手数ですが README.md の再読をよろしくお願い致します。
 
 <u>**v1.3.0 から src フォルダの app.config.json のレスポンシブ切り替え用の項目を Boolean 型に変更しました。**</u>
@@ -591,14 +593,14 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 
 <u>**v1.2.7 から新たに src フォルダの app.config.json にレスポンシブ切り替え用の項目が追加されました。**</u>
 
-> ```RESPONSIVE_TEMPLATE``` の項目に何でも良いので入力されている場合、PC用とSP用のビルドはスキップされ
+> ```RESPONSIVE_TEMPLATE``` の項目に何でも良いので入力されている場合、PC用とSP用のビルドはスキップされ  
 レスポンシブ用のテンプレートのみビルド対象になります。
 
 <u>**v1.1.0 から新たに src フォルダに import フォルダが追加されました。**</u>
 
-> この中にファイル又はフォルダを追加し data.json に設定を記述することによって
-本テンプレート以外にユーザーが自由に設定したファイル＆フォルダを htdocs に出力することが可能です。
-フォルダの場合は type に ```dir``` ファイルの場合は ```file``` を記述し data にフォルダ名またはファイル名を入力した後
+> この中にファイル又はフォルダを追加し data.json に設定を記述することによって  
+本テンプレート以外にユーザーが自由に設定したファイル＆フォルダを htdocs に出力することが可能です。  
+フォルダの場合は type に ```dir``` ファイルの場合は ```file``` を記述し data にフォルダ名またはファイル名を入力した後  
 ```output``` の項目に出力先のパスを入力することによって書き出されます。
 
 ## Version History
