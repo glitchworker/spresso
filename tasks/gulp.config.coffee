@@ -777,17 +777,19 @@ if appConfig.API_SERVER
   }
 
 # json-server watch & refresh
-g.task 'watch-api', ->
+g.task 'api', ->
   g.src paths.api.watch
   .pipe apiServer.pipe()
+
+g.task 'watch-api', ['api'], ->
+  $.watch paths.api.watch, ->
+    g.start 'api' # json ファイルが変更または追加されたらビルド出力
 
 # watch
 g.task 'watch', ['bs'], ->
   g.watch [paths.common.js.plugin, paths.common.js.javascript, paths.common.js.coffee], ['coffee']
   $.watch paths.common.img.src, ->
     g.start 'img' # img ファイルが変更または追加されたらビルド出力
-  $.watch paths.api.watch, ->
-    g.start 'watch-api' # json ファイルが変更または追加されたらビルド出力
 
 # watch rp
 g.task 'watch-rp', ['bs'], ->
