@@ -7,6 +7,7 @@ path = require 'path' # パス解析
 g = require 'gulp' # Gulp 本体
 $ = do require 'gulp-load-plugins' # package.json からプラグインを自動で読み込む
 fs = require 'fs' # ファイルやディレクトリの操作
+url = require 'url'
 
 runSequence = require 'run-sequence' # タスクの並列 / 直列処理
 rimraf = require 'rimraf' # 単一ファイル / ディレクトリ削除
@@ -16,6 +17,7 @@ eventStream = require 'event-stream' # Gulp のイベントを取得する
 
 bs = require('browser-sync').create() # Web サーバー作成
 ssi = require 'browsersync-ssi' # SSI を有効化
+jsonServer = require 'gulp-json-srv'
 
 #------------------------------------------------------
 # Load original module
@@ -59,6 +61,7 @@ appConfig.BASE_SITE_URL = APP_SITE_URL # app.config.json に BASE_SITE_URL 項�
 appConfig.APP_SITE_URL = APP_SITE_URL + appConfig.CURRENT_DIR # app.config.json に APP_SITE_URL 項目を追加
 appConfig.RESPONSIVE_TEMPLATE = Boolean(appConfig.RESPONSIVE_TEMPLATE) # app.config.json の RESPONSIVE_TEMPLATE 項目を Boolean 型に変換
 appConfig.ABSOLUTE_PATH = Boolean(appConfig.ABSOLUTE_PATH) # app.config.json の ABSOLUTE_PATH 項目を Boolean 型に変換
+appConfig.API_SERVER = Boolean(appConfig.API_SERVER) # app.config.json の API_SERVER 項目を Boolean 型に変換
 
 #------------------------------------------------------
 # Path Settings
@@ -152,6 +155,11 @@ paths =
     src: rootDir.htdocs + '/**/*'
     temp: rootDir.temp + '/'
     dest: rootDir.archive + '/'
+  api:
+    port: 9000
+    src: './' + rootDir.src + '/api/'
+    watch: rootDir.src + '/api/**/*.json'
+    dest: '/api'
 
 #------------------------------------------------------
 # Comment information Settings
@@ -738,7 +746,7 @@ g.task 'clean-archive', ['clean-temp'], (cb) ->
 
 # browserSync
 g.task 'bs', ->
-  bs.init(null, {
+  bs.init null, {
     server:
       baseDir: rootDir.htdocs,
       middleware: [
@@ -753,13 +761,33 @@ g.task 'bs', ->
     logPrefix: appConfig.SITE_NAME
     logFileChanges: false
     startPath: appConfig.CURRENT_DIR
-  })
+  }, (err, bs) ->
+    return
+
+# json-server
+if appConfig.API_SERVER
+  apiServer = jsonServer.create {
+    port: paths.api.port,
+    baseUrl: paths.api.dest,
+    static: paths.api.src,
+    verbosity: {
+      level: "error",
+      urlTracing: false
+    }
+  }
+
+# json-server watch & refresh
+g.task 'watch-api', ->
+  g.src paths.api.watch
+  .pipe apiServer.pipe()
 
 # watch
 g.task 'watch', ['bs'], ->
   g.watch [paths.common.js.plugin, paths.common.js.javascript, paths.common.js.coffee], ['coffee']
   $.watch paths.common.img.src, ->
     g.start 'img' # img ファイルが変更または追加されたらビルド出力
+  $.watch paths.api.watch, ->
+    g.start 'watch-api' # json ファイルが変更または追加されたらビルド出力
 
 # watch rp
 g.task 'watch-rp', ['bs'], ->
@@ -787,6 +815,12 @@ g.task 'watch-sp', ['bs'], ->
 
 # default task
 if appConfig.RESPONSIVE_TEMPLATE
-  g.task 'default', ['bs', 'watch-rp', 'watch']
+  if appConfig.API_SERVER
+   g.task 'default', ['bs', 'watch-rp', 'watch', 'watch-api']
+  else
+   g.task 'default', ['bs', 'watch-rp', 'watch']
 else
-  g.task 'default', ['bs', 'watch-pc', 'watch-sp', 'watch']
+  if appConfig.API_SERVER
+    g.task 'default', ['bs', 'watch-pc', 'watch-sp', 'watch', 'watch-api']
+  else
+    g.task 'default', ['bs', 'watch-pc', 'watch-sp', 'watch']

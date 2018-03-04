@@ -8,5 +8,6 @@
   "AUTHOR": "これは作成者です",
   "MODIFIER": "これは編集者です",
   "RESPONSIVE_TEMPLATE": false,
-  "ABSOLUTE_PATH": false
+  "ABSOLUTE_PATH": false,
+  "API_SERVER": false
 }

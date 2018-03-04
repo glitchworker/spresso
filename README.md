@@ -63,7 +63,8 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
   "AUTHOR": "これは作成者です",
   "MODIFIER": "これは編集者です",
   "RESPONSIVE_TEMPLATE": false,
-  "ABSOLUTE_PATH": false
+  "ABSOLUTE_PATH": false,
+  "API_SERVER": false
 }
 ```
 
@@ -281,6 +282,8 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 	├── src
 	│   ├── app.config.json
 	│   ├── postcss-sorting.json
+	│   ├── api
+	│   │   └── data.json
 	│   ├── import
 	│   │   └── data.json
 	│   ├── common
@@ -469,6 +472,7 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 ### src
 
 	./src
+	├── api
 	├── import
 	├── common
 	│   ├── images
@@ -522,7 +526,6 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 	        ├── bases
 	        └── partials
 
-
 ### htdocs
 
 	./htdocs
@@ -551,6 +554,114 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 app.config.json に ASSETS_DIR の項目が追加されたことによって  
 assets フォルダの名称および設置場所を自由に変更出来るようになりました。
 
+## API Mock Server
+
+```app.config.json``` の ```API_SERVER``` を有効にすると起動します。
+
+> 機能としては JSON ファイルを用意しておけば API のリクエストを受け取り、  
+または返してくれるシンプルな RESTful API サーバーを用意することが出来ます。  
+対応しているメソッドは GET / POST / PUT / DELETE さらに PATCH もサポートしています。  
+JSONP または CORS に対応していますのでクロスドメインでも使えるようになっています。
+
+```/src/api/``` 以下に JSON ファイルを設置することによって  
+そのファイルを API としてレスポンスが返されるようになります。  
+※ファイル数に制限は無く配下にいくつでも JSON ファイルを設置することが出来ます。
+デフォルトのポート番号は 9000 番に設定されているので  
+http://localhost:9000/api/ 等でアクセスする事が可能です。  
+```/api/db``` にアクセスするとディレクトリ内全ての JSON が結合したデータを取得出来ます。
+
+例として以下のような ```/src/api/data.json``` を配置しています。
+
+```json
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "hoge",
+      "email": "hoge@hoge.com"
+    },
+	  {
+      "id": 2,
+      "name": "fuga",
+      "email": "fuga@fuga.com"
+    }
+  ]
+}
+```
+
+この場合、```/api/users``` にアクセスすると users のみを取得することも可能です。
+
+```json
+[
+  {
+    "id": 1,
+    "name": "hoge",
+    "email": "hoge@hoge.com"
+  },
+  {
+    "id": 2,
+    "name": "fuga",
+    "email": "fuga@fuga.com"
+  }
+]
+```
+
+また、```/api/users?id=1``` とすれば絞り込み検索も可能です。
+
+```json
+[
+  {
+    "id": 1,
+    "name": "hoge",
+    "email": "hoge@hoge.com"
+  }
+]
+```
+
+### 一部細かい機能の紹介
+
+※このサーバーは [json-server](https://github.com/typicode/json-server) を使用しているので  
+　その他細かい使い方は上記の公式ドキュメント等々をご参考ください。
+
+#### Filter
+パラメーター名による絞り込みは以下で可能です。
+
+http://localhost:9000/api/users?name=hoge&email=hoge@hoge.com  
+http://localhost:9000/api/users?id=1&id=2  
+http://localhost:9000/api/users?name=fuga
+
+#### Slice
+```_start``` と ```_end``` 又は ```_limit``` を使用して  
+データをスライスすることが出来ます。
+
+http://localhost:9000/api/users?_start=1&_end=3
+
+#### Sort
+```_sort``` と ```_order``` を使用して  
+データをソートして並べ替える事が出来ます。  
+※デフォルトは昇順で返されます。
+
+降順  
+http://localhost:9000/api/users?_sort=id&_order=DESC  
+昇順  
+http://localhost:9000/api/users?_sort=id&_order=ASC
+
+#### Operators
+
+```_gte``` と ```_lte``` を使用してデータの取得範囲を制限することが出来ます。  
+http://localhost:9000/api/users?id_gte=1&id_lte=3
+
+```_ne``` を使用して一部データを除外することが出来ます。  
+http://localhost:9000/api/users?id_ne=1
+
+```_like``` を使用して正規表現を使ってフィルタリング出来ます。  
+http://localhost:9000/api/users?name_like=hoge
+
+#### Full-text search
+
+```q``` を使用して全てのデータから検索することが出来ます。  
+http://localhost:9000/api/users?q=fuga
+
 ## Dependencies
 
 - [NodeJS](https://nodejs.org/en/)
@@ -574,6 +685,12 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 
 ## Important Notices
 
+<u>**v1.3.6 で API Mock Server を追加しました。**</u>
+
+> json 形式を使用した、簡易的な RESTful API サーバーを立てる機能を実装しました。
+```/src/api/``` 配下に設置された JSON データをレスポンスし ajax 等で GET および POST が可能です。
+詳しい使い方などは本 README.md の [API Mock Server](#api-mock-server) をご覧ください。
+
 <u>**v1.3.4 から JSON で扱う項目名を全て大文字に変更しました。**</u>
 
 > Gulp から受け渡す名称と、JSON に記述されている名称で大文字と小文字が混在している状況になり  
@@ -583,7 +700,7 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 <u>**v1.3.2 および v1.3.3 から ディレクトリやタスク処理を大幅に変更しました。**</u>
 
 > より汎用性と自動化をはかるためにファイルやフォルダ構成の整理を含む  
-各 json ファイルや gulp.config.coffee などの内部的処理を大幅に変更しました。  
+各 json ファイルや ```gulp.config.coffee``` などの内部的処理を大幅に変更しました。  
 マイナーアップデートでありながらも規定値の設定方法などガラッと変わっていますのでご注意ください。  
 変数等の名称に変更があるので、お手数ですが README.md の再読をよろしくお願い致します。
 
@@ -598,14 +715,20 @@ assets フォルダの名称および設置場所を自由に変更出来るよ�
 
 <u>**v1.1.0 から新たに src フォルダに import フォルダが追加されました。**</u>
 
-> この中にファイル又はフォルダを追加し data.json に設定を記述することによって  
-本テンプレート以外にユーザーが自由に設定したファイル＆フォルダを htdocs に出力することが可能です。  
+> この中にファイル又はフォルダを追加し ```data.json``` に設定を記述することによって  
+本テンプレート以外にユーザーが自由に設定したファイル＆フォルダを ```htdocs ```に出力することが可能です。  
 フォルダの場合は type に ```dir``` ファイルの場合は ```file``` を記述し data にフォルダ名またはファイル名を入力した後  
 ```output``` の項目に出力先のパスを入力することによって書き出されます。
 
 ## Version History
 
-### v1.3.5（2018年3月02日）
+### v1.3.6（2018年3月4日）
+- package.json に gulp-json-srv を追加（API Mock Server の追加）
+- app.config.json に API_SERVER の項目を追加
+- 上記に伴い gulp.config.coffee に API サーバーを立ち上げる処理を追加
+- README.md の修正
+
+### v1.3.5（2018年3月2日）
 - package.json の gulp-autoprefixer の更新
 - app.config.json に STG_SITE_URL を追加（本番同等のテストサーバー用のURLを指定）
 - 上記に伴い package.json に staging 用の script コマンドを追加
