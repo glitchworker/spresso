@@ -565,7 +565,7 @@ JSONP または CORS に対応していますのでクロスドメインでも�
 
 ```/src/api/``` 以下に JSON ファイルを設置することによって  
 そのファイルを API としてレスポンスが返されるようになります。  
-※ファイル数に制限は無く配下にいくつでも JSON ファイルを設置することが出来ます。
+※ファイル数に制限は無く配下にいくつでも JSON ファイルを設置することが出来ます。  
 デフォルトのポート番号は 9000 番に設定されているので  
 http://localhost:9000/api/ 等でアクセスする事が可能です。  
 ```/api/db``` にアクセスするとディレクトリ内全ての JSON が結合したデータを取得出来ます。
@@ -685,10 +685,10 @@ http://localhost:9000/api/users?q=fuga
 
 ## Important Notices
 
-<u>**v1.3.6 で API Mock Server を追加しました。**</u>
+<u>**v1.3.6 から API Mock Server を追加しました。**</u>
 
-> json 形式を使用した、簡易的な RESTful API サーバーを立てる機能を実装しました。
-```/src/api/``` 配下に設置された JSON データをレスポンスし ajax 等で GET および POST が可能です。
+> json 形式を使用した、簡易的な RESTful API サーバーを立てる機能を実装しました。  
+```/src/api/``` 配下に設置された JSON データをレスポンスし ajax 等で GET および POST が可能です。  
 詳しい使い方などは本 README.md の [API Mock Server](#api-mock-server) をご覧ください。
 
 <u>**v1.3.4 から JSON で扱う項目名を全て大文字に変更しました。**</u>
