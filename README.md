@@ -140,7 +140,7 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
 
 ## How to use
 
-共通の規定値は app.config.json に定義してください。  
+共通の規定値は ```app.config.json``` に定義してください。  
 規定値の参照方法などは以下をご覧ください。
 
 #### ectの場合
@@ -155,7 +155,7 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
 | <%- @SITE_URL %> | サイトURL（カレントディレクトリを含む） |
 | <%- @SITE_NAME %> | サイト名 |
 
-> /src/(rp か pc か sp)/templates/pages.json 内で json を取得しています。  
+> ```/src/(rp か pc か sp)/templates/pages.json``` 内で json を取得しています。  
 ※ ```<%- @HEAD.META_TITLE %>``` 等で参照できます。  
 上記以外にも、pages.json に記入された内容は呼び出すことが可能です。  
 ```<% for HEAD in @HEAD : %><% end %>``` で囲むことによって meta 情報の入れ子を以下の様に  
@@ -186,7 +186,7 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
 | #{$UPDATE} | ファイル更新日時 |
 | #{$TIMESTAMP} | ファイル更新日時Unix |
 
-> /src/common/stylesheets/_config.scss 内で json を取得しています。 ```#{$SITE_NAME}``` 等で参照できます。  
+> ```/src/common/stylesheets/_config.scss``` 内で json を取得しています。 ```#{$SITE_NAME}``` 等で参照できます。  
 また sass の map 形式に変換されるので、 ```map-get($appConfig, [hash])``` 等で参照できます。
 
 <u>**v1.3.2 から Gulp のタスク内に参照先を変更しました。**</u>
@@ -219,7 +219,7 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
 | yarn run start | gulp | 開発サーバーを起動する |
-| yarn run start-stg | gulp --env staging | 開発サーバーを本番（テスト）状態で起動する |
+| yarn run start-stg | gulp --env staging | 開発サーバーをステージング状態で起動する |
 | yarn run start-prod | gulp --env production | 開発サーバーを本番状態で起動する |
 | yarn run start-rp | gulp watch-rp | 開発サーバーを起動する（Responsive） |
 | yarn run start-pc | gulp watch-pc | 開発サーバーを起動する（PC） |
@@ -235,10 +235,10 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 | yarn run dev-rp | gulp build-rp | 開発用のファイルを出力（Responsive） |
 | yarn run dev-pc | gulp build-pc | 開発用のファイルを出力（PC） |
 | yarn run dev-sp | gulp build-sp | 開発用のファイルを出力（SP） |
-| yarn run stg | gulp build --env staging | 本番（テスト）用のファイルを出力 |
-| yarn run stg-rp | gulp build-rp --env staging | 本番（テスト）用のファイルを出力（Responsive） |
-| yarn run stg-pc | gulp build-pc --env staging | 本番（テスト）用のファイルを出力（PC） |
-| yarn run stg-sp | gulp build-sp --env staging | 本番（テスト）用のファイルを出力（SP） |
+| yarn run stg | gulp build --env staging | ステージング用のファイルを出力 |
+| yarn run stg-rp | gulp build-rp --env staging | ステージング用のファイルを出力（Responsive） |
+| yarn run stg-pc | gulp build-pc --env staging | ステージング用のファイルを出力（PC） |
+| yarn run stg-sp | gulp build-sp --env staging | ステージング用のファイルを出力（SP） |
 | yarn run prod | gulp build --env production | 本番用のファイルを出力 |
 | yarn run prod-rp | gulp build-rp --env production | 本番用のファイルを出力（Responsive） |
 | yarn run prod-pc | gulp build-pc --env production | 本番用のファイルを出力（PC） |
@@ -251,7 +251,7 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
 | yarn run diff | gulp diff | 開発用一時データを出力 |
-| yarn run diff-stg | gulp diff --env staging | 本番（テスト）用一時データを出力 |
+| yarn run diff-stg | gulp diff --env staging | ステージング用一時データを出力 |
 | yarn run diff-prod | gulp diff --env production | 本番用一時データを出力 |
 | yarn run export | gulp export | 差分データを出力 |
 
