@@ -7,7 +7,6 @@ path = require 'path' # パス解析
 g = require 'gulp' # Gulp 本体
 $ = do require 'gulp-load-plugins' # package.json からプラグインを自動で読み込む
 fs = require 'fs' # ファイルやディレクトリの操作
-url = require 'url'
 
 runSequence = require 'run-sequence' # タスクの並列 / 直列処理
 rimraf = require 'rimraf' # 単一ファイル / ディレクトリ削除
@@ -17,7 +16,7 @@ eventStream = require 'event-stream' # Gulp のイベントを取得する
 
 bs = require('browser-sync').create() # Web サーバー作成
 ssi = require 'browsersync-ssi' # SSI を有効化
-jsonServer = require 'gulp-json-srv'
+jsonServer = require 'gulp-json-srv' # API サーバー
 
 #------------------------------------------------------
 # Load original module
@@ -744,6 +743,11 @@ g.task 'clean-temp', (cb) ->
 g.task 'clean-archive', ['clean-temp'], (cb) ->
   return rimraf paths.archive.dest, cb
 
+#------------------------------------------------------
+# Local server settings
+# ローカルサーバー設定
+#------------------------------------------------------
+
 # browserSync
 g.task 'bs', ->
   bs.init null, {
@@ -776,12 +780,19 @@ if appConfig.API_SERVER
     }
   }
 
+#------------------------------------------------------
+# Monitoring task
+# 監視タスク
+#------------------------------------------------------
+
 # json-server watch & refresh
 g.task 'api', ->
   g.src paths.api.watch
   .pipe apiServer.pipe()
 
 g.task 'watch-api', ['api'], ->
+  # API サーバー起動のログを出力
+  console.log '[\u001b[34mAPI Mock Server\u001b[0m] \u001b[1mAccess URLs: \u001b[0m\u001b[35mhttp://localhost:' + paths.api.port + paths.api.dest + '/db\u001b[0m'
   $.watch paths.api.watch, ->
     g.start 'api' # json ファイルが変更または追加されたらビルド出力
 
