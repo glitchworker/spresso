@@ -7,6 +7,7 @@ path = require 'path' # パス解析
 g = require 'gulp' # Gulp 本体
 $ = do require 'gulp-load-plugins' # package.json からプラグインを自動で読み込む
 fs = require 'fs' # ファイルやディレクトリの操作
+url = require 'url' # URL をパースする
 
 runSequence = require 'run-sequence' # タスクの並列 / 直列処理
 rimraf = require 'rimraf' # 単一ファイル / ディレクトリ削除
@@ -766,6 +767,17 @@ g.task 'bs', ->
     logFileChanges: false
     startPath: appConfig.CURRENT_DIR
   }, (err, bs) ->
+    # API サーバー起動のログを出力
+    if appConfig.API_SERVER
+      baseURL = bs.getOption 'urls'
+      localURL = url.parse baseURL.get 'local', false
+      externalURL = url.parse baseURL.get 'external', false
+      console.log '[\u001b[32mAPI Mock Server\u001b[0m] \u001b[1mAccess URLs: \u001b[0m'
+      console.log ' \u001b[2m---------------------------------------\u001b[0m'
+      console.log '       Local: \u001b[35m' + localURL.protocol + '//' + localURL.hostname + ':' + paths.api.port + paths.api.dest + '/db\u001b[0m'
+      console.log '    External: \u001b[35m' + externalURL.protocol + '//' + externalURL.hostname + ':' + paths.api.port + paths.api.dest + '/db\u001b[0m'
+      console.log ' \u001b[2m---------------------------------------\u001b[0m'
+      console.log '[\u001b[32mAPI Mock Server\u001b[0m] Serving files from: \u001b[35msrc' + paths.api.dest + '\u001b[0m'
     return
 
 # json-server
@@ -791,8 +803,6 @@ g.task 'api', ->
   .pipe apiServer.pipe()
 
 g.task 'watch-api', ['api'], ->
-  # API サーバー起動のログを出力
-  console.log '[\u001b[34mAPI Mock Server\u001b[0m] \u001b[1mAccess URLs: \u001b[0m\u001b[35mhttp://localhost:' + paths.api.port + paths.api.dest + '/db\u001b[0m'
   $.watch paths.api.watch, ->
     g.start 'api' # json ファイルが変更または追加されたらビルド出力
 
