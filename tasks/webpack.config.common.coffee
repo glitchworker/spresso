@@ -3,7 +3,6 @@
 # 依存モジュール読み込み
 #------------------------------------------------------
 
-webpack = require('gulp-webpack').webpack # Webpack 読み込み
 minimist = require 'minimist' # Gulp で引数を解析
 merge = require 'webpack-merge' # 共通の Webpack 設定をマージ
 

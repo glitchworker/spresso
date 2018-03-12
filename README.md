@@ -722,6 +722,11 @@ http://localhost:9000/api/users?q=fuga
 
 ## Version History
 
+### v1.3.7（2018年3月13日）
+- package.json の gulp-header を更新
+- webpack で merge しているファイルから webpack の require を削除
+- README.md の修正
+
 ### v1.3.6（2018年3月4日）
 - package.json に gulp-json-srv を追加（API Mock Server の追加）
 - app.config.json に API_SERVER の項目を追加
