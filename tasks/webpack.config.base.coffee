@@ -4,7 +4,7 @@
 #------------------------------------------------------
 
 path = require 'path' # パス解析
-webpack = require('gulp-webpack').webpack # Webpack 読み込み
+webpack = require('webpack-stream').webpack # Webpack 読み込み
 minimist = require 'minimist' # Gulp で引数を解析
 IfPlugin = require 'if-webpack-plugin' # Webpack の Plugins 内で条件分岐
 
@@ -48,11 +48,11 @@ commonPath = path.resolve('') + '/src/common/scripts/coffee/common'
 config = {
   devtool: if not isProduction then 'source-map'
   resolve: {
-    extensions: ['', '.js', '.coffee'] # require する際に、拡張子を省略するための設定
+    extensions: ['.js', '.coffee'] # require する際に、拡張子を省略するための設定
   }
   module:
-    loaders: [
-      {test: /\.coffee$/, loader: 'coffee-loader'} # CoffeeScript をコンパイルするための設定
+    rules: [
+      {test: /\.coffee$/, use: 'coffee-loader'} # CoffeeScript をコンパイルするための設定
     ]
   plugins: [
     new webpack.ProvidePlugin

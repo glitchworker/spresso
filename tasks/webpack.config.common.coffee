@@ -11,7 +11,7 @@ merge = require 'webpack-merge' # 共通の Webpack 設定をマージ
 # 独自モジュール読み込み
 #------------------------------------------------------
 
-baseConfig = require './webpack.config.base.coffee' # Webpack 共通設定
+baseConfig = require './webpack.config.base' # Webpack 共通設定
 
 #------------------------------------------------------
 # Development & Production Environment Branch processing

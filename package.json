@@ -85,7 +85,6 @@
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
     "gulp-watch": "^5.0.0",
-    "gulp-webpack": "^1.5.0",
     "gulp-zip": "^4.1.0",
     "if-webpack-plugin": "^1.0.5",
     "minimist": "^1.2.0",
@@ -95,6 +94,8 @@
     "require-dir": "^1.0.0",
     "rimraf": "^2.6.2",
     "run-sequence": "^2.2.1",
-    "webpack-merge": "^4.1.2"
+    "webpack": "^3.11.0",
+    "webpack-merge": "^4.1.2",
+    "webpack-stream": "^4.0.2"
   }
 }
