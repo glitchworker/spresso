@@ -722,11 +722,12 @@ http://localhost:9000/api/users?q=fuga
 
 ## Version History
 
-### v1.3.7（2018年3月13日）
+### v1.3.7（2018年3月14日）
 - package.json の gulp-header を更新
 - webpack で merge しているファイルから webpack の require を削除
 - gulp-webpack を削除し webpack-stream を導入（webpack 1.x → 3.x に変更）
 - 上記に伴い gulp.config および webpack.config の記述を修正
+- IE8 以下の polyfill.js ファイルの追加 ＆ _head.ect の記述修正
 - README.md の修正
 
 ### v1.3.6（2018年3月4日）

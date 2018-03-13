@@ -98,16 +98,18 @@
 <% else: %>
 <script src="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/js/lib/jquery-3.3.1.min.js"></script>
 <% end %>
-<script src="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/js/common.js"></script>
-<% if @REDIRECT : %>
-<script>redirectSP("<%- @REDIRECT_PATH %>");</script>
-<% end %>
-<% content 'addScriptsHeader' %>
 <% if HEAD.META_OLD_BROWSER : %>
 
 <!--[if lt IE 9]>
 <script src="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/js/lib/html5shiv.min.js"></script>
 <script src="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/js/lib/selectivizr.min.js"></script>
+<script src="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/js/lib/polyfill.js"></script>
 <![endif]-->
+
 <% end %>
+<script src="<%- @RELATIVE_PATH %><%- @ASSETS_DIR %>common/js/common.js"></script>
+<% if @REDIRECT : %>
+<script>redirectSP("<%- @REDIRECT_PATH %>");</script>
+<% end %>
+<% content 'addScriptsHeader' %>
 <% end %>
