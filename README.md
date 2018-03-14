@@ -732,6 +732,13 @@ http://localhost:9000/api/users?q=fuga
 
 ## Version History
 
+### v1.3.8（2018年3月15日）
+- CoffeeScript のバージョンを 2.x 系に更新
+- package.json に babel-loader, babel-core, babel-preset-env, babel-plugin-transform-es2015-classes を追加
+- Babel で出力された ES6 に対応していないブラウザの為に transform-es2015-classes の loose モードを有効
+- 上記に伴い gulp.config および webpack.config の記述を修正
+- README.md の修正
+
 ### v1.3.7（2018年3月14日）
 - package.json の gulp-header を更新
 - webpack で merge しているファイルから webpack の require を削除

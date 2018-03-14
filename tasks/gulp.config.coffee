@@ -273,7 +273,7 @@ g.task 'libcopy', ->
 g.task 'coffee', ->
   g.src([paths.common.js.plugin, paths.common.js.javascript, paths.common.js.coffee])
   .pipe $.plumber(plumberConfig)
-  .pipe webpackStream require './webpack.config.common.coffee', webpack
+  .pipe webpackStream require('./webpack.config.common.coffee'), webpack
   .pipe $.if isProduction, $.header(commentsJs, pkg: appConfig, filename: '共通スクリプト')
   .pipe g.dest paths.common.js.dest
   # JS を stream オプションでリアルタイムに反映
@@ -397,7 +397,7 @@ g.task 'css-rp', ->
 g.task 'coffee-rp', ->
   g.src([paths.rp.js.plugin, paths.rp.js.javascript, paths.rp.js.coffee])
   .pipe $.plumber(plumberConfig)
-  .pipe webpackStream require './webpack.config.rp.coffee', webpack
+  .pipe webpackStream require('./webpack.config.rp.coffee'), webpack
   .pipe $.if isProduction, $.header(commentsJs, pkg: appConfig, filename: 'メインスクリプト')
   .pipe g.dest paths.rp.js.dest
   # JS を stream オプションでリアルタイムに反映
@@ -521,7 +521,7 @@ g.task 'css-pc', ->
 g.task 'coffee-pc', ->
   g.src([paths.pc.js.plugin, paths.pc.js.javascript, paths.pc.js.coffee])
   .pipe $.plumber(plumberConfig)
-  .pipe webpackStream require './webpack.config.pc.coffee', webpack
+  .pipe webpackStream require('./webpack.config.pc.coffee'), webpack
   .pipe $.if isProduction, $.header(commentsJs, pkg: appConfig, filename: 'メインスクリプト')
   .pipe g.dest paths.pc.js.dest
   # JS を stream オプションでリアルタイムに反映
@@ -644,7 +644,7 @@ g.task 'css-sp', ->
 g.task 'coffee-sp', ->
   g.src([paths.sp.js.plugin, paths.sp.js.javascript, paths.sp.js.coffee])
   .pipe $.plumber(plumberConfig)
-  .pipe webpackStream require './webpack.config.sp.coffee', webpack
+  .pipe webpackStream require('./webpack.config.sp.coffee'), webpack
   .pipe $.if isProduction, $.header(commentsJs, pkg: appConfig, filename: 'メインスクリプト')
   .pipe g.dest paths.sp.js.dest
   # JS を stream オプションでリアルタイムに反映

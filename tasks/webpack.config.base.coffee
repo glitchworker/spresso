@@ -52,7 +52,18 @@ config = {
   }
   module:
     rules: [
-      {test: /\.coffee$/, use: 'coffee-loader'} # CoffeeScript をコンパイルするための設定
+      {
+        test: /\.coffee$/,
+        use: [
+          {
+            loader: 'babel-loader'
+            options:
+              presets: ['env']
+              plugins: [["transform-es2015-classes", { "loose": true }]] # ES6 を ES5 に変換
+          }
+          'coffee-loader' # CoffeeScript をコンパイルするための設定
+        ]
+      }
     ]
   plugins: [
     new webpack.ProvidePlugin
