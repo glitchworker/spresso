@@ -304,6 +304,7 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 	│   │   │   │   ├── html5shiv.min.js
 	│   │   │   │   ├── jquery-1.12.4.min.js
 	│   │   │   │   ├── jquery-3.3.1.min.js
+	│   │   │   │   ├── polyfill.js
 	│   │   │   │   └── selectivizr.min.js
 	│   │   │   └── plugin
 	│   │   │       └── plugin.js
@@ -661,6 +662,15 @@ http://localhost:9000/api/users?name_like=hoge
 
 ```q``` を使用して全てのデータから検索することが出来ます。  
 http://localhost:9000/api/users?q=fuga
+
+## Browsers support
+
+通常の設定では比較的新しいブラウザで機能するようになっています。  
+```pages.json``` の中の ``META_OLD_BROWSER`` を ```true``` にすると   
+```Internet Explorer 7``` までの旧ブラウザにも対応する事が出来ます。  
+上記の場合は一部 Polyfill を使用していますが ``Internet Explorer 8`` までは  
+レスポンシブには非対応になっています。 ``rp`` は使用せず ``pc`` を使用するか  
+``css3-mediaqueries`` などの Fallback を使用してご利用ください。
 
 ## Dependencies
 
