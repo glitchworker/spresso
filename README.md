@@ -732,7 +732,7 @@ http://localhost:9000/api/users?q=fuga
 
 ## Version History
 
-### v1.3.8（2018年3月15日）
+### v1.3.8（2018年3月19日）
 - CoffeeScript のバージョンを 2.x 系に更新
 - package.json に babel-loader, babel-core, babel-preset-env, babel-plugin-transform-es2015-classes を追加
 - Babel で出力された ES6 に対応していないブラウザの為に transform-es2015-classes の loose モードを有効
