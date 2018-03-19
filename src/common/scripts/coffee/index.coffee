@@ -3,6 +3,7 @@ import Selector from './modules/Selector'
 class Index
 
   constructor: ->
+    new Selector()
     @init()
 
   init: ->

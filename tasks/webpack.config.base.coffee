@@ -59,7 +59,7 @@ config = {
             loader: 'babel-loader'
             options:
               presets: ['env']
-              plugins: [["transform-es2015-classes", { "loose": true }]] # ES6 を ES5 に変換
+              plugins: [['transform-es2015-classes', { 'loose': true }]] # ES6 を ES5 に変換
           }
           'coffee-loader' # CoffeeScript をコンパイルするための設定
         ]
