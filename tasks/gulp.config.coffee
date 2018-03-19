@@ -82,8 +82,8 @@ paths =
   common:
     js:
       plugin: rootDir.src + '/common/scripts/plugin/**/*.js'
-      javascript: rootDir.src + '/common/scripts/javascript/**/*.js'
-      coffee: rootDir.src + '/common/scripts/coffee/**/*.coffee'
+      javascript: rootDir.src + '/common/scripts/javascript/**/!(_)*.js'
+      coffee: rootDir.src + '/common/scripts/coffee/**/!(_)*.coffee'
       dest: rootDir.htdocs + '/' + rootDir.assets + 'common/js/'
     img:
       src: rootDir.src + '/common/images/**/*.*'
@@ -107,8 +107,8 @@ paths =
       dest: rootDir.htdocs + '/' + rootDir.assets + 'rp/css/'
     js:
       plugin: rootDir.src + '/rp/scripts/plugin/**/*.js'
-      javascript: rootDir.src + '/rp/scripts/javascript/**/*.js'
-      coffee: rootDir.src + '/rp/scripts/coffee/**/*.coffee'
+      javascript: rootDir.src + '/rp/scripts/javascript/**/!(_)*.js'
+      coffee: rootDir.src + '/rp/scripts/coffee/**/!(_)*.coffee'
       dest: rootDir.htdocs + '/' + rootDir.assets + 'rp/js/'
     img:
       src: rootDir.src + '/rp/images/**/*.*'
@@ -128,7 +128,7 @@ paths =
     js:
       plugin: rootDir.src + '/pc/scripts/plugin/**/*.js'
       javascript: rootDir.src + '/pc/scripts/javascript/**/*.js'
-      coffee: rootDir.src + '/pc/scripts/coffee/**/*.coffee'
+      coffee: rootDir.src + '/pc/scripts/coffee/**/!(_)*.coffee'
       dest: rootDir.htdocs + '/' + rootDir.assets + 'pc/js/'
     img:
       src: rootDir.src + '/pc/images/**/*.*'
@@ -147,8 +147,8 @@ paths =
       dest: rootDir.htdocs + '/' + rootDir.assets + 'sp/css/'
     js:
       plugin: rootDir.src + '/sp/scripts/plugin/**/*.js'
-      javascript: rootDir.src + '/sp/scripts/javascript/**/*.js'
-      coffee: rootDir.src + '/sp/scripts/coffee/**/*.coffee'
+      javascript: rootDir.src + '/sp/scripts/javascript/**/!(_)*.js'
+      coffee: rootDir.src + '/sp/scripts/coffee/**/!(_)*.coffee'
       dest: rootDir.htdocs + '/' + rootDir.assets + 'sp/js/'
     img:
       src: rootDir.src + '/sp/images/**/*.*'

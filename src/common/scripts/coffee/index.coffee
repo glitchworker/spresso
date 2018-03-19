@@ -1,4 +1,4 @@
-import Selector from './modules/Selector'
+import Selector from './modules/_Selector'
 
 class Index
 
