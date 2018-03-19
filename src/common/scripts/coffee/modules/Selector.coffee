@@ -4,7 +4,7 @@
 
 class Selector
 
-  constructor: (@to)->
+  constructor: ->
     @init()
 
   init: ->

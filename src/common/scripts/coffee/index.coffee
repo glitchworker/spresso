@@ -1,9 +1,8 @@
-Selector = require './modules/Selector'
+import Selector from './modules/Selector'
 
 class Index
 
   constructor: ->
-    Selector = new Selector()
     @init()
 
   init: ->
