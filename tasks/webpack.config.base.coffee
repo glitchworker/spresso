@@ -44,7 +44,7 @@ else
 # WebPack のモジュール設定
 #------------------------------------------------------
 
-commonPath = path.resolve('') + '/src/common/scripts/coffee/common'
+# commonPath = path.resolve('') + '/src/common/scripts/coffee/common'
 config = {
   devtool: if not isProduction then 'source-map'
   resolve: {
@@ -66,8 +66,8 @@ config = {
       }
     ]
   plugins: [
-    new webpack.ProvidePlugin
-      Common: commonPath # common.coffee を Common という名前で共通で require する
+    # new webpack.ProvidePlugin
+    #   Common: commonPath # common.coffee を Common という名前で共通で require する
     new webpack.DefinePlugin
       'APP_BASE_SITE_URL': JSON.stringify APP_SITE_URL
       'APP_SITE_URL': JSON.stringify APP_SITE_URL + appConfig.CURRENT_DIR
