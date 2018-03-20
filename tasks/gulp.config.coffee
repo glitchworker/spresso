@@ -382,7 +382,7 @@ g.task 'css-rp', ->
   ]).on('error', $.util.log) # エラーでも止めない
   .pipe $.autoprefixer browsers: ['> 0%']
   .pipe $.concat paths.rp.css.concat
-  .pipe $.if isProduction, $.minifyCss({advanced:false})
+  .pipe $.if isProduction, $.cleanCss({compatibility: 'ie8'})
   .pipe $.if isProduction, $.header(commentsCss, pkg: appConfig, filename: paths.rp.css.concat)
   .pipe $.if not isProduction, $.sourcemaps.write('./')
   .pipe g.dest paths.rp.css.dest
@@ -506,7 +506,7 @@ g.task 'css-pc', ->
   ]).on('error', $.util.log) # エラーでも止めない
   .pipe $.autoprefixer browsers: ['> 0%']
   .pipe $.concat paths.pc.css.concat
-  .pipe $.if isProduction, $.minifyCss({advanced:false})
+  .pipe $.if isProduction, $.cleanCss({compatibility: 'ie8'})
   .pipe $.if isProduction, $.header(commentsCss, pkg: appConfig, filename: paths.pc.css.concat)
   .pipe $.if not isProduction, $.sourcemaps.write('./')
   .pipe g.dest paths.pc.css.dest
@@ -629,7 +629,7 @@ g.task 'css-sp', ->
   ]).on('error', $.util.log) # エラーでも止めない
   .pipe $.autoprefixer browsers: ['> 0%']
   .pipe $.concat paths.sp.css.concat
-  .pipe $.if isProduction, $.minifyCss({advanced:false})
+  .pipe $.if isProduction, $.cleanCss({compatibility: 'ie8'})
   .pipe $.if isProduction, $.header(commentsCss, pkg: appConfig, filename: paths.sp.css.concat)
   .pipe $.if not isProduction, $.sourcemaps.write('./')
   .pipe g.dest paths.sp.css.dest

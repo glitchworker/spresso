@@ -732,7 +732,11 @@ http://localhost:9000/api/users?q=fuga
 
 ## Version History
 
-### v1.3.8（2018年3月19日）
+### v1.3.9（2018年3月21日）
+- package.json の gulp-minify-css を削除し gulp-clean-css を追加
+- README.md の修正
+
+### v1.3.8（2018年3月20日）
 - CoffeeScript のバージョンを 2.x 系に更新
 - package.json に babel-loader, babel-core, babel-preset-env, babel-plugin-transform-es2015-classes を追加
 - Babel で出力された ES6 に対応していないブラウザの為に transform-es2015-classes の loose モードを有効
