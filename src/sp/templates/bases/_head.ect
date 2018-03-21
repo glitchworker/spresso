@@ -29,7 +29,11 @@
 <meta property="og:type" content="<%- @NAMESPACE %>">
 <meta property="og:site_name" content="<%- @SITE_NAME %>">
 <meta property="og:title" content="<%- HEAD.META_TITLE %>">
+<% if HEAD.META_SHARE_DESCRIPTION == "" : %>
 <meta property="og:description" content="<%- HEAD.META_DESCRIPTION %>">
+<% else : %>
+<meta property="og:description" content="<%- HEAD.META_SHARE_DESCRIPTION %>">
+<% end %>
 <meta property="og:url" content="<%- @SITE_URL %>sp/<%- @FILE_PATH %>">
 <meta property="og:image" content="<%- @BASE_SITE_URL %><%- @ASSETS_DIR %>common/images/<%- HEAD.META_FACEBOOK_IMAGE %>">
 <meta property="og:locale" content="ja_JP">
@@ -43,7 +47,11 @@
 <meta name="twitter:card" content="<%- HEAD.META_TWITTER_CARD %>">
 <meta name="twitter:url" content="<%- @SITE_URL %>sp/<%- @FILE_PATH %>">
 <meta name="twitter:title" content="<%- HEAD.META_TITLE %>">
+<% if HEAD.META_SHARE_DESCRIPTION == "" : %>
 <meta name="twitter:description" content="<%- HEAD.META_DESCRIPTION %>">
+<% else : %>
+<meta name="twitter:description" content="<%- HEAD.META_SHARE_DESCRIPTION %>">
+<% end %>
 <% if HEAD.META_TWITTER_ACCOUNT?.length : %>
 <meta name="twitter:site" content="@<%- HEAD.META_TWITTER_ACCOUNT %>">
 <meta name="twitter:creator" content="@<%- HEAD.META_TWITTER_ACCOUNT %>">
@@ -63,7 +71,11 @@
 
 <!-- Google+用CARD指定 -->
 <meta itemprop="name" content="<%- HEAD.META_TITLE %>">
+<% if HEAD.META_SHARE_DESCRIPTION == "" : %>
 <meta itemprop="description" content="<%- HEAD.META_DESCRIPTION %>">
+<% else : %>
+<meta itemprop="description" content="<%- HEAD.META_SHARE_DESCRIPTION %>">
+<% end %>
 <meta itemprop="image" content="<%- @BASE_SITE_URL %><%- @ASSETS_DIR %>common/images/<%- HEAD.META_FACEBOOK_IMAGE %>">
 <% end %>
 <% if HEAD.META_WINDOWS : %>

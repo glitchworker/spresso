@@ -24,7 +24,6 @@
     "template",
     "build"
   ],
-  "main": "app.js",
   "scripts": {
     "start": "gulp",
     "start-stg": "gulp --env staging",

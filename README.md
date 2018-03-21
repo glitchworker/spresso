@@ -95,6 +95,7 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
         "META_ROBOTS": "index,follow",
         "META_KEYWORDS": "これはキーワードです",
         "META_DESCRIPTION": "これはディスクリプションです",
+        "META_SHARE_DESCRIPTION": "",
         "META_AUTHOR": "",
         "META_COPYRIGHT": "",
         "META_VIEWPORT": "width=1280",
@@ -299,7 +300,8 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 	│   │   │   │   └── modules
 	│   │   │   │       └── Selector.coffee
 	│   │   │   ├── javascript
-	│   │   │   │   └── javascript.js
+	│   │   │   │   ├── javascript.js
+	│   │   │   │   └── modules
 	│   │   │   ├── lib
 	│   │   │   │   ├── html5shiv.min.js
 	│   │   │   │   ├── jquery-1.12.4.min.js
@@ -349,7 +351,8 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 	│   │   │   │   ├── index.coffee
 	│   │   │   │   └── modules
 	│   │   │   ├── javascript
-	│   │   │   │   └── javascript.js
+	│   │   │   │   ├── javascript.js
+	│   │   │   │   └── modules
 	│   │   │   └── plugin
 	│   │   │       └── plugin.js
 	│   │   ├── stylesheets
@@ -391,7 +394,8 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 	│   │   │   │   ├── index.coffee
 	│   │   │   │   └── modules
 	│   │   │   ├── javascript
-	│   │   │   │   └── javascript.js
+	│   │   │   │   ├── javascript.js
+	│   │   │   │   └── modules
 	│   │   │   └── plugin
 	│   │   │       └── plugin.js
 	│   │   ├── stylesheets
@@ -433,7 +437,8 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 	│       │   │   ├── index.coffee
 	│       │   │   └── modules
 	│       │   ├── javascript
-	│       │   │   └── javascript.js
+	│       │   │   ├── javascript.js
+	│       │   │   └── modules
 	│       │   └── plugin
 	│       │       └── plugin.js
 	│       ├── stylesheets
@@ -734,6 +739,7 @@ http://localhost:9000/api/users?q=fuga
 
 ### v1.3.9（2018年3月21日）
 - package.json の gulp-minify-css を削除し gulp-clean-css を追加
+- pages.json に META_SHARE_DESCRIPTION を追加（空白の場合、META_DESCRIPTION が挿入される）
 - README.md の修正
 
 ### v1.3.8（2018年3月20日）
