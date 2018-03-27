@@ -737,9 +737,10 @@ http://localhost:9000/api/users?q=fuga
 
 ## Version History
 
-### v1.3.9（2018年3月21日）
+### v1.3.9（2018年3月28日）
 - package.json の gulp-minify-css を削除し gulp-clean-css を追加
 - pages.json に META_SHARE_DESCRIPTION を追加（空白の場合、META_DESCRIPTION が挿入される）
+- gulp.config.coffee の pathSearch 関数に import データを検索対象外とする処理を追加
 - README.md の修正
 
 ### v1.3.8（2018年3月20日）

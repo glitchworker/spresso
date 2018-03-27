@@ -198,6 +198,11 @@ commentsJs = [
 
 pathArray = []
 pathSearch = (dir, dirName) ->
+  # import で追加されたデータは削除対象外にする
+  jsonData = JSON.parse fs.readFileSync(paths.common.import.json)
+  jsonData.forEach (page, i) ->
+    pathArray.push '!'+ rootDir.htdocs + page.output + page.data
+  # src と htdocs フォルダの比較をする
   eventStream.map (file, done) ->
     filePath = $.slash(file.path)
     fileDir = filePath.match(dir + '.*')[0]
@@ -811,6 +816,7 @@ g.task 'watch-api', ['api'], ->
 
 # watch
 g.task 'watch', ['bs'], ->
+  g.watch paths.common.import.json, ['import']
   g.watch [paths.common.js.plugin, paths.common.js.javascript, paths.common.js.coffee], ['coffee']
   $.watch paths.common.img.src, ->
     g.start 'img' # img ファイルが変更または追加されたらビルド出力
