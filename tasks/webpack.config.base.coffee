@@ -7,6 +7,7 @@ path = require 'path' # パス解析
 webpack = require('webpack-stream').webpack # Webpack 読み込み
 minimist = require 'minimist' # Gulp で引数を解析
 IfPlugin = require 'if-webpack-plugin' # Webpack の Plugins 内で条件分岐
+HardSourcePlugin = require 'hard-source-webpack-plugin' # 中間キャッシュでビルド時間を短縮
 
 #------------------------------------------------------
 # Load original module
@@ -83,6 +84,9 @@ config = {
         compress:
           warnings: false
           drop_console: true
+    )
+    new HardSourcePlugin(
+      # cacheDirectory: '.cache/hard-source/[confighash]'
     )
   ]
 }

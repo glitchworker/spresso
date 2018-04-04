@@ -737,6 +737,12 @@ http://localhost:9000/api/users?q=fuga
 
 ## Version History
 
+### v1.4.0（2018年4月4日）
+
+- package.json の coffeescript , gulp-sass , webpack-stream を更新
+- package.json に hard-source-webpack-plugin を追加（中間キャッシュでビルド時間を短縮）
+- README.md の修正
+
 ### v1.3.9（2018年3月28日）
 - package.json の gulp-minify-css を削除し gulp-clean-css を追加
 - pages.json に META_SHARE_DESCRIPTION を追加（空白の場合、META_DESCRIPTION が挿入される）
@@ -1116,3 +1122,7 @@ http://localhost:9000/api/users?q=fuga
 ### vX.X.X（2015年9月18日）
 
 - 開発スタート
+
+## License
+Copyright (c) 2016-2018 Loxis (http://loxis.jp/)  
+Licensed under the MIT license.
