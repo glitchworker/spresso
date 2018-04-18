@@ -737,10 +737,11 @@ http://localhost:9000/api/users?q=fuga
 
 ## Version History
 
-### v1.4.0（2018年4月4日）
+### v1.4.0（2018年4月18日）
 
 - package.json の coffeescript , gulp-sass , webpack-stream を更新
 - package.json に hard-source-webpack-plugin を追加（中間キャッシュでビルド時間を短縮）
+- package.json の browsersync-ssi に不具合が発生しているので connect-ssi に変更
 - README.md の修正
 
 ### v1.3.9（2018年3月28日）

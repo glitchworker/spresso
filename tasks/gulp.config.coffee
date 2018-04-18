@@ -16,7 +16,7 @@ minimist = require 'minimist' # Gulp で引数を解析
 eventStream = require 'event-stream' # Gulp のイベントを取得する
 
 bs = require('browser-sync').create() # Web サーバー作成
-ssi = require 'browsersync-ssi' # SSI を有効化
+ssi = require 'connect-ssi' # SSI を有効化
 jsonServer = require 'gulp-json-srv' # API サーバー作成
 
 webpack = require 'webpack' # Webpack 3.x 読み込み
