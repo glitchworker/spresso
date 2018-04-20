@@ -737,6 +737,11 @@ http://localhost:9000/api/users?q=fuga
 
 ## Version History
 
+### v1.4.1（2018年4月20日）
+
+- License 周りの名義を Loxis から GlitchWorker に変更
+- README.md の修正
+
 ### v1.4.0（2018年4月18日）
 
 - package.json の coffeescript , gulp-sass , webpack-stream を更新
@@ -1125,5 +1130,5 @@ http://localhost:9000/api/users?q=fuga
 - 開発スタート
 
 ## License
-Copyright (c) 2016-2018 Loxis (http://loxis.jp/)  
+Copyright (c) 2016-2018 GlitchWorker (http://loxis.jp/)  
 Licensed under the MIT license.

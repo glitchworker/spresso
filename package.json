@@ -1,9 +1,9 @@
 {
   "name": "spresso",
   "description": "sPresso StarterKit for modern websites",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "homepage": "https://github.com/glitchworker/spresso#readme",
-  "author": "Loxis (http://loxis.jp/)",
+  "author": "GlitchWorker (http://loxis.jp/)",
   "license": "MIT",
   "repository": {
     "type": "git",
