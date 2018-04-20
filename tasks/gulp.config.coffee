@@ -345,6 +345,8 @@ g.task 'ect-rp', ->
     .pipe $.ect(data: page)
     # pages.json に記述された 'PATH_FILENAME' で決めたパスに出力
     .pipe $.rename appConfig.CURRENT_DIR + page.PATH_FILENAME
+    # html 内の img 要素の src が *.svg の場合インラインで出力
+    .pipe $.injectSvg base: paths.rp.dest + appConfig.ASSETS_DIR
     .pipe g.dest paths.rp.dest
     # html を stream オプションでリアルタイムに反映
     .pipe bs.stream()
@@ -468,6 +470,8 @@ g.task 'ect-pc', ->
     .pipe $.ect(data: page)
     # pages.json に記述された 'PATH_FILENAME' で決めたパスに出力
     .pipe $.rename appConfig.CURRENT_DIR + page.PATH_FILENAME
+    # html 内の img 要素の src が *.svg の場合インラインで出力
+    .pipe $.injectSvg base: paths.pc.dest + appConfig.ASSETS_DIR
     .pipe g.dest paths.pc.dest
     # html を stream オプションでリアルタイムに反映
     .pipe bs.stream()
@@ -592,6 +596,8 @@ g.task 'ect-sp', ->
     .pipe $.ect(data: page)
     # pages.json に記述された 'PATH_FILENAME' で決めたパスに出力
     .pipe $.rename appConfig.CURRENT_DIR + page.PATH_FILENAME
+    # html 内の img 要素の src が *.svg の場合インラインで出力
+    .pipe $.injectSvg base: paths.pc.dest + appConfig.ASSETS_DIR
     .pipe g.dest paths.sp.dest
     # html を stream オプションでリアルタイムに反映
     .pipe bs.stream()

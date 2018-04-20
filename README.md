@@ -737,8 +737,9 @@ http://localhost:9000/api/users?q=fuga
 
 ## Version History
 
-### v1.4.1（2018年4月20日）
+### v1.4.1（2018年4月21日）
 
+- package.json に gulp-inject-svg を追加（html の svg をインライン化）
 - License 周りの名義を Loxis から GlitchWorker に変更
 - README.md の修正
 
