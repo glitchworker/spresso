@@ -737,6 +737,13 @@ http://localhost:9000/api/users?q=fuga
 
 ## Version History
 
+### v1.4.2（2018年4月26日）
+
+- package.json の browser-sync , gulp-sass を更新
+- package.json に es3ify-webpack-plugin-v2 の追加（Babel の不具合により IE8 でエラー修正）
+- 上記に伴い webpack.config.base.coffee を修正
+- README.md の修正
+
 ### v1.4.1（2018年4月21日）
 
 - package.json に gulp-inject-svg を追加（html の svg をインライン化）
