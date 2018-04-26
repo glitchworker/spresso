@@ -697,6 +697,7 @@ http://localhost:9000/api/users?q=fuga
 ## Thanks
 
 - [Adobe Blank](https://github.com/adobe-fonts/adobe-blank)
+- [es3ify-webpack-plugin-v2](https://github.com/xiewulong/es3ify-webpack-plugin-v2)
 
 ## Important Notices
 
@@ -740,7 +741,7 @@ http://localhost:9000/api/users?q=fuga
 ### v1.4.2（2018年4月26日）
 
 - package.json の browser-sync , gulp-sass を更新
-- package.json に es3ify-webpack-plugin-v2 の追加（Babel の不具合により IE8 でエラー修正）
+- package.json に es3ify-webpack-plugin-v2 の追加（IE8 で Babel の不具合によりエラーが発生していたのを修正）
 - 上記に伴い webpack.config.base.coffee を修正
 - README.md の修正
 
