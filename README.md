@@ -741,7 +741,7 @@ http://localhost:9000/api/users?q=fuga
 ### v1.4.2（2018年4月26日）
 
 - package.json の browser-sync , gulp-sass を更新
-- package.json に es3ify-webpack-plugin-v2 の追加（IE8 で Babel の不具合によりエラーが発生していたのを修正）
+- package.json に es3ify-webpack-plugin-v2 を追加（IE8 で Babel の不具合によりエラーが発生していたのを修正）
 - 上記に伴い webpack.config.base.coffee を修正
 - README.md の修正
 
