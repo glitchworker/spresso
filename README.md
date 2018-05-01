@@ -2,11 +2,18 @@
 
 [![license](https://img.shields.io/github/license/glitchworker/spresso.svg)](https://github.com/glitchworker/spresso/blob/master/LICENSE)
 
-**sPresso StarterKit for modern websites**
+**sPresso StarterKit for front-end website.**
 
 gulp / ect / sass ( scss ) / webpack (coffeescript)
 
-## Usage
+## 📌 Require
+
+- Windows or Mac or Linux ( Verified )
+- This function requires supervisor permission.
+- npm v3.10.6 over
+- node v6.11.5 over
+
+## 🔰 Usage
 
 1. [NodeJS](https://nodejs.org/en/) をダウンロードしインストールする
 
@@ -36,7 +43,7 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
 ※作業を開始する前に実行しておくと作業開始時から編集後の差分データを出力することが出来る  
 　つまり実行しなければ過去に実行した時点からの差分を出力することが可能
 
-## Setting
+## 🔧 Setting
 
 ### project
 
@@ -139,7 +146,7 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
 ]
 ```
 
-## How to use
+## 💁 How to use
 
 共通の規定値は ```app.config.json``` に定義してください。  
 規定値の参照方法などは以下をご覧ください。
@@ -271,7 +278,7 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 | yarn run clean | gulp clean | ビルドフォルダを削除 |
 | yarn run clean-diff | gulp clean-archive | 差分フォルダを削除 |
 
-## Structure
+## 🌻 Structure
 
 ### outline
 
@@ -560,7 +567,7 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 app.config.json に ASSETS_DIR の項目が追加されたことによって  
 assets フォルダの名称および設置場所を自由に変更出来るようになりました。
 
-## API Mock Server
+## ✨ API Mock Server
 
 ```app.config.json``` の ```API_SERVER``` を有効にすると起動します。
 
@@ -668,7 +675,7 @@ http://localhost:9000/api/users?name_like=hoge
 ```q``` を使用して全てのデータから検索することが出来ます。  
 http://localhost:9000/api/users?q=fuga
 
-## Browsers support
+## 🚿 Browsers support
 
 通常の設定では比較的新しいブラウザで機能するようになっています。  
 ```pages.json``` の中の ``META_OLD_BROWSER`` を ```true``` にすると   
@@ -677,7 +684,7 @@ http://localhost:9000/api/users?q=fuga
 レスポンシブには非対応になっています。 ``rp`` は使用せず ``pc`` を使用するか  
 ``css3-mediaqueries`` などの Fallback を使用してご利用ください。
 
-## Dependencies
+## 🎉 Dependencies
 
 - [NodeJS](https://nodejs.org/en/)
 - [Gulp](http://gulpjs.com/)
@@ -690,16 +697,16 @@ http://localhost:9000/api/users?q=fuga
 - [webpack](https://webpack.js.org/)
 - [Browsersync](https://www.browsersync.io/)
 
-## Issues
+## 🐛 Issues
 
 - [GitHub Issues](https://github.com/glitchworker/spresso/issues)
 
-## Thanks
+## 👍 Thanks
 
 - [Adobe Blank](https://github.com/adobe-fonts/adobe-blank)
 - [es3ify-webpack-plugin-v2](https://github.com/xiewulong/es3ify-webpack-plugin-v2)
 
-## Important Notices
+## 🚀 Important Notices
 
 <u>**v1.3.6 から API Mock Server を追加しました。**</u>
 
@@ -736,7 +743,7 @@ http://localhost:9000/api/users?q=fuga
 フォルダの場合は type に ```dir``` ファイルの場合は ```file``` を記述し data にフォルダ名またはファイル名を入力した後  
 ```output``` の項目に出力先のパスを入力することによって書き出されます。
 
-## Version History
+## 🆙 Version History
 
 ### v1.4.3（2018年5月1日）
 
@@ -1143,6 +1150,6 @@ http://localhost:9000/api/users?q=fuga
 
 - 開発スタート
 
-## License
+## 📝 License
 Copyright (c) 2016-2018 GlitchWorker (http://loxis.jp/)  
 Licensed under the MIT license.
