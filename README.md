@@ -738,6 +738,11 @@ http://localhost:9000/api/users?q=fuga
 
 ## Version History
 
+### v1.4.3（2018年5月1日）
+
+- package.json の babel-core , browser-sync , coffeescript を更新
+- README.md の修正
+
 ### v1.4.2（2018年4月26日）
 
 - package.json の browser-sync , gulp-sass を更新
