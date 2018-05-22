@@ -745,6 +745,11 @@ http://localhost:9000/api/users?q=fuga
 
 ## 🆙 Version History
 
+### v1.4.4（2018年5月22日）
+
+- package.json の babel-preset-env , browser-sync , coffeescript , gulp-clean-css , gulp-rename , hard-source-webpack-plugin を更新
+- README.md の修正
+
 ### v1.4.3（2018年5月1日）
 
 - package.json の babel-core , browser-sync , coffeescript を更新
