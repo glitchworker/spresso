@@ -745,6 +745,11 @@ http://localhost:9000/api/users?q=fuga
 
 ## 🆙 Version History
 
+### v1.4.6（2018年9月18日）
+
+- package.json の browser-sync , event-stream , gulp-clean-css , gulp-rename, gulp-uglify , gulp-watch , gulp-zip , webpack-merge を更新
+- README.md の修正
+
 ### v1.4.5（2018年7月2日）
 
 - package.json の browser-sync , gulp-rename , webpack-merge を更新
