@@ -324,6 +324,7 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 	│   │       │   ├── _clearfix.scss
 	│   │       │   ├── _css3fix.scss
 	│   │       │   ├── _fontSize.scss
+	│   │       │   ├── _fontWeight.scss
 	│   │       │   ├── _hideaway.scss
 	│   │       │   ├── _inlineBlock.scss
 	│   │       │   ├── _inlinefix.scss
@@ -744,6 +745,12 @@ http://localhost:9000/api/users?q=fuga
 ```output``` の項目に出力先のパスを入力することによって書き出されます。
 
 ## 🆙 Version History
+
+### v1.4.7（2018年11月2日）
+
+- package.json の browser-sync , coffeescript , event-stream , gulp-autoprefixer , gulp-coffee , gulp-postcss , gulp-sass を更新
+- mixins に fontWeight を追加（Thin: 100、Light: 300、DemiLight: 350、Regular: 400、Medium: 500、Bold: 700、Black: 900 の名称で文字の太さが指定可能）
+- README.md の修正
 
 ### v1.4.6（2018年9月18日）
 
