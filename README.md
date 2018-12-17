@@ -746,6 +746,12 @@ http://localhost:9000/api/users?q=fuga
 
 ## 🆙 Version History
 
+### v1.4.8（2018年12月17日）
+
+- package.json を更新
+- gulp.config.coffee にてビルド時 import タスクの呼び出し順序の変更
+- README.md の修正
+
 ### v1.4.7（2018年11月2日）
 
 - package.json の browser-sync , coffeescript , event-stream , gulp-autoprefixer , gulp-coffee , gulp-postcss , gulp-sass を更新

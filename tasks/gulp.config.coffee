@@ -309,9 +309,9 @@ g.task 'img', ['img-check'], ->
 # build
 g.task 'build', ->
   if appConfig.RESPONSIVE_TEMPLATE
-    return runSequence 'import', 'libcopy', 'coffee', 'img', 'coffee-rp', 'img-rp', 'ect-rp', 'css-rp', 'remove-files'
+    return runSequence 'libcopy', 'coffee', 'img', 'coffee-rp', 'img-rp', 'ect-rp', 'css-rp', 'remove-files', 'import'
   else
-    return runSequence 'import', 'libcopy', 'coffee', 'coffee-pc', 'img-pc', 'coffee-sp', 'img-sp', 'img', 'ect-pc', 'css-pc', 'ect-sp', 'css-sp', 'remove-files'
+    return runSequence 'libcopy', 'coffee', 'coffee-pc', 'img-pc', 'coffee-sp', 'img-sp', 'img', 'ect-pc', 'css-pc', 'ect-sp', 'css-sp', 'remove-files', 'import'
 
 #------------------------------------------------------
 # Setting for Responsive
@@ -434,7 +434,7 @@ g.task 'img-rp', ['img-rp-check'], ->
 
 # build rp
 g.task 'build-rp', ->
-  return runSequence 'import', 'libcopy', 'coffee', 'img', 'coffee-rp', 'img-rp', 'ect-rp', 'css-rp', 'remove-files'
+  return runSequence 'libcopy', 'coffee', 'img', 'coffee-rp', 'img-rp', 'ect-rp', 'css-rp', 'remove-files', 'import'
 
 #------------------------------------------------------
 # Setting for PC
@@ -560,7 +560,7 @@ g.task 'img-pc', ['img-pc-check'], ->
 
 # build pc
 g.task 'build-pc', ->
-  return runSequence 'import', 'libcopy', 'coffee', 'img', 'coffee-pc', 'img-pc', 'ect-pc', 'css-pc', 'remove-files'
+  return runSequence 'libcopy', 'coffee', 'img', 'coffee-pc', 'img-pc', 'ect-pc', 'css-pc', 'remove-files', 'import'
 
 #------------------------------------------------------
 # Setting for SP
@@ -685,7 +685,7 @@ g.task 'img-sp', ['img-sp-check'], ->
 
 # build sp
 g.task 'build-sp', ->
-  return runSequence 'import', 'libcopy', 'coffee', 'img', 'coffee-sp', 'img-sp', 'ect-sp', 'css-sp', 'remove-files'
+  return runSequence 'libcopy', 'coffee', 'img', 'coffee-sp', 'img-sp', 'ect-sp', 'css-sp', 'remove-files', 'import'
 
 #------------------------------------------------------
 # Differential data extraction
