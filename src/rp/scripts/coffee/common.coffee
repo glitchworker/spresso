@@ -1,4 +1,4 @@
-class Common
+class CommonRP
 
   constructor: ->
     @common()
@@ -6,4 +6,4 @@ class Common
   common: ->
     # console.log 'Common'
 
-new Common()
+new CommonRP()

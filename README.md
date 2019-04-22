@@ -99,6 +99,7 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
       {
         "META_CHARSET": "UTF-8",
         "META_TITLE": "これはタイトルです",
+        "META_SHARE_TITLE": "",
         "META_ROBOTS": "index,follow",
         "META_KEYWORDS": "これはキーワードです",
         "META_DESCRIPTION": "これはディスクリプションです",
@@ -112,7 +113,7 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
         "META_FACEBOOK": true,
         "META_FACEBOOK_ID": "",
         "META_FACEBOOK_IMAGE": "ogp_image.jpg",
-        "META_TWITTER": false,
+        "META_TWITTER": true,
         "META_TWITTER_CARD": "summary_large_image",
         "META_TWITTER_ACCOUNT": "",
         "META_TWITTER_APP_ANDROID": "",
@@ -122,7 +123,8 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
         "META_WINDOWS": false,
         "META_WINDOWS_IMAGE": "tile_image.png",
         "META_WINDOWS_COLOR": "#000000",
-        "META_OLD_BROWSER": false
+        "META_OLD_BROWSER": false,
+        "META_PWA_MODE": false
       }
     ]
   }
@@ -305,7 +307,8 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 	│   │   │   │   ├── common.coffee
 	│   │   │   │   ├── index.coffee
 	│   │   │   │   └── modules
-	│   │   │   │       └── Selector.coffee
+	│   │   │   │       ├── _LocalStorageCache.coffee
+	│   │   │   │       └── _Selector.coffee
 	│   │   │   ├── javascript
 	│   │   │   │   ├── javascript.js
 	│   │   │   │   └── modules
@@ -323,6 +326,8 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 	│   │       ├── mixins
 	│   │       │   ├── _clearfix.scss
 	│   │       │   ├── _css3fix.scss
+	│   │       │   ├── _elementSize.scss
+	│   │       │   ├── _fontDecoration.scss
 	│   │       │   ├── _fontSize.scss
 	│   │       │   ├── _fontWeight.scss
 	│   │       │   ├── _hideaway.scss
@@ -685,6 +690,11 @@ http://localhost:9000/api/users?q=fuga
 レスポンシブには非対応になっています。 ``rp`` は使用せず ``pc`` を使用するか  
 ``css3-mediaqueries`` などの Fallback を使用してご利用ください。
 
+## 📱 PWA mode (Mobile Only)
+
+```pages.json``` の中の ``META_PWA_MODE`` を ```true``` にすると   
+ホーム追加時にフルスクリーンで立ち上がるWebAppモードを有効にすることが出来ます。
+
 ## 🎉 Dependencies
 
 - [NodeJS](https://nodejs.org/en/)
@@ -745,6 +755,19 @@ http://localhost:9000/api/users?q=fuga
 ```output``` の項目に出力先のパスを入力することによって書き出されます。
 
 ## 🆙 Version History
+
+### v1.4.9（2019年4月22日）
+
+- pages.json に MATA_PWA_MODE を追加（WebAppモードの有効化）
+- pages.json に META_SHARE_TITLE を追加（空白の場合、META_TITLE が挿入される）
+- pages.json の META_TWITTER をデフォルトで有効に変更
+- app.config.json の RESPONSIVE_TEMPLATE をデフォルトで有効に変更
+- mixins に fontDecoration と elementSize を追加
+- mixins の fontWeight に SemiBold を追加（SemiBold: 600）
+- 上記に伴い（Thin = ExtraLight、DemiLight = Normal、Black = Heavy）でも指定可能に変更
+- ビルドスタイル別の common.coffee 内のクラス名が共通モジュールとぶつかっていたのを修正
+- _struct.ect の app.js async defer を defer のみに変更（実行順序調整）
+- README.md の修正
 
 ### v1.4.8（2018年12月17日）
 
@@ -859,7 +882,7 @@ http://localhost:9000/api/users?q=fuga
 ### v1.3.2（2018年2月27日）
 
 - package.json の全バージョンの更新（coffeescript 以外）
-- iPhoneX の UserAgent 振り分けを Selector.coffee に追加
+- iPhoneX の UserAgent 振り分けを _Selector.coffee に追加
 - iPhoneX の SafeArea 対応（UIWebViewにも対応する為、UserAgent を使用し動的なメディアクエリを追加）
 - pages.json の META_VIEWPORT に minimum-scale=1 と viewport-fit=cover を追加
 - pages.json の META_VIEWPORT から user-scalable=no と minimal-ui を削除
@@ -1007,7 +1030,7 @@ http://localhost:9000/api/users?q=fuga
 
 ### v1.1.3（2016年12月23日）
 
-- Selector.coffee に iPhone 機種判別処理実装
+- _Selector.coffee に iPhone 機種判別処理実装
 - package.json の更新
 
 ### v1.1.2（2016年12月22日）

@@ -22,16 +22,22 @@
 <!-- Viewportの設定 -->
 <meta name="viewport" content="<%- HEAD.META_VIEWPORT %>">
 <meta name="format-detection" content="telephone=no,address=no,email=no">
+<% if HEAD.META_PWA_MODE : %>
 
 <!-- iOS Safari & Chrome Android Full screen -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
+<% end %>
 <% if HEAD.META_FACEBOOK : %>
 
 <!-- Facebook用OGP指定 -->
 <meta property="og:type" content="<%- @NAMESPACE %>">
 <meta property="og:site_name" content="<%- @SITE_NAME %>">
+<% if HEAD.META_SHARE_TITLE == "" : %>
 <meta property="og:title" content="<%- HEAD.META_TITLE %>">
+<% else : %>
+<meta property="og:title" content="<%- HEAD.META_SHARE_TITLE %>">
+<% end %>
 <% if HEAD.META_SHARE_DESCRIPTION == "" : %>
 <meta property="og:description" content="<%- HEAD.META_DESCRIPTION %>">
 <% else : %>
@@ -49,7 +55,11 @@
 <!-- Twitter用CARD指定 -->
 <meta name="twitter:card" content="<%- HEAD.META_TWITTER_CARD %>">
 <meta name="twitter:url" content="<%- @SITE_URL %><%- @FILE_PATH %>">
+<% if HEAD.META_SHARE_TITLE == "" : %>
 <meta name="twitter:title" content="<%- HEAD.META_TITLE %>">
+<% else : %>
+<meta name="twitter:title" content="<%- HEAD.META_SHARE_TITLE %>">
+<% end %>
 <% if HEAD.META_SHARE_DESCRIPTION == "" : %>
 <meta name="twitter:description" content="<%- HEAD.META_DESCRIPTION %>">
 <% else : %>
@@ -73,7 +83,11 @@
 <% if HEAD.META_GOOGLE : %>
 
 <!-- Google+用CARD指定 -->
+<% if HEAD.META_SHARE_TITLE == "" : %>
 <meta itemprop="name" content="<%- HEAD.META_TITLE %>">
+<% else : %>
+<meta itemprop="name" content="<%- HEAD.META_SHARE_TITLE %>">
+<% end %>
 <% if HEAD.META_SHARE_DESCRIPTION == "" : %>
 <meta itemprop="description" content="<%- HEAD.META_DESCRIPTION %>">
 <% else : %>

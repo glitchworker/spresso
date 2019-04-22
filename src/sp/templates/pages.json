@@ -9,6 +9,7 @@
       {
         "META_CHARSET": "UTF-8",
         "META_TITLE": "これはタイトルです",
+        "META_SHARE_TITLE": "",
         "META_ROBOTS": "index,follow",
         "META_KEYWORDS": "これはキーワードです",
         "META_DESCRIPTION": "これはディスクリプションです",
@@ -22,7 +23,7 @@
         "META_FACEBOOK": true,
         "META_FACEBOOK_ID": "",
         "META_FACEBOOK_IMAGE": "ogp_image.jpg",
-        "META_TWITTER": false,
+        "META_TWITTER": true,
         "META_TWITTER_CARD": "summary_large_image",
         "META_TWITTER_ACCOUNT": "",
         "META_TWITTER_APP_ANDROID": "",
@@ -31,7 +32,8 @@
         "META_GOOGLE": false,
         "META_WINDOWS": false,
         "META_WINDOWS_IMAGE": "tile_image.png",
-        "META_WINDOWS_COLOR": "#000000"
+        "META_WINDOWS_COLOR": "#000000",
+        "META_PWA_MODE": false
       }
     ]
   },
@@ -45,6 +47,7 @@
       {
         "META_CHARSET": "UTF-8",
         "META_TITLE": "これはタイトルです",
+        "META_SHARE_TITLE": "",
         "META_ROBOTS": "index,follow",
         "META_KEYWORDS": "これはキーワードです",
         "META_DESCRIPTION": "これはディスクリプションです",
@@ -58,7 +61,7 @@
         "META_FACEBOOK": true,
         "META_FACEBOOK_ID": "",
         "META_FACEBOOK_IMAGE": "ogp_image.jpg",
-        "META_TWITTER": false,
+        "META_TWITTER": true,
         "META_TWITTER_CARD": "summary_large_image",
         "META_TWITTER_ACCOUNT": "",
         "META_TWITTER_APP_ANDROID": "",
@@ -67,7 +70,8 @@
         "META_GOOGLE": false,
         "META_WINDOWS": false,
         "META_WINDOWS_IMAGE": "tile_image.png",
-        "META_WINDOWS_COLOR": "#000000"
+        "META_WINDOWS_COLOR": "#000000",
+        "META_PWA_MODE": false
       }
     ]
   },
@@ -81,6 +85,7 @@
       {
         "META_CHARSET": "UTF-8",
         "META_TITLE": "これはタイトルです",
+        "META_SHARE_TITLE": "",
         "META_ROBOTS": "index,follow",
         "META_KEYWORDS": "これはキーワードです",
         "META_DESCRIPTION": "これはディスクリプションです",
@@ -94,7 +99,7 @@
         "META_FACEBOOK": true,
         "META_FACEBOOK_ID": "",
         "META_FACEBOOK_IMAGE": "ogp_image.jpg",
-        "META_TWITTER": false,
+        "META_TWITTER": true,
         "META_TWITTER_CARD": "summary_large_image",
         "META_TWITTER_ACCOUNT": "",
         "META_TWITTER_APP_ANDROID": "",
@@ -103,7 +108,8 @@
         "META_GOOGLE": false,
         "META_WINDOWS": false,
         "META_WINDOWS_IMAGE": "tile_image.png",
-        "META_WINDOWS_COLOR": "#000000"
+        "META_WINDOWS_COLOR": "#000000",
+        "META_PWA_MODE": false
       }
     ]
   }
