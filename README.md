@@ -315,7 +315,7 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 	│   │   │   ├── lib
 	│   │   │   │   ├── html5shiv.min.js
 	│   │   │   │   ├── jquery-1.12.4.min.js
-	│   │   │   │   ├── jquery-3.3.1.min.js
+	│   │   │   │   ├── jquery-3.4.0.min.js
 	│   │   │   │   ├── polyfill.js
 	│   │   │   │   └── selectivizr.min.js
 	│   │   │   └── plugin
@@ -755,6 +755,11 @@ http://localhost:9000/api/users?q=fuga
 ```output``` の項目に出力先のパスを入力することによって書き出されます。
 
 ## 🆙 Version History
+
+### v1.5.0（2019年4月22日）
+- jQuery のバージョンを 3.3.1 から 3.4.0 に更新
+- 上記より :first :last :eq :even :odd :lt :gt :nth などのCSSセレクタが非推奨
+- README.md の修正
 
 ### v1.4.9（2019年4月22日）
 
