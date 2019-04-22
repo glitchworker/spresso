@@ -81,8 +81,12 @@ class Selector
         is_ = userAgent.is
         if is_('iphone')
           version = ' '
-          if (window.screen.width == 375 and window.screen.height == 812) or (window.screen.width == 812 and window.screen.height == 375) and window.devicePixelRatio == 3
-            version += 'iphoneX'
+          if (window.screen.width == 414 and window.screen.height == 896) or (window.screen.width == 896 and window.screen.height == 414) and window.devicePixelRatio == 3
+            version += 'iphoneXSMax'
+          else if (window.screen.width == 414 and window.screen.height == 896) or (window.screen.width == 896 and window.screen.height == 414) and window.devicePixelRatio == 2
+            version += 'iphoneXR'
+          else if (window.screen.width == 375 and window.screen.height == 812) or (window.screen.width == 812 and window.screen.height == 375) and window.devicePixelRatio == 3
+            version += 'iphoneX iphoneXS'
           else if (window.screen.width == 414 and window.screen.height == 736) or (window.screen.width == 736 and window.screen.height == 414) and window.devicePixelRatio == 3
             version += 'iphone6_plus iphone7_plus iphone6s_plus iphone7s_plus iphone8_plus'
           else if (window.screen.width == 375 and window.screen.height == 667) or (window.screen.width == 667 and window.screen.height == 375) and window.devicePixelRatio == 2

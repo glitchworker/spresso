@@ -69,7 +69,7 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
   "SITE_NAME": "これはサイト名です",
   "AUTHOR": "これは作成者です",
   "MODIFIER": "これは編集者です",
-  "RESPONSIVE_TEMPLATE": false,
+  "RESPONSIVE_TEMPLATE": true,
   "ABSOLUTE_PATH": false,
   "API_SERVER": false
 }
@@ -767,6 +767,8 @@ http://localhost:9000/api/users?q=fuga
 - 上記に伴い（Thin = ExtraLight、DemiLight = Normal、Black = Heavy）でも指定可能に変更
 - ビルドスタイル別の common.coffee 内のクラス名が共通モジュールとぶつかっていたのを修正
 - _struct.ect の app.js async defer を defer のみに変更（実行順序調整）
+- _Selector.coffee に iPhoneXS iphoneXR iPhoneXSMax のクラスを追加
+- _reset.scss と app.scss の inlinefix をデフォルトで無効化（あまり使わない為）
 - README.md の修正
 
 ### v1.4.8（2018年12月17日）

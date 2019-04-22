@@ -93,7 +93,7 @@ config = {
     )
     # IE8 での Babel バグ https://github.com/babel/babel/issues/2817
     # 並び順によって無効化されてしまう https://github.com/babel/babel/issues/4168
-    # { default: obj } が { 'default': obj } ならないといけない
+    # 以下は { default: obj } を { 'default': obj } に修正するプラグイン
     new es3ifyWebpackPlugin()
   ]
 }
