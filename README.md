@@ -769,6 +769,7 @@ http://localhost:9000/api/users?q=fuga
 - _struct.ect の app.js async defer を defer のみに変更（実行順序調整）
 - _Selector.coffee に iPhoneXS iphoneXR iPhoneXSMax のクラスを追加
 - _reset.scss と app.scss の inlinefix をデフォルトで無効化（あまり使わない為）
+- common.coffee にスクロール無効化＆有効化の関数を追加
 - README.md の修正
 
 ### v1.4.8（2018年12月17日）
