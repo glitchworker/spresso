@@ -756,6 +756,11 @@ http://localhost:9000/api/users?q=fuga
 
 ## 🆙 Version History
 
+### v1.5.1（2019年6月21日）
+- package.json の browser-sync , coffeescript , del , gulp-autoprefixer , gulp-footer , gulp-header , gulp-load-plugins , gulp-clean-css , gulp-plumber , gulp-sourcemaps , gulp-uglify , require-dir , rimraf を更新
+- gulp.config.coffee にて Autoprefixer のエラーを修正（browsers → overrideBrowserslist）
+- README.md の修正
+
 ### v1.5.0（2019年4月22日）
 - jQuery のバージョンを 3.3.1 から 3.4.0 に更新
 - 上記より :first :last :eq :even :odd :lt :gt :nth などのCSSセレクタが非推奨
