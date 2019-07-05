@@ -10,12 +10,12 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
 
 - Windows or Mac or Linux ( Verified )
 - This function requires supervisor permission.
-- npm v3.10.6 over
-- node v6.11.5 over
+- npm v6.9.0 over
+- node v10.16.0 over
 
 ## 🔰 Usage
 
-1. [NodeJS](https://nodejs.org/en/) をダウンロードしインストールする
+1. [NodeJS](https://nodejs.org/en/) をダウンロードしインストールする（最新版を推奨）
 
 2. ターミナルまたはコマンドプロンプトを管理者権限で開く
 
@@ -755,6 +755,16 @@ http://localhost:9000/api/users?q=fuga
 ```output``` の項目に出力先のパスを入力することによって書き出されます。
 
 ## 🆙 Version History
+
+### v2.0.0（2019年7月5日）
+- package.json の coffeescript, css-mqpacker, del, gulp, gulp-changed, gulp-load-plugins, gulp-zip, hard-source-webpack-plugin, postcss-sorting, webpack, webpack-merge, webpack-stream を更新
+- package.json に gulp-cli, uglifyjs-webpack-plugin, webpack-cli を追加
+- package.json の gulp-sourcemaps, gulp-uglify, run-sequence を削除
+- package.json の babel-core を @babel/core, babel-preset-env を @babel/preset-env, babel-plugin-transform-es2015-classes を @babel/plugin-transform-classes に変更
+- Webpack 3 から Webpack 4 に更新
+- Babel 7 から Babel 8 に更新
+- Gulp 3 から Gulp 4 に更新
+- README.md の修正
 
 ### v1.5.1（2019年6月21日）
 - package.json の browser-sync , coffeescript , del , gulp-autoprefixer , gulp-footer , gulp-header , gulp-load-plugins , gulp-clean-css , gulp-plumber , gulp-sourcemaps , gulp-uglify , require-dir , rimraf を更新

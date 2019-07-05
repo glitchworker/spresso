@@ -9,7 +9,6 @@ $ = do require 'gulp-load-plugins' # package.json からプラグインを自動
 fs = require 'fs' # ファイルやディレクトリの操作
 url = require 'url' # URL をパースする
 
-runSequence = require 'run-sequence' # タスクの並列 / 直列処理
 rimraf = require 'rimraf' # 単一ファイル / ディレクトリ削除
 del = require 'del' # 複数ファイル / ディレクトリ削除
 minimist = require 'minimist' # Gulp で引数を解析
@@ -46,11 +45,19 @@ isProduction = if options.env == 'production' or options.env == 'staging' then t
 isStaging = if options.env == 'staging' then true else false
 
 if isProduction
+  # SourceMap
+  isSourcemap = false
+  isSourcemapOutput = true
+  # BASE URL
   if isStaging
     APP_SITE_URL = appConfig.STG_SITE_URL
   else
     APP_SITE_URL = appConfig.PROD_SITE_URL
 else
+  # SourceMap
+  isSourcemap = true
+  isSourcemapOutput = '.'
+  # BASE URL
   APP_SITE_URL = appConfig.DEV_SITE_URL
 
 #------------------------------------------------------
@@ -254,19 +261,20 @@ plumberConfig = (error) ->
 #------------------------------------------------------
 
 # data import process
-g.task 'import', ->
+g.task 'import', (done) ->
   jsonData = JSON.parse fs.readFileSync(paths.common.import.json)
   jsonData.forEach (page, i) ->
     if page.TYPE == 'dir'
-      g.src rootDir.src + '/import/' + page.DATA + '/**/*'
+      g.src rootDir.src + '/import/' + page.DATA + '/**/*', { allowEmpty: true }
       .pipe $.plumber(plumberConfig)
-      .pipe $.changed(page.OUTPUT, { hasChanged: $.changed.compareSha1Digest })
+      .pipe $.changed(page.OUTPUT, { hasChanged: $.changed.compareContents })
       .pipe g.dest rootDir.htdocs + '/' + page.OUTPUT
     else
-      g.src rootDir.src + '/import/' + page.DATA
+      g.src rootDir.src + '/import/' + page.DATA, { allowEmpty: true }
       .pipe $.plumber(plumberConfig)
-      .pipe $.changed(page.OUTPUT, { hasChanged: $.changed.compareSha1Digest })
+      .pipe $.changed(page.OUTPUT, { hasChanged: $.changed.compareContents })
       .pipe g.dest rootDir.htdocs + '/' + page.OUTPUT
+  done()
 
 # lib copy process
 g.task 'libcopy', ->
@@ -298,20 +306,13 @@ g.task 'img-check', ->
     return
 
 # img optimize
-g.task 'img', ['img-check'], ->
+g.task 'img', g.task('img-check'), ->
   g.src paths.common.img.src
   .pipe $.plumber(plumberConfig)
   # 画像に変更がない場合、出力しない
-  .pipe $.changed(paths.common.img.dest, { hasChanged: $.changed.compareSha1Digest })
+  .pipe $.changed(paths.common.img.dest, { hasChanged: $.changed.compareContents })
   # .pipe $.imagemin()
   .pipe g.dest paths.common.img.dest
-
-# build
-g.task 'build', ->
-  if appConfig.RESPONSIVE_TEMPLATE
-    return runSequence 'libcopy', 'coffee', 'img', 'coffee-rp', 'img-rp', 'ect-rp', 'css-rp', 'remove-files', 'import'
-  else
-    return runSequence 'libcopy', 'coffee', 'coffee-pc', 'img-pc', 'coffee-sp', 'img-sp', 'img', 'ect-pc', 'css-pc', 'ect-sp', 'css-sp', 'remove-files', 'import'
 
 #------------------------------------------------------
 # Setting for Responsive
@@ -319,7 +320,7 @@ g.task 'build', ->
 #------------------------------------------------------
 
 # ect json process rp
-g.task 'ect-rp', ->
+g.task 'ect-rp', (done) ->
   jsonData = JSON.parse fs.readFileSync(paths.rp.ect.json)
   jsonDataLength = Object.keys(jsonData).length - 1
   jsonData.forEach (page, i) ->
@@ -356,12 +357,12 @@ g.task 'ect-rp', ->
         pathArray.unshift('!' + paths.rp.dest + 'index.html')
         pathArray.unshift(paths.rp.dest + '**/*.html')
       return
+  done()
 
 # sass compile process rp
 g.task 'css-rp', ->
-  g.src paths.rp.css.sass
+  g.src paths.rp.css.sass, { sourcemaps: isSourcemap }
   .pipe $.plumber(plumberConfig)
-  .pipe $.if not isProduction, $.sourcemaps.init()
   # gulp-header を使用して JSON ファイルを sass 変数に読み込む
   .pipe $.header(
     '$BASE_SITE_URL: "' + appConfig.BASE_SITE_URL + '";\n' +
@@ -391,8 +392,7 @@ g.task 'css-rp', ->
   .pipe $.concat paths.rp.css.concat
   .pipe $.if isProduction, $.cleanCss({compatibility: 'ie8'})
   .pipe $.if isProduction, $.header(commentsCss, pkg: appConfig, filename: paths.rp.css.concat)
-  .pipe $.if not isProduction, $.sourcemaps.write('./')
-  .pipe g.dest paths.rp.css.dest
+  .pipe g.dest paths.rp.css.dest, if not isProduction then { sourcemaps: isSourcemapOutput }
   # CSS を stream オプションでリアルタイムに反映
   .pipe bs.stream()
   # sourcemaps を本番ビルド時に削除する
@@ -424,17 +424,18 @@ g.task 'img-rp-check', ->
     return
 
 # img optimize rp
-g.task 'img-rp', ['img-rp-check'], ->
+g.task 'img-rp', g.task('img-rp-check'), ->
   g.src paths.rp.img.src
   .pipe $.plumber(plumberConfig)
   # 画像に変更がない場合、出力しない
-  .pipe $.changed(paths.rp.img.dest, { hasChanged: $.changed.compareSha1Digest })
+  .pipe $.changed(paths.rp.img.dest, { hasChanged: $.changed.compareContents })
   # .pipe $.imagemin()
   .pipe g.dest paths.rp.img.dest
 
 # build rp
-g.task 'build-rp', ->
-  return runSequence 'libcopy', 'coffee', 'img', 'coffee-rp', 'img-rp', 'ect-rp', 'css-rp', 'remove-files', 'import'
+g.task 'build-rp', (done) ->
+  g.series 'libcopy', 'coffee', 'img', 'coffee-rp', 'img-rp', 'ect-rp', 'css-rp', 'remove-files', 'import'
+  done()
 
 #------------------------------------------------------
 # Setting for PC
@@ -442,7 +443,7 @@ g.task 'build-rp', ->
 #------------------------------------------------------
 
 # ect json process pc
-g.task 'ect-pc', ->
+g.task 'ect-pc', (done) ->
   jsonData = JSON.parse fs.readFileSync(paths.pc.ect.json)
   jsonDataLength = Object.keys(jsonData).length - 1
   jsonData.forEach (page, i) ->
@@ -482,12 +483,12 @@ g.task 'ect-pc', ->
         pathArray.unshift('!' + paths.sp.dest + '**/*.html')
         pathArray.unshift(paths.pc.dest + '**/*.html')
       return
+  done()
 
 # sass compile process pc
 g.task 'css-pc', ->
-  g.src paths.pc.css.sass
+  g.src paths.pc.css.sass, { sourcemaps: isSourcemap }
   .pipe $.plumber(plumberConfig)
-  .pipe $.if not isProduction, $.sourcemaps.init()
   # gulp-header を使用して JSON ファイルを sass 変数に読み込む
   .pipe $.header(
     '$BASE_SITE_URL: "' + appConfig.BASE_SITE_URL + '";\n' +
@@ -517,8 +518,7 @@ g.task 'css-pc', ->
   .pipe $.concat paths.pc.css.concat
   .pipe $.if isProduction, $.cleanCss({compatibility: 'ie8'})
   .pipe $.if isProduction, $.header(commentsCss, pkg: appConfig, filename: paths.pc.css.concat)
-  .pipe $.if not isProduction, $.sourcemaps.write('./')
-  .pipe g.dest paths.pc.css.dest
+  .pipe g.dest paths.pc.css.dest, if not isProduction then { sourcemaps: isSourcemapOutput }
   # CSS を stream オプションでリアルタイムに反映
   .pipe bs.stream()
   # sourcemaps を本番ビルド時に削除する
@@ -550,17 +550,18 @@ g.task 'img-pc-check', ->
     return
 
 # img optimize pc
-g.task 'img-pc', ['img-pc-check'], ->
+g.task 'img-pc', g.task('img-pc-check'), ->
   g.src paths.pc.img.src
   .pipe $.plumber(plumberConfig)
   # 画像に変更がない場合、出力しない
-  .pipe $.changed(paths.pc.img.dest, { hasChanged: $.changed.compareSha1Digest })
+  .pipe $.changed(paths.pc.img.dest, { hasChanged: $.changed.compareContents })
   # .pipe $.imagemin()
   .pipe g.dest paths.pc.img.dest
 
 # build pc
-g.task 'build-pc', ->
-  return runSequence 'libcopy', 'coffee', 'img', 'coffee-pc', 'img-pc', 'ect-pc', 'css-pc', 'remove-files', 'import'
+g.task 'build-pc', (done) ->
+  g.series 'libcopy', 'coffee', 'img', 'coffee-pc', 'img-pc', 'ect-pc', 'css-pc', 'remove-files', 'import'
+  done()
 
 #------------------------------------------------------
 # Setting for SP
@@ -568,7 +569,7 @@ g.task 'build-pc', ->
 #------------------------------------------------------
 
 # ect json process sp
-g.task 'ect-sp', ->
+g.task 'ect-sp', (done) ->
   jsonData = JSON.parse fs.readFileSync(paths.sp.ect.json)
   jsonDataLength = Object.keys(jsonData).length - 1
   jsonData.forEach (page, i) ->
@@ -607,12 +608,12 @@ g.task 'ect-sp', ->
         pathArray.unshift('!' + paths.sp.dest + 'index.html')
         pathArray.unshift(paths.sp.dest + '**/*.html')
       return
+  done()
 
 # sass compile process sp
 g.task 'css-sp', ->
-  g.src paths.sp.css.sass
+  g.src paths.sp.css.sass, { sourcemaps: isSourcemap }
   .pipe $.plumber(plumberConfig)
-  .pipe $.if not isProduction, $.sourcemaps.init()
   # gulp-header を使用して JSON ファイルを sass 変数に読み込む
   .pipe $.header(
     '$BASE_SITE_URL: "' + appConfig.BASE_SITE_URL + '";\n' +
@@ -642,8 +643,7 @@ g.task 'css-sp', ->
   .pipe $.concat paths.sp.css.concat
   .pipe $.if isProduction, $.cleanCss({compatibility: 'ie8'})
   .pipe $.if isProduction, $.header(commentsCss, pkg: appConfig, filename: paths.sp.css.concat)
-  .pipe $.if not isProduction, $.sourcemaps.write('./')
-  .pipe g.dest paths.sp.css.dest
+  .pipe g.dest paths.sp.css.dest, if not isProduction then { sourcemaps: isSourcemapOutput }
   # CSS を stream オプションでリアルタイムに反映
   .pipe bs.stream()
   # sourcemaps を本番ビルド時に削除する
@@ -675,60 +675,18 @@ g.task 'img-sp-check', ->
     return
 
 # img optimize sp
-g.task 'img-sp', ['img-sp-check'], ->
+g.task 'img-sp', g.task('img-sp-check'), ->
   g.src paths.sp.img.src
   .pipe $.plumber(plumberConfig)
   # 画像に変更がない場合、出力しない
-  .pipe $.changed(paths.sp.img.dest, { hasChanged: $.changed.compareSha1Digest })
+  .pipe $.changed(paths.sp.img.dest, { hasChanged: $.changed.compareContents })
   # .pipe $.imagemin()
   .pipe g.dest paths.sp.img.dest
 
 # build sp
-g.task 'build-sp', ->
-  return runSequence 'libcopy', 'coffee', 'img', 'coffee-sp', 'img-sp', 'ect-sp', 'css-sp', 'remove-files', 'import'
-
-#------------------------------------------------------
-# Differential data extraction
-# 差分データ抽出
-#------------------------------------------------------
-
-# diff process
-g.task 'diff', ['clean', 'clean-temp'], ->
-  if appConfig.RESPONSIVE_TEMPLATE
-    return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-rp', 'css-rp', 'coffee-rp', 'img-rp', 'temp'
-  else
-    return runSequence 'import', 'libcopy', 'coffee', 'img', 'ect-pc', 'css-pc', 'coffee-pc', 'img-pc', 'ect-sp', 'css-sp', 'coffee-sp', 'img-sp', 'temp'
-
-# temp process
-g.task 'temp', ->
-  g.src paths.archive.src
-  .pipe $.plumber(plumberConfig)
-  # htdocs を temp にコピー
-  .pipe g.dest paths.archive.temp
-
-# export process
-g.task 'export', ->
-  date = new Date
-  y = date.getFullYear()
-  mon = date.getMonth() + 1
-  d = date.getDate()
-  h = date.getHours()
-  m = date.getMinutes()
-  s = date.getSeconds()
-  g.src paths.archive.src
-  .pipe $.plumber(plumberConfig)
-  .pipe $.changed(paths.archive.temp, { hasChanged: $.changed.compareSha1Digest })
-  # 全ファイルをコピーするが、空フォルダは出力しない
-  .pipe $.ignore.include({ isFile: true })
-  # htdocs と temp を比較し htdocs に変更があれば差分データを zip に圧縮して出力
-  .pipe $.zip 'archives_' + y + '-' + mon + '-' + d + '-' + h + '-' + m + '-' + s + '.zip'
-  .pipe $.size(
-    title: 'Saved'
-    pretty: true
-    showFiles: true
-    showTotal: false
-  )
-  .pipe g.dest paths.archive.dest
+g.task 'build-sp', (done) ->
+  g.series 'libcopy', 'coffee', 'img', 'coffee-sp', 'img-sp', 'ect-sp', 'css-sp', 'remove-files', 'import'
+  done()
 
 #------------------------------------------------------
 # Other Settings
@@ -755,8 +713,53 @@ g.task 'clean-temp', (cb) ->
   return rimraf paths.archive.temp, cb
 
 # clean archive
-g.task 'clean-archive', ['clean-temp'], (cb) ->
+g.task 'clean-archive', g.task('clean-temp'), (cb) ->
   return rimraf paths.archive.dest, cb
+
+#------------------------------------------------------
+# Differential data extraction
+# 差分データ抽出
+#------------------------------------------------------
+
+# temp process
+g.task 'temp', ->
+  g.src paths.archive.src
+  .pipe $.plumber(plumberConfig)
+  # htdocs を temp にコピー
+  .pipe g.dest paths.archive.temp
+
+# export process
+g.task 'export', ->
+  date = new Date
+  y = date.getFullYear()
+  mon = date.getMonth() + 1
+  d = date.getDate()
+  h = date.getHours()
+  m = date.getMinutes()
+  s = date.getSeconds()
+  g.src paths.archive.src
+  .pipe $.plumber(plumberConfig)
+  # Gulp 4 になりディレクトリが空の時にエラーが発生していたのを修正
+  .pipe $.if(((f) ->
+    !f.isDirectory()
+  ), $.changed(paths.archive.temp, hasChanged: $.changed.compareContents))
+  # 全ファイルをコピーするが、空フォルダは出力しない
+  .pipe $.ignore.include({ isFile: true })
+  # htdocs と temp を比較し htdocs に変更があれば差分データを zip に圧縮して出力
+  .pipe $.zip 'archives_' + y + '-' + mon + '-' + d + '-' + h + '-' + m + '-' + s + '.zip'
+  .pipe $.size(
+    title: 'Saved'
+    pretty: true
+    showFiles: true
+    showTotal: false
+  )
+  .pipe g.dest paths.archive.dest
+
+# diff process
+if appConfig.RESPONSIVE_TEMPLATE
+  g.task 'diff', g.series 'clean', 'clean-temp', 'import', 'libcopy', 'coffee', 'img', 'ect-rp', 'css-rp', 'coffee-rp', 'img-rp', 'temp'
+else
+  g.task 'diff', g.series 'clean', 'clean-temp', 'import', 'libcopy', 'coffee', 'img', 'ect-pc', 'css-pc', 'coffee-pc', 'img-pc', 'ect-sp', 'css-sp', 'coffee-sp', 'img-sp', 'temp'
 
 #------------------------------------------------------
 # Local server settings
@@ -816,49 +819,55 @@ g.task 'api', ->
   g.src paths.api.watch
   .pipe apiServer.pipe()
 
-g.task 'watch-api', ['api'], ->
+g.task 'watch-api', g.task('api'), ->
   $.watch paths.api.watch, ->
-    g.start 'api' # json ファイルが変更または追加されたらビルド出力
+    g.task 'api' # json ファイルが変更または追加されたらビルド出力
 
 # watch
-g.task 'watch', ['bs'], ->
-  g.watch paths.common.import.json, ['import']
-  g.watch [paths.common.js.plugin, paths.common.js.javascript, paths.common.js.coffee], ['coffee']
+g.task 'watch', ->
+  g.watch paths.common.import.json, g.task('import')
+  g.watch [paths.common.js.plugin, paths.common.js.javascript, paths.common.js.coffee], g.task('coffee')
   $.watch paths.common.img.src, ->
-    g.start 'img' # img ファイルが変更または追加されたらビルド出力
+    g.task 'img' # img ファイルが変更または追加されたらビルド出力
 
 # watch rp
-g.task 'watch-rp', ['bs'], ->
-  g.watch [paths.rp.ect.watch, paths.rp.ect.json], ['ect-rp']
-  g.watch paths.rp.css.watch, ['css-rp']
-  g.watch [paths.rp.js.plugin, paths.rp.js.javascript, paths.rp.js.coffee], ['coffee-rp']
+g.task 'watch-rp', ->
+  g.watch [paths.rp.ect.watch, paths.rp.ect.json], g.task('ect-rp')
+  g.watch paths.rp.css.watch, g.task('css-rp')
+  g.watch [paths.rp.js.plugin, paths.rp.js.javascript, paths.rp.js.coffee], g.task('coffee-rp')
   $.watch paths.rp.img.src, ->
-    g.start 'img-rp' # img ファイルが変更または追加されたらビルド出力
+    g.task 'img-rp' # img ファイルが変更または追加されたらビルド出力
 
 # watch pc
-g.task 'watch-pc', ['bs'], ->
-  g.watch [paths.pc.ect.watch, paths.pc.ect.json], ['ect-pc']
-  g.watch paths.pc.css.watch, ['css-pc']
-  g.watch [paths.pc.js.plugin, paths.pc.js.javascript, paths.pc.js.coffee], ['coffee-pc']
+g.task 'watch-pc', ->
+  g.watch [paths.pc.ect.watch, paths.pc.ect.json], g.task('ect-pc')
+  g.watch paths.pc.css.watch, g.task('css-pc')
+  g.watch [paths.pc.js.plugin, paths.pc.js.javascript, paths.pc.js.coffee], g.task('coffee-pc')
   $.watch paths.pc.img.src, ->
-    g.start 'img-pc' # img ファイルが変更または追加されたらビルド出力
+    g.task 'img-pc' # img ファイルが変更または追加されたらビルド出力
 
 # watch sp
-g.task 'watch-sp', ['bs'], ->
-  g.watch [paths.sp.ect.watch, paths.sp.ect.json], ['ect-sp']
-  g.watch paths.sp.css.watch, ['css-sp']
-  g.watch [paths.sp.js.plugin, paths.sp.js.javascript, paths.sp.js.coffee], ['coffee-sp']
+g.task 'watch-sp', ->
+  g.watch [paths.sp.ect.watch, paths.sp.ect.json], g.task('ect-sp')
+  g.watch paths.sp.css.watch, g.task('css-sp')
+  g.watch [paths.sp.js.plugin, paths.sp.js.javascript, paths.sp.js.coffee], g.task('coffee-sp')
   $.watch paths.sp.img.src, ->
-    g.start 'img-sp' # img ファイルが変更または追加されたらビルド出力
+    g.task 'img-sp' # img ファイルが変更または追加されたらビルド出力
 
 # default task
 if appConfig.RESPONSIVE_TEMPLATE
+  # build
+  g.task 'build', g.series('libcopy', 'coffee', 'img', 'coffee-rp', 'img-rp', 'ect-rp', 'css-rp', 'remove-files', 'import')
+  # api
   if appConfig.API_SERVER
-   g.task 'default', ['bs', 'watch-rp', 'watch', 'watch-api']
+   g.task 'default', g.parallel('bs', 'watch-rp', 'watch', 'watch-api')
   else
-   g.task 'default', ['bs', 'watch-rp', 'watch']
+   g.task 'default', g.parallel('bs', 'watch-rp', 'watch')
 else
+  # build
+  g.task 'build', g.series('libcopy', 'coffee', 'coffee-pc', 'img-pc', 'coffee-sp', 'img-sp', 'img', 'ect-pc', 'css-pc', 'ect-sp', 'css-sp', 'remove-files', 'import')
+  # api
   if appConfig.API_SERVER
-    g.task 'default', ['bs', 'watch-pc', 'watch-sp', 'watch', 'watch-api']
+    g.task 'default', g.parallel('bs', 'watch-pc', 'watch-sp', 'watch', 'watch-api')
   else
-    g.task 'default', ['bs', 'watch-pc', 'watch-sp', 'watch']
+    g.task 'default', g.parallel('bs', 'watch-pc', 'watch-sp', 'watch')

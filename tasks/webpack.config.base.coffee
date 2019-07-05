@@ -6,7 +6,8 @@
 path = require 'path' # パス解析
 webpack = require('webpack-stream').webpack # Webpack 読み込み
 minimist = require 'minimist' # Gulp で引数を解析
-IfPlugin = require 'if-webpack-plugin' # Webpack の Plugins 内で条件分岐
+IfPlugin = require 'if-webpack-plugin' # Webpack の 条件分岐
+UglifyJSPlugin = require 'uglifyjs-webpack-plugin' # Webpack の minify 設定
 HardSourcePlugin = require 'hard-source-webpack-plugin' # 中間キャッシュでビルド時間を短縮
 es3ifyWebpackPlugin = require 'es3ify-webpack-plugin-v2' # IE8 での Babel バグ修正
 
@@ -32,6 +33,7 @@ envOption =
 
 isProduction = if options.env == 'production' or options.env == 'staging' then true else false
 isStaging = if options.env == 'staging' then true else false
+isMode = if options.env == 'production' or options.env == 'staging' then 'production' else 'development'
 
 if isProduction
   if isStaging
@@ -48,6 +50,7 @@ else
 
 # commonPath = path.resolve('') + '/src/common/scripts/coffee/common'
 config = {
+  mode: isMode
   devtool: if not isProduction then 'source-map'
   resolve: {
     extensions: ['.js', '.coffee'] # require する際に、拡張子を省略するための設定
@@ -60,9 +63,9 @@ config = {
           {
             loader: 'babel-loader'
             options:
-              presets: ['env']
+              presets: ['@babel/preset-env']
               plugins: [
-                ['transform-es2015-classes', { 'loose': true }] # ES6 を ES5 に変換
+                ['@babel/plugin-transform-classes', { 'loose': true }] # ES6 を ES5 に変換
               ]
           }
           'coffee-loader' # CoffeeScript をコンパイルするための設定
@@ -80,14 +83,6 @@ config = {
       'APP_MODIFIER': JSON.stringify appConfig.MODIFIER
       'APP_UPDATE': JSON.stringify update
       'APP_TIMESTAMP':JSON.stringify timestamp
-    new IfPlugin(
-      isProduction
-      new webpack.optimize.UglifyJsPlugin
-        preserveComments: 'some' # Licence 表記を消さない
-        compress:
-          warnings: false
-          drop_console: true
-    )
     new HardSourcePlugin(
       # cacheDirectory: '.cache/hard-source/[confighash]'
     )
@@ -96,6 +91,20 @@ config = {
     # 以下は { default: obj } を { 'default': obj } に修正するプラグイン
     new es3ifyWebpackPlugin()
   ]
+  # Webpack 4 で minify の詳細設定するための記述
+  optimization: {
+    minimizer: [
+      new IfPlugin(
+        isProduction
+        new UglifyJSPlugin
+          uglifyOptions:
+            output:
+              comments: /^\**!|@preserve|@license|@cc_on/ # Licence 表記を消さない
+            compress:
+              drop_console: true # console.log を削除
+      )
+    ]
+  }
 }
 
 module.exports = config
