@@ -18,7 +18,7 @@ bs = require('browser-sync').create() # Web サーバー作成
 ssi = require 'connect-ssi' # SSI を有効化
 jsonServer = require 'gulp-json-srv' # API サーバー作成
 
-webpack = require 'webpack' # Webpack 3.x 読み込み
+webpack = require 'webpack' # Webpack 読み込み
 webpackStream = require 'webpack-stream' # Gulp で Webpack を読み込む
 
 #------------------------------------------------------
@@ -96,7 +96,7 @@ paths =
       src: rootDir.src + '/common/images/**/*.*'
       postcss: rootDir.assets + 'common/images/'
       dest: rootDir.htdocs + '/' + rootDir.assets + 'common/images/'
-    libcopy:
+    libCopy:
       lib: rootDir.src + '/common/scripts/lib/**/*.js'
       dest: rootDir.htdocs + '/' + rootDir.assets + 'common/js/lib/'
     import:
@@ -261,7 +261,7 @@ plumberConfig = (error) ->
 #------------------------------------------------------
 
 # data import process
-g.task 'import', (done) ->
+importData = (done) ->
   jsonData = JSON.parse fs.readFileSync(paths.common.import.json)
   jsonData.forEach (page, i) ->
     if page.TYPE == 'dir'
@@ -277,13 +277,13 @@ g.task 'import', (done) ->
   done()
 
 # lib copy process
-g.task 'libcopy', ->
-  g.src paths.common.libcopy.lib
-  .pipe $.changed(paths.common.libcopy.dest)
-  .pipe g.dest paths.common.libcopy.dest
+libCopy = ->
+  g.src paths.common.libCopy.lib
+  .pipe $.changed(paths.common.libCopy.dest)
+  .pipe g.dest paths.common.libCopy.dest
 
 # coffee compile process
-g.task 'coffee', ->
+coffeeCompile = ->
   g.src([paths.common.js.plugin, paths.common.js.javascript, paths.common.js.coffee])
   .pipe $.plumber(plumberConfig)
   .pipe webpackStream require('./webpack.config.common.coffee'), webpack
@@ -297,8 +297,8 @@ g.task 'coffee', ->
     return
 
 # img file check
-g.task 'img-check', ->
-  return g.src paths.common.img.src
+imgCheck = ->
+  g.src paths.common.img.src
   .pipe $.plumber(plumberConfig)
   # src フォルダに存在しないファイルを htdocs から削除する
   .pipe pathSearch(rootDir.src + '/common/images/', 'images').on 'end', (cb) ->
@@ -306,7 +306,7 @@ g.task 'img-check', ->
     return
 
 # img optimize
-g.task 'img', g.task('img-check'), ->
+imgCompile = ->
   g.src paths.common.img.src
   .pipe $.plumber(plumberConfig)
   # 画像に変更がない場合、出力しない
@@ -320,7 +320,7 @@ g.task 'img', g.task('img-check'), ->
 #------------------------------------------------------
 
 # ect json process rp
-g.task 'ect-rp', (done) ->
+ectRP = (done) ->
   jsonData = JSON.parse fs.readFileSync(paths.rp.ect.json)
   jsonDataLength = Object.keys(jsonData).length - 1
   jsonData.forEach (page, i) ->
@@ -360,7 +360,7 @@ g.task 'ect-rp', (done) ->
   done()
 
 # sass compile process rp
-g.task 'css-rp', ->
+cssRP = ->
   g.src paths.rp.css.sass, { sourcemaps: isSourcemap }
   .pipe $.plumber(plumberConfig)
   # gulp-header を使用して JSON ファイルを sass 変数に読み込む
@@ -401,7 +401,7 @@ g.task 'css-rp', ->
     return
 
 # coffee compile process rp
-g.task 'coffee-rp', ->
+coffeeRP = ->
   g.src([paths.rp.js.plugin, paths.rp.js.javascript, paths.rp.js.coffee])
   .pipe $.plumber(plumberConfig)
   .pipe webpackStream require('./webpack.config.rp.coffee'), webpack
@@ -415,8 +415,8 @@ g.task 'coffee-rp', ->
     return
 
 # img check rp
-g.task 'img-rp-check', ->
-  return g.src paths.rp.img.src
+imgCheckRP = ->
+  g.src paths.rp.img.src
   .pipe $.plumber(plumberConfig)
   # src フォルダに存在しないファイルを htdocs から削除する
   .pipe pathSearch(rootDir.src + '/rp/images/', 'images').on 'end', (cb) ->
@@ -424,7 +424,7 @@ g.task 'img-rp-check', ->
     return
 
 # img optimize rp
-g.task 'img-rp', g.task('img-rp-check'), ->
+imgCompileRP = ->
   g.src paths.rp.img.src
   .pipe $.plumber(plumberConfig)
   # 画像に変更がない場合、出力しない
@@ -433,8 +433,8 @@ g.task 'img-rp', g.task('img-rp-check'), ->
   .pipe g.dest paths.rp.img.dest
 
 # build rp
-g.task 'build-rp', (done) ->
-  g.series 'libcopy', 'coffee', 'img', 'coffee-rp', 'img-rp', 'ect-rp', 'css-rp', 'remove-files', 'import'
+buildRP = (done) ->
+  g.series 'lib', 'coffee', 'img', 'coffee-rp', 'img-rp', 'ect-rp', 'css-rp', 'remove-files', 'import'
   done()
 
 #------------------------------------------------------
@@ -443,7 +443,7 @@ g.task 'build-rp', (done) ->
 #------------------------------------------------------
 
 # ect json process pc
-g.task 'ect-pc', (done) ->
+ectPC = (done) ->
   jsonData = JSON.parse fs.readFileSync(paths.pc.ect.json)
   jsonDataLength = Object.keys(jsonData).length - 1
   jsonData.forEach (page, i) ->
@@ -486,7 +486,7 @@ g.task 'ect-pc', (done) ->
   done()
 
 # sass compile process pc
-g.task 'css-pc', ->
+cssPC = ->
   g.src paths.pc.css.sass, { sourcemaps: isSourcemap }
   .pipe $.plumber(plumberConfig)
   # gulp-header を使用して JSON ファイルを sass 変数に読み込む
@@ -527,7 +527,7 @@ g.task 'css-pc', ->
     return
 
 # coffee compile process pc
-g.task 'coffee-pc', ->
+coffeePC = ->
   g.src([paths.pc.js.plugin, paths.pc.js.javascript, paths.pc.js.coffee])
   .pipe $.plumber(plumberConfig)
   .pipe webpackStream require('./webpack.config.pc.coffee'), webpack
@@ -541,8 +541,8 @@ g.task 'coffee-pc', ->
     return
 
 # img check pc
-g.task 'img-pc-check', ->
-  return g.src paths.pc.img.src
+imgCheckPC = ->
+  g.src paths.pc.img.src
   .pipe $.plumber(plumberConfig)
   # src フォルダに存在しないファイルを htdocs から削除する
   .pipe pathSearch(rootDir.src + '/pc/images/', 'images').on 'end', (cb) ->
@@ -550,7 +550,7 @@ g.task 'img-pc-check', ->
     return
 
 # img optimize pc
-g.task 'img-pc', g.task('img-pc-check'), ->
+imgCompilePC = ->
   g.src paths.pc.img.src
   .pipe $.plumber(plumberConfig)
   # 画像に変更がない場合、出力しない
@@ -559,8 +559,8 @@ g.task 'img-pc', g.task('img-pc-check'), ->
   .pipe g.dest paths.pc.img.dest
 
 # build pc
-g.task 'build-pc', (done) ->
-  g.series 'libcopy', 'coffee', 'img', 'coffee-pc', 'img-pc', 'ect-pc', 'css-pc', 'remove-files', 'import'
+buildPC = (done) ->
+  g.series 'lib', 'coffee', 'img', 'coffee-pc', 'img-pc', 'ect-pc', 'css-pc', 'remove-files', 'import'
   done()
 
 #------------------------------------------------------
@@ -569,7 +569,7 @@ g.task 'build-pc', (done) ->
 #------------------------------------------------------
 
 # ect json process sp
-g.task 'ect-sp', (done) ->
+ectSP = (done) ->
   jsonData = JSON.parse fs.readFileSync(paths.sp.ect.json)
   jsonDataLength = Object.keys(jsonData).length - 1
   jsonData.forEach (page, i) ->
@@ -611,7 +611,7 @@ g.task 'ect-sp', (done) ->
   done()
 
 # sass compile process sp
-g.task 'css-sp', ->
+cssSP = ->
   g.src paths.sp.css.sass, { sourcemaps: isSourcemap }
   .pipe $.plumber(plumberConfig)
   # gulp-header を使用して JSON ファイルを sass 変数に読み込む
@@ -652,7 +652,7 @@ g.task 'css-sp', ->
     return
 
 # coffee compile process sp
-g.task 'coffee-sp', ->
+coffeeSP = ->
   g.src([paths.sp.js.plugin, paths.sp.js.javascript, paths.sp.js.coffee])
   .pipe $.plumber(plumberConfig)
   .pipe webpackStream require('./webpack.config.sp.coffee'), webpack
@@ -666,8 +666,8 @@ g.task 'coffee-sp', ->
     return
 
 # img check sp
-g.task 'img-sp-check', ->
-  return g.src paths.sp.img.src
+imgCheckSP = ->
+  g.src paths.sp.img.src
   .pipe $.plumber(plumberConfig)
   # src フォルダに存在しないファイルを htdocs から削除する
   .pipe pathSearch(rootDir.src + '/sp/images/', 'images').on 'end', (cb) ->
@@ -675,7 +675,7 @@ g.task 'img-sp-check', ->
     return
 
 # img optimize sp
-g.task 'img-sp', g.task('img-sp-check'), ->
+imgCompileSP = ->
   g.src paths.sp.img.src
   .pipe $.plumber(plumberConfig)
   # 画像に変更がない場合、出力しない
@@ -684,8 +684,8 @@ g.task 'img-sp', g.task('img-sp-check'), ->
   .pipe g.dest paths.sp.img.dest
 
 # build sp
-g.task 'build-sp', (done) ->
-  g.series 'libcopy', 'coffee', 'img', 'coffee-sp', 'img-sp', 'ect-sp', 'css-sp', 'remove-files', 'import'
+buildSP = (done) ->
+  g.series 'lib', 'coffee', 'img', 'coffee-sp', 'img-sp', 'ect-sp', 'css-sp', 'remove-files', 'import'
   done()
 
 #------------------------------------------------------
@@ -694,27 +694,27 @@ g.task 'build-sp', (done) ->
 #------------------------------------------------------
 
 # remove files
-g.task 'remove-files', (cb) ->
-  return del pathArray, cb
+removeFiles = (cb) ->
+  del pathArray, cb
 
 # clean
-g.task 'clean', (cb) ->
+clean = (cb) ->
   if appConfig.RESPONSIVE_TEMPLATE
-    return rimraf paths.rp.dest, cb
+    rimraf paths.rp.dest, cb
   else
-    return rimraf paths.pc.dest, cb
+    rimraf paths.pc.dest, cb
 
 # clean sp
-g.task 'clean-sp', (cb) ->
-  return rimraf paths.sp.dest, cb
+cleanSP = (cb) ->
+  rimraf paths.sp.dest, cb
 
 # clean temp
-g.task 'clean-temp', (cb) ->
-  return rimraf paths.archive.temp, cb
+cleanTemp = (cb) ->
+  rimraf paths.archive.temp, cb
 
 # clean archive
-g.task 'clean-archive', g.task('clean-temp'), (cb) ->
-  return rimraf paths.archive.dest, cb
+cleanArchive = (cb) ->
+  rimraf paths.archive.dest, cb
 
 #------------------------------------------------------
 # Differential data extraction
@@ -722,14 +722,14 @@ g.task 'clean-archive', g.task('clean-temp'), (cb) ->
 #------------------------------------------------------
 
 # temp process
-g.task 'temp', ->
+tempData = ->
   g.src paths.archive.src
   .pipe $.plumber(plumberConfig)
   # htdocs を temp にコピー
   .pipe g.dest paths.archive.temp
 
 # export process
-g.task 'export', ->
+exportData = ->
   date = new Date
   y = date.getFullYear()
   mon = date.getMonth() + 1
@@ -755,19 +755,13 @@ g.task 'export', ->
   )
   .pipe g.dest paths.archive.dest
 
-# diff process
-if appConfig.RESPONSIVE_TEMPLATE
-  g.task 'diff', g.series 'clean', 'clean-temp', 'import', 'libcopy', 'coffee', 'img', 'ect-rp', 'css-rp', 'coffee-rp', 'img-rp', 'temp'
-else
-  g.task 'diff', g.series 'clean', 'clean-temp', 'import', 'libcopy', 'coffee', 'img', 'ect-pc', 'css-pc', 'coffee-pc', 'img-pc', 'ect-sp', 'css-sp', 'coffee-sp', 'img-sp', 'temp'
-
 #------------------------------------------------------
 # Local server settings
 # ローカルサーバー設定
 #------------------------------------------------------
 
 # browserSync
-g.task 'bs', ->
+browserSync = ->
   bs.init null, {
     server:
       baseDir: rootDir.htdocs,
@@ -797,7 +791,153 @@ g.task 'bs', ->
       console.log '[\u001b[32mAPI Mock Server\u001b[0m] Serving files from: \u001b[35msrc' + paths.api.dest + '\u001b[0m'
     return
 
-# json-server
+#------------------------------------------------------
+# Monitoring task
+# 監視タスク
+#------------------------------------------------------
+
+# json-server watch & refresh
+api = ->
+  g.src paths.api.watch
+  .pipe apiServer.pipe()
+
+apiWatch = ->
+  g.watch paths.api.watch, g.task('api') # json ファイルが変更または追加されたらビルド出力
+
+# watch
+watch = ->
+  g.watch paths.common.import.json, g.task('import')
+  g.watch [paths.common.js.plugin, paths.common.js.javascript, paths.common.js.coffee], g.task('coffee')
+  g.watch paths.common.img.src, g.task('img') # img ファイルが変更または追加されたらビルド出力
+
+# watch rp
+watchRP = ->
+  g.watch [paths.rp.ect.watch, paths.rp.ect.json], g.task('ect-rp')
+  g.watch paths.rp.css.watch, g.task('css-rp')
+  g.watch [paths.rp.js.plugin, paths.rp.js.javascript, paths.rp.js.coffee], g.task('coffee-rp')
+  g.watch paths.rp.img.src, g.task('img-rp') # img ファイルが変更または追加されたらビルド出力
+
+# watch pc
+watchPC = ->
+  g.watch [paths.pc.ect.watch, paths.pc.ect.json], g.task('ect-pc')
+  g.watch paths.pc.css.watch, g.task('css-pc')
+  g.watch [paths.pc.js.plugin, paths.pc.js.javascript, paths.pc.js.coffee], g.task('coffee-pc')
+  g.watch paths.pc.img.src, g.task('img-pc') # img ファイルが変更または追加されたらビルド出力
+
+# watch sp
+watchSP = ->
+  g.watch [paths.sp.ect.watch, paths.sp.ect.json], g.task('ect-sp')
+  g.watch paths.sp.css.watch, g.task('css-sp')
+  g.watch [paths.sp.js.plugin, paths.sp.js.javascript, paths.sp.js.coffee], g.task('coffee-sp')
+  g.watch paths.sp.img.src, g.task('img-sp') # img ファイルが変更または追加されたらビルド出力
+
+#------------------------------------------------------
+# Declaring Each Task
+# 各タスクの宣言
+#------------------------------------------------------
+
+# Common Task
+exports.importData = importData
+exports.libCopy = libCopy
+exports.coffeeCompile = coffeeCompile
+exports.imgCheck = imgCheck
+exports.imgCompile = imgCompile
+
+# Responsive Task
+exports.ectRP = ectRP
+exports.cssRP = cssRP
+exports.coffeeRP = coffeeRP
+exports.imgCheckRP = imgCheckRP
+exports.imgCompileRP = imgCompileRP
+exports.buildRP = buildRP
+
+# PC Task
+exports.ectPC = ectPC
+exports.cssPC = cssPC
+exports.coffeePC = coffeePC
+exports.imgCheckPC = imgCheckPC
+exports.imgCompilePC = imgCompilePC
+exports.buildPC = buildPC
+
+# SP Task
+exports.ectSP = ectSP
+exports.cssSP = cssSP
+exports.coffeeSP = coffeeSP
+exports.imgCheckSP = imgCheckSP
+exports.imgCompileSP = imgCompileSP
+exports.buildSP = buildSP
+
+# Other Task
+exports.removeFiles = removeFiles
+exports.clean = clean
+exports.cleanSP = cleanSP
+exports.cleanTemp = cleanTemp
+exports.cleanArchive = cleanArchive
+
+# Differential Task
+exports.tempData = tempData
+exports.exportData = exportData
+
+# Local server Task
+exports.browserSync = browserSync
+
+# Monitoring Task
+exports.api = api
+exports.apiWatch = apiWatch
+exports.watch = watch
+exports.watchRP = watchRP
+exports.watchPC = watchPC
+exports.watchSP = watchSP
+
+#------------------------------------------------------
+# Installation of each task
+# 各タスクの設定
+#------------------------------------------------------
+
+# Common Task
+g.task 'import', importData
+g.task 'lib', libCopy
+g.task 'coffee', coffeeCompile
+g.task 'img', g.series(imgCheck, imgCompile)
+
+# Responsive Task
+g.task 'ect-rp', ectRP
+g.task 'css-rp', cssRP
+g.task 'coffee-rp', coffeeRP
+g.task 'img-rp', g.series(imgCheckRP, imgCompileRP)
+g.task 'build-rp', buildRP
+
+# PC Task
+g.task 'ect-pc', ectPC
+g.task 'css-pc', cssPC
+g.task 'coffee-pc', coffeePC
+g.task 'img-pc', g.series(imgCheckPC, imgCompilePC)
+g.task 'build-pc', buildPC
+
+# SP Task
+g.task 'ect-sp', ectSP
+g.task 'css-sp', cssSP
+g.task 'coffee-sp', coffeeSP
+g.task 'img-sp', g.series(imgCheckSP, imgCompileSP)
+g.task 'build-sp', buildSP
+
+# Other Task
+g.task 'remove-files', removeFiles
+g.task 'clean', clean
+g.task 'clean-sp', cleanSP
+g.task 'clean-temp', cleanTemp
+g.task 'clean-archive', g.series(cleanTemp, cleanArchive)
+
+# Differential Task
+g.task 'temp', tempData
+g.task 'export', exportData
+if appConfig.RESPONSIVE_TEMPLATE
+  g.task 'diff', g.series 'clean', 'clean-temp', 'import', 'lib', 'coffee', 'img', 'ect-rp', 'css-rp', 'coffee-rp', 'img-rp', 'temp'
+else
+  g.task 'diff', g.series 'clean', 'clean-temp', 'import', 'lib', 'coffee', 'img', 'ect-pc', 'css-pc', 'coffee-pc', 'img-pc', 'ect-sp', 'css-sp', 'coffee-sp', 'img-sp', 'temp'
+
+# Local server Task
+g.task 'bs', browserSync
 if appConfig.API_SERVER
   apiServer = jsonServer.create {
     port: paths.api.port,
@@ -809,55 +949,18 @@ if appConfig.API_SERVER
     }
   }
 
-#------------------------------------------------------
-# Monitoring task
-# 監視タスク
-#------------------------------------------------------
+# Monitoring Task
+g.task 'api', api
+g.task 'watch-api', g.series(api, apiWatch)
+g.task 'watch', watch
+g.task 'watch-rp', watchRP
+g.task 'watch-pc', watchPC
+g.task 'watch-sp', watchSP
 
-# json-server watch & refresh
-g.task 'api', ->
-  g.src paths.api.watch
-  .pipe apiServer.pipe()
-
-g.task 'watch-api', g.task('api'), ->
-  $.watch paths.api.watch, ->
-    g.task 'api' # json ファイルが変更または追加されたらビルド出力
-
-# watch
-g.task 'watch', ->
-  g.watch paths.common.import.json, g.task('import')
-  g.watch [paths.common.js.plugin, paths.common.js.javascript, paths.common.js.coffee], g.task('coffee')
-  $.watch paths.common.img.src, ->
-    g.task 'img' # img ファイルが変更または追加されたらビルド出力
-
-# watch rp
-g.task 'watch-rp', ->
-  g.watch [paths.rp.ect.watch, paths.rp.ect.json], g.task('ect-rp')
-  g.watch paths.rp.css.watch, g.task('css-rp')
-  g.watch [paths.rp.js.plugin, paths.rp.js.javascript, paths.rp.js.coffee], g.task('coffee-rp')
-  $.watch paths.rp.img.src, ->
-    g.task 'img-rp' # img ファイルが変更または追加されたらビルド出力
-
-# watch pc
-g.task 'watch-pc', ->
-  g.watch [paths.pc.ect.watch, paths.pc.ect.json], g.task('ect-pc')
-  g.watch paths.pc.css.watch, g.task('css-pc')
-  g.watch [paths.pc.js.plugin, paths.pc.js.javascript, paths.pc.js.coffee], g.task('coffee-pc')
-  $.watch paths.pc.img.src, ->
-    g.task 'img-pc' # img ファイルが変更または追加されたらビルド出力
-
-# watch sp
-g.task 'watch-sp', ->
-  g.watch [paths.sp.ect.watch, paths.sp.ect.json], g.task('ect-sp')
-  g.watch paths.sp.css.watch, g.task('css-sp')
-  g.watch [paths.sp.js.plugin, paths.sp.js.javascript, paths.sp.js.coffee], g.task('coffee-sp')
-  $.watch paths.sp.img.src, ->
-    g.task 'img-sp' # img ファイルが変更または追加されたらビルド出力
-
-# default task
+# Default task
 if appConfig.RESPONSIVE_TEMPLATE
   # build
-  g.task 'build', g.series('libcopy', 'coffee', 'img', 'coffee-rp', 'img-rp', 'ect-rp', 'css-rp', 'remove-files', 'import')
+  g.task 'build', g.series('lib', 'coffee', 'img', 'coffee-rp', 'img-rp', 'ect-rp', 'css-rp', 'remove-files', 'import')
   # api
   if appConfig.API_SERVER
    g.task 'default', g.parallel('bs', 'watch-rp', 'watch', 'watch-api')
@@ -865,7 +968,7 @@ if appConfig.RESPONSIVE_TEMPLATE
    g.task 'default', g.parallel('bs', 'watch-rp', 'watch')
 else
   # build
-  g.task 'build', g.series('libcopy', 'coffee', 'coffee-pc', 'img-pc', 'coffee-sp', 'img-sp', 'img', 'ect-pc', 'css-pc', 'ect-sp', 'css-sp', 'remove-files', 'import')
+  g.task 'build', g.series('lib', 'coffee', 'coffee-pc', 'img-pc', 'coffee-sp', 'img-sp', 'img', 'ect-pc', 'css-pc', 'ect-sp', 'css-sp', 'remove-files', 'import')
   # api
   if appConfig.API_SERVER
     g.task 'default', g.parallel('bs', 'watch-pc', 'watch-sp', 'watch', 'watch-api')

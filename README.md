@@ -756,6 +756,12 @@ http://localhost:9000/api/users?q=fuga
 
 ## 🆙 Version History
 
+### v2.0.1（2019年7月6日）
+- Webpack 4 になり出力形式が変わり iE8 以下でエラーが出ていたのを修正（Polyfill.js）
+- gulp.config.coffee のタスクの記述方法を適切な Gulp 4 の形式に修正
+- package.json の gulp-foreach, gulp-watch を削除
+- README.md の修正
+
 ### v2.0.0（2019年7月5日）
 - package.json の coffeescript, css-mqpacker, del, gulp, gulp-changed, gulp-load-plugins, gulp-zip, hard-source-webpack-plugin, postcss-sorting, webpack, webpack-merge, webpack-stream を更新
 - package.json に gulp-cli, uglifyjs-webpack-plugin, webpack-cli を追加
@@ -777,7 +783,6 @@ http://localhost:9000/api/users?q=fuga
 - README.md の修正
 
 ### v1.4.9（2019年4月22日）
-
 - pages.json に MATA_PWA_MODE を追加（WebAppモードの有効化）
 - pages.json に META_SHARE_TITLE を追加（空白の場合、META_TITLE が挿入される）
 - pages.json の META_TWITTER をデフォルトで有効に変更
@@ -793,52 +798,43 @@ http://localhost:9000/api/users?q=fuga
 - README.md の修正
 
 ### v1.4.8（2018年12月17日）
-
 - package.json を更新
 - gulp.config.coffee にてビルド時 import タスクの呼び出し順序の変更
 - README.md の修正
 
 ### v1.4.7（2018年11月2日）
-
 - package.json の browser-sync , coffeescript , event-stream , gulp-autoprefixer , gulp-coffee , gulp-postcss , gulp-sass を更新
 - mixins に fontWeight を追加（Thin: 100、Light: 300、DemiLight: 350、Regular: 400、Medium: 500、Bold: 700、Black: 900 の名称で文字の太さが指定可能）
 - README.md の修正
 
 ### v1.4.6（2018年9月18日）
-
 - package.json の browser-sync , event-stream , gulp-clean-css , gulp-rename, gulp-uglify , gulp-watch , gulp-zip , webpack-merge を更新
 - README.md の修正
 
 ### v1.4.5（2018年7月2日）
-
 - package.json の browser-sync , gulp-rename , webpack-merge を更新
 - README.md の修正
 
 ### v1.4.4（2018年5月22日）
-
 - package.json の babel-preset-env , browser-sync , coffeescript , gulp-clean-css , gulp-rename , hard-source-webpack-plugin を更新
 - README.md の修正
 
 ### v1.4.3（2018年5月1日）
-
 - package.json の babel-core , browser-sync , coffeescript を更新
 - README.md の修正
 
 ### v1.4.2（2018年4月26日）
-
 - package.json の browser-sync , gulp-sass を更新
 - package.json に es3ify-webpack-plugin-v2 を追加（IE8 で Babel の不具合によりエラーが発生していたのを修正）
 - 上記に伴い webpack.config.base.coffee を修正
 - README.md の修正
 
 ### v1.4.1（2018年4月21日）
-
 - package.json に gulp-inject-svg を追加（html の svg をインライン化）
 - License 周りの名義を Loxis から GlitchWorker に変更
 - README.md の修正
 
 ### v1.4.0（2018年4月18日）
-
 - package.json の coffeescript , gulp-sass , webpack-stream を更新
 - package.json に hard-source-webpack-plugin を追加（中間キャッシュでビルド時間を短縮）
 - package.json の browsersync-ssi に不具合が発生しているので connect-ssi に変更

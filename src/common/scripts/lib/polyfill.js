@@ -161,3 +161,31 @@
     return select(selector, 1)[0] || null;
   };
 }());
+
+/**
+ * Object.defineProperty for ie8
+ */
+var origDefineProperty = Object.defineProperty;
+var arePropertyDescriptorsSupported = function() {
+  var obj = {};
+  try {
+    origDefineProperty(obj, "x", { enumerable: false, value: obj });
+    for (var _ in obj) {
+      return false;
+    }
+    return obj.x === obj;
+  } catch (e) {
+    /* this is IE 8. */
+    return false;
+  }
+};
+var supportsDescriptors = origDefineProperty && arePropertyDescriptorsSupported();
+if (!supportsDescriptors) {
+  Object.defineProperty = function(a, b, c) {
+    if (origDefineProperty && a.nodeType == 1) {
+      return origDefineProperty(a, b, c);
+    } else {
+      a[b] = c.value || (c.get && c.get());
+    }
+  };
+}
