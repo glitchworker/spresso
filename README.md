@@ -1229,5 +1229,5 @@ http://localhost:9000/api/users?q=fuga
 - 開発スタート
 
 ## 📝 License
-Copyright (c) 2016-2018 GlitchWorker (http://loxis.jp/)  
+Copyright (c) 2016-2019 GlitchWorker (http://loxis.jp/)  
 Licensed under the MIT license.
