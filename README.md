@@ -719,11 +719,18 @@ http://localhost:9000/api/users?q=fuga
 
 ## 🚀 Important Notices
 
+<u>**v2.0.0 から Gulp4, Webpack4, Babel8 に変更したことにより大幅に処理が見直されました。**</u>
+
+> Gulp3 から Gulp4 に変更したことにより ```gulp.config.coffee``` の内部的処理が大幅に見直しました。  
+また Webpack も同様に Webpack3 から Webpack4 に変更したので ```webpack.config.base.coffee```  
+の一部処理が変更されました。また Babel8 の出力形式が変わり IE8 にて ```Object.defineProperty``` のエラーが  
+発生していたので ```polyfill.js``` に記述を追記し修正しておきました。
+
 <u>**v1.3.6 から API Mock Server を追加しました。**</u>
 
 > json 形式を使用した、簡易的な RESTful API サーバーを立てる機能を実装しました。  
 ```/src/api/``` 配下に設置された JSON データをレスポンスし ajax 等で GET および POST が可能です。  
-詳しい使い方などは本 README.md の [API Mock Server](#api-mock-server) をご覧ください。
+詳しい使い方などは本 README.md の [API Mock Server](#-api-mock-server) をご覧ください。
 
 <u>**v1.3.4 から JSON で扱う項目名を全て大文字に変更しました。**</u>
 
@@ -757,7 +764,8 @@ http://localhost:9000/api/users?q=fuga
 ## 🆙 Version History
 
 ### v2.0.1（2019年7月6日）
-- Webpack 4 になり出力形式が変わり iE8 以下でエラーが出ていたのを修正（Polyfill.js）
+- [Important Notices](#-important-notices) に大幅更新の詳細内容を追記
+- Babel 8 になり出力形式が変わり iE8 以下でエラーが出ていたのを修正（Polyfill.js）
 - gulp.config.coffee のタスクの記述方法を適切な Gulp 4 の形式に修正
 - package.json の gulp-foreach, gulp-watch を削除
 - README.md の修正
