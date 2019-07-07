@@ -68,7 +68,6 @@
     "coffeescript": "^2.4.1",
     "css-mqpacker": "^7.0.0",
     "del": "^5.0.0",
-    "es3ify-webpack-plugin-v2": "^0.0.2",
     "event-stream": "^4.0.1",
     "gulp-cli": "^2.2.0",
     "gulp": "^4.0.2",

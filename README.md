@@ -715,7 +715,6 @@ http://localhost:9000/api/users?q=fuga
 ## 👍 Thanks
 
 - [Adobe Blank](https://github.com/adobe-fonts/adobe-blank)
-- [es3ify-webpack-plugin-v2](https://github.com/xiewulong/es3ify-webpack-plugin-v2)
 
 ## 🚀 Important Notices
 
@@ -724,7 +723,8 @@ http://localhost:9000/api/users?q=fuga
 > Gulp3 から Gulp4 に変更したことにより ```gulp.config.coffee``` の内部的処理が大幅に見直しました。  
 また Webpack も同様に Webpack3 から Webpack4 に変更したので ```webpack.config.base.coffee```  
 の一部処理が変更されました。また Babel8 の出力形式が変わり IE8 にて ```Object.defineProperty``` のエラーが  
-発生していたので ```polyfill.js``` に記述を追記し修正しておきました。
+発生していたので ```polyfill.js``` に記述を追記し修正しておきました。  
+また ```es3ify-webpack-plugin-v2``` が不要になったようなので関連を削除しました。
 
 <u>**v1.3.6 から API Mock Server を追加しました。**</u>
 
@@ -763,11 +763,12 @@ http://localhost:9000/api/users?q=fuga
 
 ## 🆙 Version History
 
-### v2.0.1（2019年7月6日）
+### v2.0.1（2019年7月7日）
+- Babel のバージョンが上がり es3ify-webpack-plugin-v2 が不要になったので削除
 - [Important Notices](#-important-notices) に大幅更新の詳細内容を追記
 - Babel 8 になり出力形式が変わり iE8 以下でエラーが出ていたのを修正（Polyfill.js）
 - gulp.config.coffee のタスクの記述方法を適切な Gulp 4 の形式に修正
-- package.json の gulp-foreach, gulp-watch を削除
+- package.json の gulp-foreach, gulp-watch, es3ify-webpack-plugin-v2 を削除
 - README.md の修正
 
 ### v2.0.0（2019年7月5日）

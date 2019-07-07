@@ -9,7 +9,6 @@ minimist = require 'minimist' # Gulp で引数を解析
 IfPlugin = require 'if-webpack-plugin' # Webpack の 条件分岐
 UglifyJSPlugin = require 'uglifyjs-webpack-plugin' # Webpack の minify 設定
 HardSourcePlugin = require 'hard-source-webpack-plugin' # 中間キャッシュでビルド時間を短縮
-es3ifyWebpackPlugin = require 'es3ify-webpack-plugin-v2' # IE8 での Babel バグ修正
 
 #------------------------------------------------------
 # Load original module
@@ -86,10 +85,6 @@ config = {
     new HardSourcePlugin(
       # cacheDirectory: '.cache/hard-source/[confighash]'
     )
-    # IE8 での Babel バグ https://github.com/babel/babel/issues/2817
-    # 並び順によって無効化されてしまう https://github.com/babel/babel/issues/4168
-    # 以下は { default: obj } を { 'default': obj } に修正するプラグイン
-    new es3ifyWebpackPlugin()
   ]
   # Webpack 4 で minify の詳細設定するための記述
   optimization: {
