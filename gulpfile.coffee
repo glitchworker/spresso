@@ -783,7 +783,12 @@ browserSync = ->
       console.log '[\u001b[32mAPI Mock Server\u001b[0m] Serving files from: \u001b[35msrc' + paths.api.dest + '\u001b[0m'
     return
 
-# API Server
+#------------------------------------------------------
+# API server settings
+# APIサーバー設定
+#------------------------------------------------------
+
+# API Server Init
 apiServer = undefined
 apiServerInit = ->
   apiServer = jsonServer.create {
@@ -796,18 +801,14 @@ apiServerInit = ->
     }
   }
 
-#------------------------------------------------------
-# Monitoring task
-# 監視タスク
-#------------------------------------------------------
-
-# json-server watch & refresh
 api = ->
   src paths.api.watch
   .pipe apiServer.pipe()
 
-apiWatch = ->
-  watch paths.api.watch, series api # json ファイルが変更または追加されたらビルド出力
+#------------------------------------------------------
+# Monitoring task
+# 監視タスク
+#------------------------------------------------------
 
 # watch
 watchCommon = ->
@@ -835,6 +836,10 @@ watchSP = ->
   watch paths.sp.css.watch, series cssSP
   watch [paths.sp.js.plugin, paths.sp.js.javascript, paths.sp.js.coffee], series coffeeSP
   watch paths.sp.img.src, series imgCheckSP, imgCompileSP # img ファイルが変更または追加されたらビルド出力
+
+# watch api
+apiWatch = ->
+  watch paths.api.watch, series api # json ファイルが変更または追加されたらビルド出力
 
 #------------------------------------------------------
 # Declaring Each Task
