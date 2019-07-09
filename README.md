@@ -50,7 +50,7 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
 | ファイル名 | 説明 |
 |----|---|
 | /src/app.config.json | プロジェクト内共通の設定ファイル ※ネストは非対応 |
-| /tasks/gulp.config.coffee | gulp に関する設定ファイル |
+| /gulpfile.coffee | gulp に関する設定ファイル |
 | /tasks/webpack.config.base.coffee | webpack に関する設定ファイル |
 | /tasks/webpack.config.common.coffee | 共通の webpack に関する設定ファイル |
 | /tasks/webpack.config.rp.coffee | webpack に関する設定ファイル（Responsive） |
@@ -478,7 +478,6 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 	│           ├── index.ect
 	│           └── pages.json
 	└── tasks
-	    ├── gulp.config.coffee
 	    ├── script
 	    │   ├── getTime.coffee
 	    │   └── getTimeStamp.coffee
