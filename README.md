@@ -231,9 +231,9 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 | yarn run start | gulp | 開発サーバーを起動する |
 | yarn run start-stg | gulp --env staging | 開発サーバーをステージング状態で起動する |
 | yarn run start-prod | gulp --env production | 開発サーバーを本番状態で起動する |
-| yarn run start-rp | gulp watch-rp | 開発サーバーを起動する（Responsive） |
-| yarn run start-pc | gulp watch-pc | 開発サーバーを起動する（PC） |
-| yarn run start-sp | gulp watch-sp | 開発サーバーを起動する（SP） |
+| yarn run start-rp | gulp watchRP | 開発サーバーを起動する（Responsive） |
+| yarn run start-pc | gulp watchPC | 開発サーバーを起動する（PC） |
+| yarn run start-sp | gulp watchSP | 開発サーバーを起動する（SP） |
 
 ### build
 
@@ -242,17 +242,17 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
 | yarn run dev | gulp build | 開発用のファイルを出力 |
-| yarn run dev-rp | gulp build-rp | 開発用のファイルを出力（Responsive） |
-| yarn run dev-pc | gulp build-pc | 開発用のファイルを出力（PC） |
-| yarn run dev-sp | gulp build-sp | 開発用のファイルを出力（SP） |
+| yarn run dev-rp | gulp buildRP | 開発用のファイルを出力（Responsive） |
+| yarn run dev-pc | gulp buildPC | 開発用のファイルを出力（PC） |
+| yarn run dev-sp | gulp buildSP | 開発用のファイルを出力（SP） |
 | yarn run stg | gulp build --env staging | ステージング用のファイルを出力 |
-| yarn run stg-rp | gulp build-rp --env staging | ステージング用のファイルを出力（Responsive） |
-| yarn run stg-pc | gulp build-pc --env staging | ステージング用のファイルを出力（PC） |
-| yarn run stg-sp | gulp build-sp --env staging | ステージング用のファイルを出力（SP） |
+| yarn run stg-rp | gulp buildRP --env staging | ステージング用のファイルを出力（Responsive） |
+| yarn run stg-pc | gulp buildPC --env staging | ステージング用のファイルを出力（PC） |
+| yarn run stg-sp | gulp buildSP --env staging | ステージング用のファイルを出力（SP） |
 | yarn run prod | gulp build --env production | 本番用のファイルを出力 |
-| yarn run prod-rp | gulp build-rp --env production | 本番用のファイルを出力（Responsive） |
-| yarn run prod-pc | gulp build-pc --env production | 本番用のファイルを出力（PC） |
-| yarn run prod-sp | gulp build-sp --env production | 本番用のファイルを出力（SP） |
+| yarn run prod-rp | gulp buildRP --env production | 本番用のファイルを出力（Responsive） |
+| yarn run prod-pc | gulp buildPC --env production | 本番用のファイルを出力（PC） |
+| yarn run prod-sp | gulp buildSP --env production | 本番用のファイルを出力（SP） |
 
 ### diff / export
 
@@ -278,7 +278,7 @@ sass に依存してしまうので gulp-header を使い Gulp タスク内で�
 | Yarn コマンド | Gulp コマンド | 説明 |
 |----|---|---|
 | yarn run clean | gulp clean | ビルドフォルダを削除 |
-| yarn run clean-diff | gulp clean-archive | 差分フォルダを削除 |
+| yarn run clean-diff | gulp cleanArchive | 差分フォルダを削除 |
 
 ## 🌻 Structure
 
@@ -718,6 +718,14 @@ http://localhost:9000/api/users?q=fuga
 
 ## 🚀 Important Notices
 
+<u>**v2.1.0 から一部コマンド実行名が変更されました。**</u>
+
+> Gulp4 の exports 記法に変更したことにより一部タスク名が変更されました。  
+Gulp でのタスク実行時のみの変更なので Yarn や npm に関しては変更はございません。  
+また再帰的にディレクトリを呼びだしていた ```require-dir``` を使用すると  
+エラーが発生していたので ```gulp.config.coffee``` を削除いたしました。  
+上記に伴い内部処理を ```gulpfile.coffee``` の方に移行しました。
+
 <u>**v2.0.0 から Gulp4, Webpack4, Babel8 に変更したことにより大幅に処理が見直されました。**</u>
 
 > Gulp3 から Gulp4 に変更したことにより ```gulp.config.coffee``` の内部的処理が大幅に見直しました。  
@@ -762,6 +770,13 @@ http://localhost:9000/api/users?q=fuga
 ```output``` の項目に出力先のパスを入力することによって書き出されます。
 
 ## 🆙 Version History
+
+### v2.1.0（2019年7月9日）
+- Gulp 4 の exports 記法に完全に移行完了（task 廃止）
+- 上記に伴い、require-dir での依存関係でエラーが出ていたので廃止
+- ./tasks/ 配下の gulp.config.coffee を削除し gulpfile.coffee に処理を移行
+- package.json の scripts のタスク実行名変更 & require-dir を削除
+- README.md の修正
 
 ### v2.0.1（2019年7月7日）
 - Babel のバージョンが上がり es3ify-webpack-plugin-v2 が不要になったので削除
