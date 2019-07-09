@@ -35,6 +35,7 @@ webpackStream = require 'webpack-stream' # Gulp で Webpack を読み込む
 appConfig = require './src/app.config.json' # サイト共通設定
 update = do require './tasks/script/getTime' # 現在日時取得
 timestamp = do require './tasks/script/getTimeStamp' # 現在タイムスタンプ取得
+postCSSSortingConfig = './src/postcss-sorting.json' # PostCSS の ソート設定
 
 #------------------------------------------------------
 # Development & Production Environment Branch processing
@@ -391,7 +392,7 @@ cssRP = ->
     )
     require('css-mqpacker')
     require('postcss-sorting')(
-      require './src/postcss-sorting.json' # 並び順の設定ファイル
+      require postCSSSortingConfig # 並び順の設定ファイル
     )
   ]).on('error', $.util.log) # エラーでも止めない
   .pipe $.autoprefixer overrideBrowserslist: ['> 0%']
@@ -512,7 +513,7 @@ cssPC = ->
     )
     require('css-mqpacker')
     require('postcss-sorting')(
-      require './src/postcss-sorting.json' # 並び順の設定ファイル
+      require postCSSSortingConfig # 並び順の設定ファイル
     )
   ]).on('error', $.util.log) # エラーでも止めない
   .pipe $.autoprefixer overrideBrowserslist: ['> 0%']
@@ -632,7 +633,7 @@ cssSP = ->
     )
     require('css-mqpacker')
     require('postcss-sorting')(
-      require './src/postcss-sorting.json' # 並び順の設定ファイル
+      require postCSSSortingConfig # 並び順の設定ファイル
     )
   ]).on('error', $.util.log) # エラーでも止めない
   .pipe $.autoprefixer overrideBrowserslist: ['> 0%']
@@ -782,6 +783,19 @@ browserSync = ->
       console.log '[\u001b[32mAPI Mock Server\u001b[0m] Serving files from: \u001b[35msrc' + paths.api.dest + '\u001b[0m'
     return
 
+# API Server
+apiServer = undefined
+apiServerInit = ->
+  apiServer = jsonServer.create {
+    port: paths.api.port,
+    baseUrl: paths.api.dest,
+    static: paths.api.src,
+    verbosity: {
+      level: "error",
+      urlTracing: false
+    }
+  }
+
 #------------------------------------------------------
 # Monitoring task
 # 監視タスク
@@ -827,59 +841,51 @@ watchSP = ->
 # 各タスクの宣言
 #------------------------------------------------------
 
-# Responsive Task
+# Build Task - Responsive
 exports.buildRP = series libCopy, coffeeCompile, imgCheck, imgCompile, coffeeRP, imgCheckRP, imgCompileRP, ectRP, cssRP, removeFiles, importData
 
-# PC Task
+# Build Task - PC
 exports.buildPC = series libCopy, coffeeCompile, imgCheck, imgCompile, coffeePC, imgCheckPC, imgCompilePC, ectPC, cssPC, removeFiles, importData
 
-# SP Task
+# Build Task - SP
 exports.buildSP = series libCopy, coffeeCompile, imgCheck, imgCompile, coffeeSP, imgCheckSP, imgCompileSP, ectSP, cssSP, removeFiles, importData
 
-# Other Task
+# Clean Task
 exports.clean = clean
 exports.cleanSP = cleanSP
 exports.cleanArchive = series cleanTemp, cleanArchive
 
-# Differential Task
+# Import / Export Task
 exports.import = importData
 exports.export = exportData
-if appConfig.RESPONSIVE_TEMPLATE
-  exports.diff = series clean, cleanTemp, importData, libCopy, coffeeCompile, imgCheck, imgCompile, ectRP, cssRP, coffeeRP, imgCheckRP, imgCompileRP, tempData
-else
-  exports.diff = series clean, cleanTemp, importData, libCopy, coffeeCompile, imgCheck, imgCompile, ectPC, cssPC, coffeePC, imgCheckPC, imgCompilePC, ectSP, cssSP, coffeeSP, imgCheckSP, imgCompileSP, tempData
 
-# Monitoring Task
+# Watch Task
 exports.watchRP = watchRP
 exports.watchPC = watchPC
 exports.watchSP = watchSP
 
-# Local server Task
-if appConfig.API_SERVER
-  apiServer = jsonServer.create {
-    port: paths.api.port,
-    baseUrl: paths.api.dest,
-    static: paths.api.src,
-    verbosity: {
-      level: "error",
-      urlTracing: false
-    }
-  }
-
-# Default task
+# Static / Responsive Switch
 if appConfig.RESPONSIVE_TEMPLATE
-  # build
+  # All Build Task
   exports.build = series libCopy, coffeeCompile, imgCheck, imgCompile, coffeeRP, imgCheckRP, imgCompileRP, ectRP, cssRP, removeFiles, importData
-  # api
+  # diff Task
+  exports.diff = series clean, cleanTemp, importData, libCopy, coffeeCompile, imgCheck, imgCompile, ectRP, cssRP, coffeeRP, imgCheckRP, imgCompileRP, tempData
+  # Default Task
   if appConfig.API_SERVER
-   exports.default = parallel browserSync, watchRP, watchCommon, api, apiWatch
+    # API Server
+    exports.default = parallel browserSync, watchRP, watchCommon, apiServerInit, api, apiWatch
   else
-   exports.default = parallel browserSync, watchRP, watchCommon
+    # Normal Server
+    exports.default = parallel browserSync, watchRP, watchCommon
 else
-  # build
+  # All Build Task
   exports.build = series libCopy, coffeeCompile, coffeePC, imgCheckPC, imgCompilePC, coffeeSP, imgCheckSP, imgCompileSP, imgCheck, imgCompile, ectPC, cssPC, ectSP, cssSP, removeFiles, importData
-  # api
+  # diff Task
+  exports.diff = series clean, cleanTemp, importData, libCopy, coffeeCompile, imgCheck, imgCompile, ectPC, cssPC, coffeePC, imgCheckPC, imgCompilePC, ectSP, cssSP, coffeeSP, imgCheckSP, imgCompileSP, tempData
+  # Default Task
   if appConfig.API_SERVER
-    exports.default = parallel browserSync, watchPC, watchSP, watchCommon, api, apiWatch
+    # API Server
+    exports.default = parallel browserSync, watchPC, watchSP, watchCommon, apiServerInit, api, apiWatch
   else
+    # Normal Server
     exports.default = parallel browserSync, watchPC, watchSP, watchCommon
