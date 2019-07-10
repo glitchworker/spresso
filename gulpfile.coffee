@@ -691,7 +691,7 @@ apiServerInit = ->
     }
   }
 
-api = ->
+apiDirectory = ->
   src paths.api.watch
   .pipe apiServer.pipe()
 
@@ -785,7 +785,7 @@ watchSP = ->
 
 # watch api
 apiWatch = ->
-  watch paths.api.watch, api # json ファイルが変更または追加されたらビルド出力
+  watch paths.api.watch, apiDirectory # json ファイルが変更または追加されたらビルド出力
 
 #------------------------------------------------------
 # Declaring Each Task
@@ -824,7 +824,7 @@ if appConfig.RESPONSIVE_TEMPLATE
   # Default Task
   if appConfig.API_SERVER
     # API Server
-    exports.default = parallel browserSync, watchStart, watchRP, watchCommon, apiServerInit, api, apiWatch
+    exports.default = parallel browserSync, watchStart, watchRP, watchCommon, apiServerInit, apiDirectory, apiWatch
   else
     # Normal Server
     exports.default = parallel browserSync, watchStart, watchRP, watchCommon
@@ -836,7 +836,7 @@ else
   # Default Task
   if appConfig.API_SERVER
     # API Server
-    exports.default = parallel browserSync, watchStart, watchPC, watchSP, watchCommon, apiServerInit, api, apiWatch
+    exports.default = parallel browserSync, watchStart, watchPC, watchSP, watchCommon, apiServerInit, apiDirectory, apiWatch
   else
     # Normal Server
     exports.default = parallel browserSync, watchStart, watchPC, watchSP, watchCommon
