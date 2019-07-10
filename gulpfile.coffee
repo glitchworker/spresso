@@ -15,10 +15,8 @@ $ = do require 'gulp-load-plugins' # package.json からプラグインを自動
 fs = require 'fs' # ファイルやディレクトリの操作
 url = require 'url' # URL をパースする
 
-rimraf = require 'rimraf' # 単一ファイル / ディレクトリ削除
-del = require 'del' # 複数ファイル / ディレクトリ削除
+del = require 'del' # ファイル / ディレクトリ削除
 minimist = require 'minimist' # Gulp で引数を解析
-eventStream = require 'event-stream' # Gulp のイベントを取得する
 
 bs = require('browser-sync').create() # Web サーバー作成
 ssi = require 'connect-ssi' # SSI を有効化
@@ -206,34 +204,6 @@ commentsJs = [
 ].join('\n')
 
 #------------------------------------------------------
-# Get filepath Settings
-# ファイルパスを取得
-#------------------------------------------------------
-
-pathArray = []
-pathSearch = (dir, dirName) ->
-  # import で追加されたデータは削除対象外にする
-  jsonData = JSON.parse fs.readFileSync(paths.common.import.json)
-  jsonData.forEach (page, i) ->
-    pathArray.push '!'+ rootDir.htdocs + page.output + page.data
-  # src と htdocs フォルダの比較をする
-  eventStream.map (file, done) ->
-    filePath = $.slash(file.path)
-    fileDir = filePath.match(dir + '.*')[0]
-    if dirName == 'templates'
-      if appConfig.RESPONSIVE_TEMPLATE
-        fileReplace = fileDir.replace(rootDir.src + '/', paths.rp.dest).replace('/rp', '').replace('/templates', '')
-      else
-        fileReplace = fileDir.replace(rootDir.src + '/', paths.pc.dest).replace('/pc', '').replace('/templates', '')
-    else if dirName == 'images'
-      fileReplace = fileDir.replace(rootDir.src + '/', paths.pc.dest + '/' + rootDir.assets)
-    else if dirName == 'js' or dirName == 'css'
-      fileReplace = fileDir
-    pathArray.push '!' + fileReplace
-    done()
-    return
-
-#------------------------------------------------------
 # Convert absolute path to relative path
 # 絶対パスから相対パスに変換
 #------------------------------------------------------
@@ -298,19 +268,11 @@ coffeeCompile = ->
   .pipe dest paths.common.js.dest
   # JS を stream オプションでリアルタイムに反映
   .pipe bs.stream()
-  # # sourcemaps を本番ビルド時に削除する
-  # .pipe $.if isProduction, pathSearch(paths.common.js.dest, 'js').on 'end', (cb) ->
-  #   pathArray.unshift(paths.common.js.dest + '**/*.map')
-  #   return
 
 # img file check
 imgCheck = ->
   src paths.common.img.src
   .pipe $.plumber(plumberConfig)
-  # # src フォルダに存在しないファイルを htdocs から削除する
-  # .pipe pathSearch(rootDir.src + '/common/images/', 'images').on 'end', (cb) ->
-  #   pathArray.unshift(paths.common.img.dest + '**/*.*')
-  #   return
 
 # img optimize
 imgCompile = ->
@@ -358,12 +320,6 @@ ectRP = (done) ->
     .pipe dest paths.rp.dest
     # html を stream オプションでリアルタイムに反映
     .pipe bs.stream()
-    # # src フォルダに存在しないファイルを htdocs から削除する
-    # .pipe pathSearch(paths.rp.dest, 'templates').on 'end', (cb) ->
-    #   if i == jsonDataLength
-    #     pathArray.unshift('!' + paths.rp.dest + 'index.html')
-    #     pathArray.unshift(paths.rp.dest + '**/*.html')
-    #   return
   done()
 
 # sass compile process rp
@@ -402,10 +358,6 @@ cssRP = ->
   .pipe dest paths.rp.css.dest, if not isProduction then { sourcemaps: isSourcemapOutput }
   # CSS を stream オプションでリアルタイムに反映
   .pipe bs.stream()
-  # # sourcemaps を本番ビルド時に削除する
-  # .pipe $.if isProduction, pathSearch(paths.rp.css.dest, 'css').on 'end', (cb) ->
-  #   pathArray.unshift(paths.rp.css.dest + '**/*.map')
-  #   return
 
 # coffee compile process rp
 coffeeRP = ->
@@ -416,19 +368,11 @@ coffeeRP = ->
   .pipe dest paths.rp.js.dest
   # JS を stream オプションでリアルタイムに反映
   .pipe bs.stream()
-  # # sourcemaps を本番ビルド時に削除する
-  # .pipe $.if isProduction, pathSearch(paths.rp.js.dest, 'js').on 'end', (cb) ->
-  #   pathArray.unshift(paths.rp.js.dest + '**/*.map')
-  #   return
 
 # img check rp
 imgCheckRP = ->
   src paths.rp.img.src
   .pipe $.plumber(plumberConfig)
-  # # src フォルダに存在しないファイルを htdocs から削除する
-  # .pipe pathSearch(rootDir.src + '/rp/images/', 'images').on 'end', (cb) ->
-  #   pathArray.unshift(paths.rp.img.dest + '**/*.*')
-  #   return
 
 # img optimize rp
 imgCompileRP = ->
@@ -478,13 +422,6 @@ ectPC = (done) ->
     .pipe dest paths.pc.dest
     # html を stream オプションでリアルタイムに反映
     .pipe bs.stream()
-    # # src フォルダに存在しないファイルを htdocs から削除する
-    # .pipe pathSearch(paths.pc.dest, 'templates').on 'end', (cb) ->
-    #   if i == jsonDataLength
-    #     pathArray.unshift('!' + paths.pc.dest + 'index.html')
-    #     pathArray.unshift('!' + paths.sp.dest + '**/*.html')
-    #     pathArray.unshift(paths.pc.dest + '**/*.html')
-    #   return
   done()
 
 # sass compile process pc
@@ -523,10 +460,6 @@ cssPC = ->
   .pipe dest paths.pc.css.dest, if not isProduction then { sourcemaps: isSourcemapOutput }
   # CSS を stream オプションでリアルタイムに反映
   .pipe bs.stream()
-  # # sourcemaps を本番ビルド時に削除する
-  # .pipe $.if isProduction, pathSearch(paths.pc.css.dest, 'css').on 'end', (cb) ->
-  #   pathArray.unshift(paths.pc.css.dest + '**/*.map')
-  #   return
 
 # coffee compile process pc
 coffeePC = ->
@@ -537,19 +470,11 @@ coffeePC = ->
   .pipe dest paths.pc.js.dest
   # JS を stream オプションでリアルタイムに反映
   .pipe bs.stream()
-  # # sourcemaps を本番ビルド時に削除する
-  # .pipe $.if isProduction, pathSearch(paths.pc.js.dest, 'js').on 'end', (cb) ->
-  #   pathArray.unshift(paths.pc.js.dest + '**/*.map')
-  #   return
 
 # img check pc
 imgCheckPC = ->
   src paths.pc.img.src
   .pipe $.plumber(plumberConfig)
-  # # src フォルダに存在しないファイルを htdocs から削除する
-  # .pipe pathSearch(rootDir.src + '/pc/images/', 'images').on 'end', (cb) ->
-  #   pathArray.unshift(paths.pc.img.dest + '**/*.*')
-  #   return
 
 # img optimize pc
 imgCompilePC = ->
@@ -599,12 +524,6 @@ ectSP = (done) ->
     .pipe dest paths.sp.dest
     # html を stream オプションでリアルタイムに反映
     .pipe bs.stream()
-    # # src フォルダに存在しないファイルを htdocs から削除する
-    # .pipe pathSearch(paths.sp.dest, 'templates').on 'end', (cb) ->
-    #   if i == jsonDataLength
-    #     pathArray.unshift('!' + paths.sp.dest + 'index.html')
-    #     pathArray.unshift(paths.sp.dest + '**/*.html')
-    #   return
   done()
 
 # sass compile process sp
@@ -643,10 +562,6 @@ cssSP = ->
   .pipe dest paths.sp.css.dest, if not isProduction then { sourcemaps: isSourcemapOutput }
   # CSS を stream オプションでリアルタイムに反映
   .pipe bs.stream()
-  # # sourcemaps を本番ビルド時に削除する
-  # .pipe $.if isProduction, pathSearch(paths.sp.css.dest, 'css').on 'end', (cb) ->
-  #   pathArray.unshift(paths.sp.css.dest + '**/*.map')
-  #   return
 
 # coffee compile process sp
 coffeeSP = ->
@@ -657,19 +572,11 @@ coffeeSP = ->
   .pipe dest paths.sp.js.dest
   # JS を stream オプションでリアルタイムに反映
   .pipe bs.stream()
-  # # sourcemaps を本番ビルド時に削除する
-  # .pipe $.if isProduction, pathSearch(paths.sp.js.dest, 'js').on 'end', (cb) ->
-  #   pathArray.unshift(paths.sp.js.dest + '**/*.map')
-  #   return
 
 # img check sp
 imgCheckSP = ->
   src paths.sp.img.src
   .pipe $.plumber(plumberConfig)
-  # # src フォルダに存在しないファイルを htdocs から削除する
-  # .pipe pathSearch(rootDir.src + '/sp/images/', 'images').on 'end', (cb) ->
-  #   pathArray.unshift(paths.sp.img.dest + '**/*.*')
-  #   return
 
 # img optimize sp
 imgCompileSP = ->
@@ -687,26 +594,26 @@ imgCompileSP = ->
 
 # remove files
 removeFiles = (cb) ->
-  del pathArray, cb
+  del [ paths.rp.dest + '**/*.map' ], cb
 
 # clean
 clean = (cb) ->
   if appConfig.RESPONSIVE_TEMPLATE
-    rimraf paths.rp.dest, cb
+    del [ paths.rp.dest ], cb
   else
-    rimraf paths.pc.dest, cb
+    del [ paths.pc.dest ], cb
 
 # clean sp
 cleanSP = (cb) ->
-  rimraf paths.sp.dest, cb
+  del [ paths.sp.dest ], cb
 
 # clean temp
 cleanTemp = (cb) ->
-  rimraf paths.archive.temp, cb
+  del [ paths.archive.temp ], cb
 
 # clean archive
 cleanArchive = (cb) ->
-  rimraf paths.archive.dest, cb
+  del [ paths.archive.dest ], cb
 
 #------------------------------------------------------
 # Differential data extraction
@@ -806,8 +713,8 @@ api = ->
   .pipe apiServer.pipe()
 
 #------------------------------------------------------
-# Monitoring task
-# 監視タスク
+# File Monitoring task - Chokidar instance
+# ファイル監視タスク
 #------------------------------------------------------
 
 watcher = undefined
@@ -815,62 +722,56 @@ watcher = undefined
 watchStart = (done) ->
   watcher = watch [rootDir.src, rootDir.htdocs]
 
-  watcher.on 'change', (path, stats) ->
-    filePath = $.slash(path)
-    fileSplit = filePath.split '/'
-    if fileSplit[1] is 'import'
+  # watcher.on 'change', (path, stats) ->
+  #   filePath = $.slash(path)
+  #   fileSplit = filePath.split '/'
+  #   if fileSplit[1] isnt 'import'
+  #     console.log 'change: ' + filePath
+  #   return
 
-    else
-      console.log 'change: ' + filePath
-    return
-
-  watcher.on 'add', (path, stats) ->
-    filePath = $.slash(path)
-    fileSplit = filePath.split '/'
-    if fileSplit[1] is 'import'
-
-    else
-      fileName = filePath.replace(rootDir.src + '/', paths.pc.dest + rootDir.assets)
-      console.log 'add: ' + fileName
-    return
+  # watcher.on 'add', (path, stats) ->
+  #   filePath = $.slash(path)
+  #   fileSplit = filePath.split '/'
+  #   if fileSplit[1] isnt 'import'
+  #     fileName = filePath.replace(rootDir.src + '/', paths.pc.dest + rootDir.assets)
+  #     console.log 'add: ' + fileName
+  #   return
 
   watcher.on 'unlink', (path, stats) ->
     filePath = $.slash(path)
     fileSplit = filePath.split '/'
-    if fileSplit[1] is 'import'
-
-    else
+    if fileSplit[1] isnt 'import'
       fileName = filePath.replace(rootDir.src + '/', paths.pc.dest + rootDir.assets)
-      console.log 'del: ' + fileName
-      del [fileName]
+      # console.log 'del: ' + fileName
+      del [ fileName ]
     return
 
-  watcher.on 'addDir', (path, stats) ->
-    filePath = $.slash(path)
-    fileSplit = filePath.split '/'
-    if fileSplit[1] is 'import'
-
-    else
-      fileName = filePath.replace(rootDir.src + '/', paths.pc.dest + rootDir.assets)
-      console.log 'addDir: ' + fileName
-    return
+  # watcher.on 'addDir', (path, stats) ->
+  #   filePath = $.slash(path)
+  #   fileSplit = filePath.split '/'
+  #   if fileSplit[1] isnt 'import'
+  #     fileName = filePath.replace(rootDir.src + '/', paths.pc.dest + rootDir.assets)
+  #     console.log 'addDir: ' + fileName
+  #   return
 
   watcher.on 'unlinkDir', (path, stats) ->
     filePath = $.slash(path)
     fileSplit = filePath.split '/'
-    if fileSplit[1] is 'import'
-
-    else
+    if fileSplit[1] isnt 'import'
       fileName = filePath.replace(rootDir.src + '/', paths.pc.dest + rootDir.assets)
-      console.log 'delDir: ' + fileName
-      del fileName
+      # console.log 'delDir: ' + fileName
+      del [ fileName ]
     return
-
   done()
 
 watchClose = (done) ->
   watcher.close()
   done()
+
+#------------------------------------------------------
+# Monitoring task
+# 監視タスク
+#------------------------------------------------------
 
 # watch
 watchCommon = ->
@@ -909,13 +810,13 @@ apiWatch = ->
 #------------------------------------------------------
 
 # Build Task - Responsive
-exports.buildRP = series watchStart, libCopy, coffeeCompile, imgCheck, imgCompile, coffeeRP, imgCheckRP, imgCompileRP, ectRP, cssRP, removeFiles, importData, watchClose
+exports.buildRP = series watchStart, removeFiles, libCopy, coffeeCompile, imgCheck, imgCompile, coffeeRP, imgCheckRP, imgCompileRP, ectRP, cssRP, importData, watchClose
 
 # Build Task - PC
-exports.buildPC = series watchStart, libCopy, coffeeCompile, imgCheck, imgCompile, coffeePC, imgCheckPC, imgCompilePC, ectPC, cssPC, removeFiles, importData, watchClose
+exports.buildPC = series watchStart, removeFiles, libCopy, coffeeCompile, imgCheck, imgCompile, coffeePC, imgCheckPC, imgCompilePC, ectPC, cssPC, importData, watchClose
 
 # Build Task - SP
-exports.buildSP = series watchStart, libCopy, coffeeCompile, imgCheck, imgCompile, coffeeSP, imgCheckSP, imgCompileSP, ectSP, cssSP, removeFiles, importData, watchClose
+exports.buildSP = series watchStart, removeFiles, libCopy, coffeeCompile, imgCheck, imgCompile, coffeeSP, imgCheckSP, imgCompileSP, ectSP, cssSP, importData, watchClose
 
 # Clean Task
 exports.clean = clean
@@ -934,7 +835,7 @@ exports.watchSP = watchSP
 # Static / Responsive Switch
 if appConfig.RESPONSIVE_TEMPLATE
   # All Build Task
-  exports.build = series watchStart, libCopy, coffeeCompile, imgCheck, imgCompile, coffeeRP, imgCheckRP, imgCompileRP, ectRP, cssRP, removeFiles, importData, watchClose
+  exports.build = series watchStart, removeFiles, libCopy, coffeeCompile, imgCheck, imgCompile, coffeeRP, imgCheckRP, imgCompileRP, ectRP, cssRP, importData, watchClose
   # diff Task
   exports.diff = series clean, cleanTemp, importData, libCopy, coffeeCompile, imgCheck, imgCompile, ectRP, cssRP, coffeeRP, imgCheckRP, imgCompileRP, tempData
   # Default Task
@@ -946,7 +847,7 @@ if appConfig.RESPONSIVE_TEMPLATE
     exports.default = parallel browserSync, watchStart, watchRP, watchCommon
 else
   # All Build Task
-  exports.build = series watchStart, libCopy, coffeeCompile, coffeePC, imgCheckPC, imgCompilePC, coffeeSP, imgCheckSP, imgCompileSP, imgCheck, imgCompile, ectPC, cssPC, ectSP, cssSP, removeFiles, importData, watchClose
+  exports.build = series watchStart, removeFiles, libCopy, coffeeCompile, coffeePC, imgCheckPC, imgCompilePC, coffeeSP, imgCheckSP, imgCompileSP, imgCheck, imgCompile, ectPC, cssPC, ectSP, cssSP, importData, watchClose
   # diff Task
   exports.diff = series clean, cleanTemp, importData, libCopy, coffeeCompile, imgCheck, imgCompile, ectPC, cssPC, coffeePC, imgCheckPC, imgCompilePC, ectSP, cssSP, coffeeSP, imgCheckSP, imgCompileSP, tempData
   # Default Task
