@@ -243,43 +243,38 @@ importData = (done) ->
   jsonData.forEach (page, i) ->
     if page.TYPE == 'dir'
       src rootDir.src + '/import/' + page.DATA + '/**/*', { allowEmpty: true }
-      .pipe $.plumber(plumberConfig)
-      .pipe $.changed(page.OUTPUT, { hasChanged: $.changed.compareContents })
+      .pipe $.plumber plumberConfig
+      .pipe $.changed page.OUTPUT, { hasChanged: $.changed.compareContents }
       .pipe dest rootDir.htdocs + '/' + page.OUTPUT
     else
       src rootDir.src + '/import/' + page.DATA, { allowEmpty: true }
-      .pipe $.plumber(plumberConfig)
-      .pipe $.changed(page.OUTPUT, { hasChanged: $.changed.compareContents })
+      .pipe $.plumber plumberConfig
+      .pipe $.changed page.OUTPUT, { hasChanged: $.changed.compareContents }
       .pipe dest rootDir.htdocs + '/' + page.OUTPUT
   done()
 
 # lib copy process
 libCopy = ->
   src paths.common.libCopy.lib
-  .pipe $.changed(paths.common.libCopy.dest)
+  .pipe $.changed paths.common.libCopy.dest
   .pipe dest paths.common.libCopy.dest
 
 # coffee compile process
-coffeeCompile = ->
+coffeeCommon = ->
   src([paths.common.js.plugin, paths.common.js.javascript, paths.common.js.coffee])
-  .pipe $.plumber(plumberConfig)
+  .pipe $.plumber plumberConfig
   .pipe webpackStream require('./tasks/webpack.config.common.coffee'), webpack
   .pipe $.if isProduction, $.header(commentsJs, pkg: appConfig, filename: '共通スクリプト')
   .pipe dest paths.common.js.dest
   # JS を stream オプションでリアルタイムに反映
   .pipe bs.stream()
 
-# img file check
-imgCheck = ->
-  src paths.common.img.src
-  .pipe $.plumber(plumberConfig)
-
 # img optimize
-imgCompile = ->
+imgCommon = ->
   src paths.common.img.src
-  .pipe $.plumber(plumberConfig)
+  .pipe $.plumber plumberConfig
   # 画像に変更がない場合、出力しない
-  .pipe $.changed(paths.common.img.dest, { hasChanged: $.changed.compareContents })
+  .pipe $.changed paths.common.img.dest, { hasChanged: $.changed.compareContents }
   # .pipe $.imagemin()
   .pipe dest paths.common.img.dest
 
@@ -294,7 +289,7 @@ ectRP = (done) ->
   jsonDataLength = Object.keys(jsonData).length - 1
   jsonData.forEach (page, i) ->
     src rootDir.src + '/rp/templates/' + page.TEMPLATE_ECT + '.ect'
-    .pipe $.plumber(plumberConfig)
+    .pipe $.plumber plumberConfig
     # ect で JSON ファイルを変数に読み込む
     .pipe $.data (file)->
       staticData = page
@@ -325,7 +320,7 @@ ectRP = (done) ->
 # sass compile process rp
 cssRP = ->
   src paths.rp.css.sass, { sourcemaps: isSourcemap }
-  .pipe $.plumber(plumberConfig)
+  .pipe $.plumber plumberConfig
   # gulp-header を使用して JSON ファイルを sass 変数に読み込む
   .pipe $.header(
     '$BASE_SITE_URL: "' + appConfig.BASE_SITE_URL + '";\n' +
@@ -362,24 +357,19 @@ cssRP = ->
 # coffee compile process rp
 coffeeRP = ->
   src([paths.rp.js.plugin, paths.rp.js.javascript, paths.rp.js.coffee])
-  .pipe $.plumber(plumberConfig)
+  .pipe $.plumber plumberConfig
   .pipe webpackStream require('./tasks/webpack.config.rp.coffee'), webpack
   .pipe $.if isProduction, $.header(commentsJs, pkg: appConfig, filename: 'メインスクリプト')
   .pipe dest paths.rp.js.dest
   # JS を stream オプションでリアルタイムに反映
   .pipe bs.stream()
 
-# img check rp
-imgCheckRP = ->
-  src paths.rp.img.src
-  .pipe $.plumber(plumberConfig)
-
 # img optimize rp
-imgCompileRP = ->
+imgRP = ->
   src paths.rp.img.src
-  .pipe $.plumber(plumberConfig)
+  .pipe $.plumber plumberConfig
   # 画像に変更がない場合、出力しない
-  .pipe $.changed(paths.rp.img.dest, { hasChanged: $.changed.compareContents })
+  .pipe $.changed paths.rp.img.dest, { hasChanged: $.changed.compareContents }
   # .pipe $.imagemin()
   .pipe dest paths.rp.img.dest
 
@@ -394,7 +384,7 @@ ectPC = (done) ->
   jsonDataLength = Object.keys(jsonData).length - 1
   jsonData.forEach (page, i) ->
     src rootDir.src + '/pc/templates/' + page.TEMPLATE_ECT + '.ect'
-    .pipe $.plumber(plumberConfig)
+    .pipe $.plumber plumberConfig
     # ect で JSON ファイルを変数に読み込む
     .pipe $.data (file)->
       staticData = page
@@ -427,7 +417,7 @@ ectPC = (done) ->
 # sass compile process pc
 cssPC = ->
   src paths.pc.css.sass, { sourcemaps: isSourcemap }
-  .pipe $.plumber(plumberConfig)
+  .pipe $.plumber plumberConfig
   # gulp-header を使用して JSON ファイルを sass 変数に読み込む
   .pipe $.header(
     '$BASE_SITE_URL: "' + appConfig.BASE_SITE_URL + '";\n' +
@@ -464,24 +454,19 @@ cssPC = ->
 # coffee compile process pc
 coffeePC = ->
   src([paths.pc.js.plugin, paths.pc.js.javascript, paths.pc.js.coffee])
-  .pipe $.plumber(plumberConfig)
+  .pipe $.plumber plumberConfig
   .pipe webpackStream require('./tasks/webpack.config.pc.coffee'), webpack
   .pipe $.if isProduction, $.header(commentsJs, pkg: appConfig, filename: 'メインスクリプト')
   .pipe dest paths.pc.js.dest
   # JS を stream オプションでリアルタイムに反映
   .pipe bs.stream()
 
-# img check pc
-imgCheckPC = ->
-  src paths.pc.img.src
-  .pipe $.plumber(plumberConfig)
-
 # img optimize pc
-imgCompilePC = ->
+imgPC = ->
   src paths.pc.img.src
-  .pipe $.plumber(plumberConfig)
+  .pipe $.plumber plumberConfig
   # 画像に変更がない場合、出力しない
-  .pipe $.changed(paths.pc.img.dest, { hasChanged: $.changed.compareContents })
+  .pipe $.changed paths.pc.img.dest, { hasChanged: $.changed.compareContents }
   # .pipe $.imagemin()
   .pipe dest paths.pc.img.dest
 
@@ -496,7 +481,7 @@ ectSP = (done) ->
   jsonDataLength = Object.keys(jsonData).length - 1
   jsonData.forEach (page, i) ->
     src rootDir.src + '/sp/templates/' + page.TEMPLATE_ECT + '.ect'
-    .pipe $.plumber(plumberConfig)
+    .pipe $.plumber plumberConfig
     # ect で JSON ファイルを変数に読み込む
     .pipe $.data (file)->
       staticData = page
@@ -529,7 +514,7 @@ ectSP = (done) ->
 # sass compile process sp
 cssSP = ->
   src paths.sp.css.sass, { sourcemaps: isSourcemap }
-  .pipe $.plumber(plumberConfig)
+  .pipe $.plumber plumberConfig
   # gulp-header を使用して JSON ファイルを sass 変数に読み込む
   .pipe $.header(
     '$BASE_SITE_URL: "' + appConfig.BASE_SITE_URL + '";\n' +
@@ -566,24 +551,19 @@ cssSP = ->
 # coffee compile process sp
 coffeeSP = ->
   src([paths.sp.js.plugin, paths.sp.js.javascript, paths.sp.js.coffee])
-  .pipe $.plumber(plumberConfig)
+  .pipe $.plumber plumberConfig
   .pipe webpackStream require('./tasks/webpack.config.sp.coffee'), webpack
   .pipe $.if isProduction, $.header(commentsJs, pkg: appConfig, filename: 'メインスクリプト')
   .pipe dest paths.sp.js.dest
   # JS を stream オプションでリアルタイムに反映
   .pipe bs.stream()
 
-# img check sp
-imgCheckSP = ->
-  src paths.sp.img.src
-  .pipe $.plumber(plumberConfig)
-
 # img optimize sp
-imgCompileSP = ->
+imgSP = ->
   src paths.sp.img.src
-  .pipe $.plumber(plumberConfig)
+  .pipe $.plumber plumberConfig
   # 画像に変更がない場合、出力しない
-  .pipe $.changed(paths.sp.img.dest, { hasChanged: $.changed.compareContents })
+  .pipe $.changed paths.sp.img.dest, { hasChanged: $.changed.compareContents }
   # .pipe $.imagemin()
   .pipe dest paths.sp.img.dest
 
@@ -623,7 +603,7 @@ cleanArchive = (cb) ->
 # temp process
 tempData = ->
   src paths.archive.src
-  .pipe $.plumber(plumberConfig)
+  .pipe $.plumber plumberConfig
   # htdocs を temp にコピー
   .pipe dest paths.archive.temp
 
@@ -637,11 +617,11 @@ exportData = ->
   m = date.getMinutes()
   s = date.getSeconds()
   src paths.archive.src
-  .pipe $.plumber(plumberConfig)
+  .pipe $.plumber plumberConfig
   # Gulp 4 になりディレクトリが空の時にエラーが発生していたのを修正
   .pipe $.if(((f) ->
     !f.isDirectory()
-  ), $.changed(paths.archive.temp, hasChanged: $.changed.compareContents))
+  ), $.changed paths.archive.temp, hasChanged: $.changed.compareContents)
   # 全ファイルをコピーするが、空フォルダは出力しない
   .pipe $.ignore.include({ isFile: true })
   # htdocs と temp を比較し htdocs に変更があれば差分データを zip に圧縮して出力
@@ -742,7 +722,7 @@ watchStart = (done) ->
     fileSplit = filePath.split '/'
     if fileSplit[1] isnt 'import'
       fileName = filePath.replace(rootDir.src + '/', paths.pc.dest + rootDir.assets)
-      # console.log 'del: ' + fileName
+      console.log 'del: ' + fileName
       del [ fileName ]
     return
 
@@ -759,7 +739,7 @@ watchStart = (done) ->
     fileSplit = filePath.split '/'
     if fileSplit[1] isnt 'import'
       fileName = filePath.replace(rootDir.src + '/', paths.pc.dest + rootDir.assets)
-      # console.log 'delDir: ' + fileName
+      console.log 'delDir: ' + fileName
       del [ fileName ]
     return
   done()
@@ -775,34 +755,34 @@ watchClose = (done) ->
 
 # watch
 watchCommon = ->
-  watch paths.common.import.json, series importData
-  watch [paths.common.js.plugin, paths.common.js.javascript, paths.common.js.coffee], series coffeeCompile
-  watch paths.common.img.src, series imgCheck, imgCompile # img ファイルが変更または追加されたらビルド出力
+  watch paths.common.import.json, importData
+  watch [paths.common.js.plugin, paths.common.js.javascript, paths.common.js.coffee], coffeeCommon
+  watch paths.common.img.src, imgCommon # img ファイルが変更または追加されたらビルド出力
 
 # watch rp
 watchRP = ->
-  watch [paths.rp.ect.watch, paths.rp.ect.json], series ectRP
-  watch paths.rp.css.watch, series cssRP
-  watch [paths.rp.js.plugin, paths.rp.js.javascript, paths.rp.js.coffee], series coffeeRP
-  watch paths.rp.img.src, series imgCheckRP, imgCompileRP # img ファイルが変更または追加されたらビルド出力
+  watch [paths.rp.ect.watch, paths.rp.ect.json], ectRP
+  watch paths.rp.css.watch, cssRP
+  watch [paths.rp.js.plugin, paths.rp.js.javascript, paths.rp.js.coffee], coffeeRP
+  watch paths.rp.img.src, imgRP # img ファイルが変更または追加されたらビルド出力
 
 # watch pc
 watchPC = ->
-  watch [paths.pc.ect.watch, paths.pc.ect.json], series ectPC
-  watch paths.pc.css.watch, series cssPC
-  watch [paths.pc.js.plugin, paths.pc.js.javascript, paths.pc.js.coffee], series coffeePC
-  watch paths.pc.img.src, series imgCheckPC, imgCompilePC # img ファイルが変更または追加されたらビルド出力
+  watch [paths.pc.ect.watch, paths.pc.ect.json], ectPC
+  watch paths.pc.css.watch, cssPC
+  watch [paths.pc.js.plugin, paths.pc.js.javascript, paths.pc.js.coffee], coffeePC
+  watch paths.pc.img.src, imgPC # img ファイルが変更または追加されたらビルド出力
 
 # watch sp
 watchSP = ->
-  watch [paths.sp.ect.watch, paths.sp.ect.json], series ectSP
-  watch paths.sp.css.watch, series cssSP
-  watch [paths.sp.js.plugin, paths.sp.js.javascript, paths.sp.js.coffee], series coffeeSP
-  watch paths.sp.img.src, series imgCheckSP, imgCompileSP # img ファイルが変更または追加されたらビルド出力
+  watch [paths.sp.ect.watch, paths.sp.ect.json], ectSP
+  watch paths.sp.css.watch, cssSP
+  watch [paths.sp.js.plugin, paths.sp.js.javascript, paths.sp.js.coffee], coffeeSP
+  watch paths.sp.img.src, imgSP # img ファイルが変更または追加されたらビルド出力
 
 # watch api
 apiWatch = ->
-  watch paths.api.watch, series api # json ファイルが変更または追加されたらビルド出力
+  watch paths.api.watch, api # json ファイルが変更または追加されたらビルド出力
 
 #------------------------------------------------------
 # Declaring Each Task
@@ -810,13 +790,13 @@ apiWatch = ->
 #------------------------------------------------------
 
 # Build Task - Responsive
-exports.buildRP = series watchStart, removeFiles, libCopy, coffeeCompile, imgCheck, imgCompile, coffeeRP, imgCheckRP, imgCompileRP, ectRP, cssRP, importData, watchClose
+exports.buildRP = series watchStart, removeFiles, libCopy, coffeeCommon, imgCommon, coffeeRP, imgRP, ectRP, cssRP, importData, watchClose
 
 # Build Task - PC
-exports.buildPC = series watchStart, removeFiles, libCopy, coffeeCompile, imgCheck, imgCompile, coffeePC, imgCheckPC, imgCompilePC, ectPC, cssPC, importData, watchClose
+exports.buildPC = series watchStart, removeFiles, libCopy, coffeeCommon, imgCommon, coffeePC, imgPC, ectPC, cssPC, importData, watchClose
 
 # Build Task - SP
-exports.buildSP = series watchStart, removeFiles, libCopy, coffeeCompile, imgCheck, imgCompile, coffeeSP, imgCheckSP, imgCompileSP, ectSP, cssSP, importData, watchClose
+exports.buildSP = series watchStart, removeFiles, libCopy, coffeeCommon, imgCommon, coffeeSP, imgSP, ectSP, cssSP, importData, watchClose
 
 # Clean Task
 exports.clean = clean
@@ -835,9 +815,9 @@ exports.watchSP = watchSP
 # Static / Responsive Switch
 if appConfig.RESPONSIVE_TEMPLATE
   # All Build Task
-  exports.build = series watchStart, removeFiles, libCopy, coffeeCompile, imgCheck, imgCompile, coffeeRP, imgCheckRP, imgCompileRP, ectRP, cssRP, importData, watchClose
+  exports.build = series watchStart, removeFiles, libCopy, coffeeCommon, imgCommon, coffeeRP, imgRP, ectRP, cssRP, importData, watchClose
   # diff Task
-  exports.diff = series clean, cleanTemp, importData, libCopy, coffeeCompile, imgCheck, imgCompile, ectRP, cssRP, coffeeRP, imgCheckRP, imgCompileRP, tempData
+  exports.diff = series clean, cleanTemp, importData, libCopy, coffeeCommon, imgCommon, ectRP, cssRP, coffeeRP, imgRP, tempData
   # Default Task
   if appConfig.API_SERVER
     # API Server
@@ -847,9 +827,9 @@ if appConfig.RESPONSIVE_TEMPLATE
     exports.default = parallel browserSync, watchStart, watchRP, watchCommon
 else
   # All Build Task
-  exports.build = series watchStart, removeFiles, libCopy, coffeeCompile, coffeePC, imgCheckPC, imgCompilePC, coffeeSP, imgCheckSP, imgCompileSP, imgCheck, imgCompile, ectPC, cssPC, ectSP, cssSP, importData, watchClose
+  exports.build = series watchStart, removeFiles, libCopy, coffeeCommon, coffeePC, imgPC, coffeeSP, imgSP, imgCommon, ectPC, cssPC, ectSP, cssSP, importData, watchClose
   # diff Task
-  exports.diff = series clean, cleanTemp, importData, libCopy, coffeeCompile, imgCheck, imgCompile, ectPC, cssPC, coffeePC, imgCheckPC, imgCompilePC, ectSP, cssSP, coffeeSP, imgCheckSP, imgCompileSP, tempData
+  exports.diff = series clean, cleanTemp, importData, libCopy, coffeeCommon, imgCommon, ectPC, cssPC, coffeePC, imgPC, ectSP, cssSP, coffeeSP, imgSP, tempData
   # Default Task
   if appConfig.API_SERVER
     # API Server

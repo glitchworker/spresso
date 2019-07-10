@@ -49,13 +49,13 @@ gulp / ect / sass ( scss ) / webpack (coffeescript)
 
 | ファイル名 | 説明 |
 |----|---|
-| /src/app.config.json | プロジェクト内共通の設定ファイル ※ネストは非対応 |
 | /gulpfile.coffee | gulp に関する設定ファイル |
 | /tasks/webpack.config.base.coffee | webpack に関する設定ファイル |
 | /tasks/webpack.config.common.coffee | 共通の webpack に関する設定ファイル |
 | /tasks/webpack.config.rp.coffee | webpack に関する設定ファイル（Responsive） |
 | /tasks/webpack.config.pc.coffee | webpack に関する設定ファイル（PC） |
 | /tasks/webpack.config.sp.coffee | webpack に関する設定ファイル（SP） |
+| /src/app.config.json | プロジェクト内共通の設定ファイル ※ネストは非対応 |
 
 #### app.config.json
 
@@ -772,7 +772,7 @@ Gulp でのタスク実行時のみの変更なので Yarn や npm に関して�
 
 ### v2.1.1（2019年7月10日）
 - ファイルの存在チェックを独自処理の pathSearch から Gulp 標準機能の Chokidar instance での watch 方法に変更
-- package.json の rimraf, event-stream を削除
+- package.json の rimraf, event-stream, gulp-cli を削除
 - package.json の @babel/core, @babel/preset-env を更新
 - README.md の修正
 
