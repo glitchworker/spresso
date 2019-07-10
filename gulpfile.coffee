@@ -33,7 +33,6 @@ webpackStream = require 'webpack-stream' # Gulp で Webpack を読み込む
 appConfig = require './src/app.config.json' # サイト共通設定
 update = do require './tasks/script/getTime' # 現在日時取得
 timestamp = do require './tasks/script/getTimeStamp' # 現在タイムスタンプ取得
-postCSSSortingConfig = './src/postcss-sorting.json' # PostCSS の ソート設定
 
 #------------------------------------------------------
 # Development & Production Environment Branch processing
@@ -89,6 +88,7 @@ rootDir =
   assets: appConfig.ASSETS_DIR
   archive: 'archives'
   temp: 'temp'
+  tasks: 'tasks'
 
 paths =
   common:
@@ -175,6 +175,15 @@ paths =
     src: './' + rootDir.src + '/api/'
     watch: rootDir.src + '/api/**/*.json'
     dest: '/api'
+
+config =
+  webpack:
+    common: './' + rootDir.tasks + '/webpack.config.common.coffee'
+    rp: './' + rootDir.tasks + '/webpack.config.rp.coffee'
+    pc: './' + rootDir.tasks + '/webpack.config.pc.coffee'
+    sp: './' + rootDir.tasks + '/webpack.config.sp.coffee'
+  postcss:
+    sorting: './' + rootDir.src + '/postcss-sorting.json' # PostCSS の ソート設定
 
 #------------------------------------------------------
 # Comment information Settings
@@ -263,7 +272,7 @@ libCopy = ->
 coffeeCommon = ->
   src([paths.common.js.plugin, paths.common.js.javascript, paths.common.js.coffee])
   .pipe $.plumber plumberConfig
-  .pipe webpackStream require('./tasks/webpack.config.common.coffee'), webpack
+  .pipe webpackStream require(config.webpack.common), webpack
   .pipe $.if isProduction, $.header(commentsJs, pkg: appConfig, filename: '共通スクリプト')
   .pipe dest paths.common.js.dest
   # JS を stream オプションでリアルタイムに反映
@@ -275,7 +284,6 @@ imgCommon = ->
   .pipe $.plumber plumberConfig
   # 画像に変更がない場合、出力しない
   .pipe $.changed paths.common.img.dest, { hasChanged: $.changed.compareContents }
-  # .pipe $.imagemin()
   .pipe dest paths.common.img.dest
 
 #------------------------------------------------------
@@ -343,7 +351,7 @@ cssRP = ->
     )
     require('css-mqpacker')
     require('postcss-sorting')(
-      require postCSSSortingConfig # 並び順の設定ファイル
+      require config.postcss.sorting # 並び順の設定ファイル
     )
   ]).on('error', $.util.log) # エラーでも止めない
   .pipe $.autoprefixer overrideBrowserslist: ['> 0%']
@@ -358,7 +366,7 @@ cssRP = ->
 coffeeRP = ->
   src([paths.rp.js.plugin, paths.rp.js.javascript, paths.rp.js.coffee])
   .pipe $.plumber plumberConfig
-  .pipe webpackStream require('./tasks/webpack.config.rp.coffee'), webpack
+  .pipe webpackStream require(config.webpack.rp), webpack
   .pipe $.if isProduction, $.header(commentsJs, pkg: appConfig, filename: 'メインスクリプト')
   .pipe dest paths.rp.js.dest
   # JS を stream オプションでリアルタイムに反映
@@ -370,7 +378,6 @@ imgRP = ->
   .pipe $.plumber plumberConfig
   # 画像に変更がない場合、出力しない
   .pipe $.changed paths.rp.img.dest, { hasChanged: $.changed.compareContents }
-  # .pipe $.imagemin()
   .pipe dest paths.rp.img.dest
 
 #------------------------------------------------------
@@ -440,7 +447,7 @@ cssPC = ->
     )
     require('css-mqpacker')
     require('postcss-sorting')(
-      require postCSSSortingConfig # 並び順の設定ファイル
+      require config.postcss.sorting # 並び順の設定ファイル
     )
   ]).on('error', $.util.log) # エラーでも止めない
   .pipe $.autoprefixer overrideBrowserslist: ['> 0%']
@@ -455,7 +462,7 @@ cssPC = ->
 coffeePC = ->
   src([paths.pc.js.plugin, paths.pc.js.javascript, paths.pc.js.coffee])
   .pipe $.plumber plumberConfig
-  .pipe webpackStream require('./tasks/webpack.config.pc.coffee'), webpack
+  .pipe webpackStream require(config.webpack.pc), webpack
   .pipe $.if isProduction, $.header(commentsJs, pkg: appConfig, filename: 'メインスクリプト')
   .pipe dest paths.pc.js.dest
   # JS を stream オプションでリアルタイムに反映
@@ -467,7 +474,6 @@ imgPC = ->
   .pipe $.plumber plumberConfig
   # 画像に変更がない場合、出力しない
   .pipe $.changed paths.pc.img.dest, { hasChanged: $.changed.compareContents }
-  # .pipe $.imagemin()
   .pipe dest paths.pc.img.dest
 
 #------------------------------------------------------
@@ -537,7 +543,7 @@ cssSP = ->
     )
     require('css-mqpacker')
     require('postcss-sorting')(
-      require postCSSSortingConfig # 並び順の設定ファイル
+      require config.postcss.sorting # 並び順の設定ファイル
     )
   ]).on('error', $.util.log) # エラーでも止めない
   .pipe $.autoprefixer overrideBrowserslist: ['> 0%']
@@ -552,7 +558,7 @@ cssSP = ->
 coffeeSP = ->
   src([paths.sp.js.plugin, paths.sp.js.javascript, paths.sp.js.coffee])
   .pipe $.plumber plumberConfig
-  .pipe webpackStream require('./tasks/webpack.config.sp.coffee'), webpack
+  .pipe webpackStream require(config.webpack.sp), webpack
   .pipe $.if isProduction, $.header(commentsJs, pkg: appConfig, filename: 'メインスクリプト')
   .pipe dest paths.sp.js.dest
   # JS を stream オプションでリアルタイムに反映
@@ -564,7 +570,6 @@ imgSP = ->
   .pipe $.plumber plumberConfig
   # 画像に変更がない場合、出力しない
   .pipe $.changed paths.sp.img.dest, { hasChanged: $.changed.compareContents }
-  # .pipe $.imagemin()
   .pipe dest paths.sp.img.dest
 
 #------------------------------------------------------
@@ -618,12 +623,10 @@ exportData = ->
   s = date.getSeconds()
   src paths.archive.src
   .pipe $.plumber plumberConfig
-  # Gulp 4 になりディレクトリが空の時にエラーが発生していたのを修正
-  .pipe $.if(((f) ->
-    !f.isDirectory()
-  ), $.changed paths.archive.temp, hasChanged: $.changed.compareContents)
   # 全ファイルをコピーするが、空フォルダは出力しない
-  .pipe $.ignore.include({ isFile: true })
+  .pipe $.ignore.include { isFile: true }
+  # ファイルに変更がない場合、出力しない
+  .pipe $.changed paths.archive.temp, { hasChanged: $.changed.compareContents }
   # htdocs と temp を比較し htdocs に変更があれば差分データを zip に圧縮して出力
   .pipe $.zip 'archives_' + y + '-' + mon + '-' + d + '-' + h + '-' + m + '-' + s + '.zip'
   .pipe $.size(
@@ -683,7 +686,7 @@ apiServerInit = ->
     baseUrl: paths.api.dest,
     static: paths.api.src,
     verbosity: {
-      level: "error",
+      level: 'error',
       urlTracing: false
     }
   }
